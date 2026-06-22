@@ -23,9 +23,10 @@
   }
 
   // Plum Light (#f2e8f1) → replaced with image background.
-  // Path is relative to this file; webpack resolves it to dist/assets/.
+  // Path is relative to the SCSS entry point (src/scss/), not this file.
+  // Webpack copies the image to dist/assets/ on build.
   &.bg-f2e8f1 {
-    background-image: url('../../assets/sunsetbanner.png');
+    background-image: url('../assets/sunsetbanner.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
