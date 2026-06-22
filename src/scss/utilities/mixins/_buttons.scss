@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+// VPSA ICF Subtheme button mixins. Prefix all mixin names with 'vicf-'.
+//
+// Example:
+// @mixin vicf-button--primary {
+//   // If you override a link color, also override the :after pseudo-element
+//   // so Decanter icons match the link color.
+//   // @include vicf--white-icons;
+//   &:hover, &:focus { }
+// }

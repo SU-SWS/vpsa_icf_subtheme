@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+//
+//  3. Component
+//
+// Discrete, reusable UI elements.
+// Components must not control their own positioning or layout.
+// Never set widths/heights except on elements that natively have them.
+//
+// Naming convention:
+//   .vicf-component-name
+//   .vicf-component-name--variant
+//   .vicf-component-name__sub-object
+
+// @import 'component-name/index';
