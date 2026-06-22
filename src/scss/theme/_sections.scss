@@ -30,6 +30,26 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    // Wysiwyg paragraphs on this image background need white text for legibility.
+    // Decanter sets explicit colors on links, so they are unaffected by this
+    // inheritance and intentionally left alone here.
+    .ptype-stanford-wysiwyg {
+      color: $su-color-white;
+
+      // Secondary buttons are red by default; override to white so they remain
+      // readable against the image. Primary buttons are left as-is.
+      .su-button--secondary {
+        color: $su-color-white;
+        border-color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+          border-color: $su-color-white;
+        }
+      }
+    }
   }
 
 }
