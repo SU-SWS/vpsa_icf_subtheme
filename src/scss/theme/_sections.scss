@@ -22,4 +22,13 @@
     background: #dff3fa;
   }
 
+  // Plum Light (#f2e8f1) → replaced with image background.
+  // Path is relative to this file; webpack resolves it to dist/assets/.
+  &.bg-f2e8f1 {
+    background-image: url('../../assets/sunsetbanner.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
 }

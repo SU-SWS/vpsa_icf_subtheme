@@ -27,11 +27,12 @@ src/scss/
 
 The following Stanford Sites section background colors are overridden in `src/scss/theme/_sections.scss`. The selector class names are anchored to the original palette hex (set by `stanford_layout_paragraphs`) and will not change if the palette label changes.
 
-| Palette label | Original hex | Override hex |
+| Palette label | Original hex | Override |
 |---|---|---|
 | Poppy Light 10 | `#f7ecde` | `#fefad7` |
 | Palo Alto Light | `#dcefec` | `#d2e3c9` |
 | Lagunita Light | `#dcecef` | `#dff3fa` |
+| Plum Light | `#f2e8f1` | `src/assets/sunsetbanner.png` (image, `cover`) |
 
 ## Naming conventions
 
