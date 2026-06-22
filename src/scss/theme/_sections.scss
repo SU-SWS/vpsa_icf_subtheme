@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+// VPSA ICF Subtheme section color overrides.
+// The .layout-background.bg-[hex] selector pattern is set by
+// stanford_layout_paragraphs; the class name is always the original
+// palette hex so it stays stable even when we change the rendered color.
+
+.layout-background {
+
+  // Poppy Light 10 (#f7ecde) → replaced with VPSA ICF off-yellow (#fefad7).
+  &.bg-f7ecde {
+    background: #fefad7;
+  }
+
+  // Palo Alto Light (#dcefec) → replaced with VPSA ICF sage green (#d2e3c9).
+  &.bg-dcefec {
+    background: #d2e3c9;
+  }
+
+  // Lagunita Light (#dcecef) → replaced with VPSA ICF sky blue (#dff3fa).
+  &.bg-dcecef {
+    background: #dff3fa;
+  }
+
+}

@@ -21,7 +21,17 @@ src/scss/
 ├── layout/      # Page/grid layout
 ├── state/       # Client-side state (.is-*, js-*)
 ├── print/       # Print styles
-└── theme/       # Visual overrides (buttons, CTAs)
+└── theme/       # Visual overrides (buttons, CTAs, section colors)
+
+## Section color overrides
+
+The following Stanford Sites section background colors are overridden in `src/scss/theme/_sections.scss`. The selector class names are anchored to the original palette hex (set by `stanford_layout_paragraphs`) and will not change if the palette label changes.
+
+| Palette label | Original hex | Override hex |
+|---|---|---|
+| Poppy Light 10 | `#f7ecde` | `#fefad7` |
+| Palo Alto Light | `#dcefec` | `#d2e3c9` |
+| Lagunita Light | `#dcecef` | `#dff3fa` |
 
 ## Naming conventions
 
