@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+// VPSA ICF Subtheme section color overrides.
+// The .layout-background.bg-[hex] selector pattern is set by
+// stanford_layout_paragraphs; the class name is always the original
+// palette hex so it stays stable even when we change the rendered color.
+
+.layout-background {
+
+  // Poppy Light 10 (#f7ecde) → replaced with VPSA ICF off-yellow (#fefad7).
+  &.bg-f7ecde {
+    background: #fefad7;
+  }
+
+  // Palo Alto Light (#dcefec) → replaced with VPSA ICF sage green (#d2e3c9).
+  &.bg-dcefec {
+    background: #d2e3c9;
+  }
+
+  // Lagunita Light (#dcecef) → replaced with VPSA ICF sky blue (#dff3fa).
+  &.bg-dcecef {
+    background: #dff3fa;
+  }
+
+  // Plum Light (#f2e8f1) → replaced with image background.
+  // Path is relative to the SCSS entry point (src/scss/), not this file.
+  // Webpack copies the image to dist/assets/ on build.
+  &.bg-f2e8f1 {
+    background-image: url('../assets/sunsetbanner.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    // Wysiwyg paragraphs on this image background need white text for legibility.
+    // Decanter sets explicit colors on links, so they are unaffected by this
+    // inheritance and intentionally left alone here.
+    .ptype-stanford-wysiwyg {
+      color: $su-color-white;
+
+      // Secondary buttons are red by default; override to white so they remain
+      // readable against the image. Primary buttons are left as-is.
+      .su-button--secondary {
+        color: $su-color-white;
+        border-color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+          border-color: $su-color-white;
+        }
+      }
+    }
+  }
+
+}
