@@ -13,6 +13,18 @@ function vpsa_icf_subtheme_preprocess_html(&$variables) {
 }
 
 /**
+ * Prepares variables for the node template.
+ */
+function vpsa_icf_subtheme_preprocess_node(array &$variables) {
+  if (!empty($variables['node']) && $variables['node']->getType() === 'stanford_page') {
+    if (!isset($variables['title_attributes'])) {
+      $variables['title_attributes'] = new \Drupal\Core\Template\Attribute();
+    }
+    $variables['title_attributes']->addClass('visually-hidden');
+  }
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function vpsa_icf_subtheme_theme_suggestions_block_alter(array &$suggestions, array $variables) {
