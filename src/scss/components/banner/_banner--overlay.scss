@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+//
+// Banner image overlay tints.
+// Applied alongside Banner Style variants to improve white text contrast.
+//
+
+@mixin vicf-banner-overlay($opacity) {
+  .su-hero {
+    position: relative;
+
+    &::after {
+      background-color: rgba($su-color-black, $opacity);
+      bottom: 0;
+      content: '';
+      left: 0;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1;
+    }
+
+    .su-hero__media {
+      z-index: 0;
+    }
+
+    .su-hero__card,
+    .su-card {
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+
+.vicf-banner-overlay--light {
+  @include vicf-banner-overlay(0.25);
+}
+
+.vicf-banner-overlay--medium {
+  @include vicf-banner-overlay(0.45);
+}
+
+.vicf-banner-overlay--dark {
+  @include vicf-banner-overlay(0.65);
+}

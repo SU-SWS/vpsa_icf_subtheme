@@ -14,3 +14,14 @@ banner_variant_info:
       options:
         vicf-banner--default: Default
         vicf-banner--quote: Quote Banner
+        vicf-banner--caption: Caption Banner
+        vicf-banner--homepage: Homepage Banner
+    banner_overlay:
+      type: select
+      title: Overlay
+      description: Add a tinted overlay over the banner image to improve text contrast.
+      empty_option: None
+      options:
+        vicf-banner-overlay--light: Light tint
+        vicf-banner-overlay--medium: Medium tint
+        vicf-banner-overlay--dark: Dark tint

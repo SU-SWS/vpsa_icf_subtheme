@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+//
+// Homepage Banner variant for stanford_banner.
+// Larger left-aligned text with no card background.
+//
+
+.vicf-banner--homepage {
+  // Prefer left placement even if Behaviors overlay position is Right.
+  &.overlay-right {
+    .su-hero {
+      .su-hero__card,
+      .su-card {
+        left: 45px;
+        right: auto;
+        align-self: flex-start;
+        margin-left: 45px;
+        margin-right: auto;
+        text-align: left;
+
+        @include grid-media-min('xl') {
+          left: 48px;
+          margin-left: 48px;
+        }
+      }
+    }
+  }
+
+  .su-hero {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      color: $su-color-white;
+
+      @include grid-media-min('md') {
+        left: 45px;
+        right: auto;
+        max-width: 55%;
+      }
+
+      @include grid-media-min('xl') {
+        left: 48px;
+        max-width: 50%;
+      }
+
+      .su-card__contents {
+        color: $su-color-white;
+        padding-left: 0;
+        padding-right: 0;
+
+        > span {
+          color: $su-color-white;
+          @include type-e;
+        }
+
+        h2,
+        h3,
+        h4,
+        .su-font-splash {
+          color: $su-color-white;
+          @include type-a;
+
+          @include responsive-spacing('margin-bottom', 0);
+        }
+
+        p {
+          color: $su-color-white;
+          @include type-c;
+        }
+      }
+
+      a:not(.su-button):not(.su-button--secondary):not(.su-button--big) {
+        color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+        }
+      }
+
+      .su-button--secondary {
+        color: $su-color-white;
+        border-color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+          border-color: $su-color-white;
+        }
+      }
+    }
+  }
+}

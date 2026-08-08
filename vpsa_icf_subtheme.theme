@@ -47,6 +47,7 @@ function vpsa_icf_subtheme_preprocess_banner(&$variables) {
   $existing_classes = $variables['attributes']['class'] ?? [];
   $extra_classes = array_filter([
     $paragraph->getBehaviorSetting('react_paragraphs:banner_variant_info', 'banner_variant', 'vicf-banner--default'),
+    $paragraph->getBehaviorSetting('react_paragraphs:banner_variant_info', 'banner_overlay'),
   ]);
 
   // Add variant classes to banner.
