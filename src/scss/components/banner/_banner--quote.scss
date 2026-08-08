@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+//
+// Quote Banner variant for stanford_banner.
+// Text sits in a left-aligned card with a transparent tinted background.
+//
+
+.vicf-banner--quote {
+  // Prefer left placement even if Behaviors overlay position is Right.
+  &.overlay-right {
+    .su-hero {
+      .su-hero__card,
+      .su-card {
+        left: 45px;
+        right: auto;
+        align-self: flex-start;
+        margin-left: 45px;
+        margin-right: auto;
+
+        @include grid-media-min('xl') {
+          left: 48px;
+          margin-left: 48px;
+        }
+      }
+    }
+  }
+
+  .su-hero {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      background-color: rgba($su-color-black, 0.55);
+      border: 0;
+      box-shadow: none;
+      color: $su-color-white;
+
+      @include grid-media-min('md') {
+        left: 45px;
+        right: auto;
+      }
+
+      @include grid-media-min('xl') {
+        left: 48px;
+      }
+
+      .su-card__contents,
+      h2,
+      h3,
+      h4,
+      p,
+      span {
+        color: $su-color-white;
+      }
+
+      a:not(.su-button):not(.su-button--secondary):not(.su-button--big) {
+        color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+        }
+      }
+
+      .su-button--secondary {
+        color: $su-color-white;
+        border-color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+          border-color: $su-color-white;
+        }
+      }
+    }
+  }
+}

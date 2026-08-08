@@ -1,0 +1,16 @@
+# React behaviors plugin definitions for VPSA ICF Subtheme.
+# Plugin property $defaults are defined in ReactBehaviorsPluginManager.
+banner_variant_info:
+  id: banner_type
+  label: 'Banner Paragraphs Type'
+  bundles:
+    - paragraphs_type|stanford_banner
+  config:
+    banner_variant:
+      type: select
+      title: 'Banner Style'
+      description: Select the display style for this image banner.
+      default_value: vicf-banner--default
+      options:
+        vicf-banner--default: Default
+        vicf-banner--quote: Quote Banner
