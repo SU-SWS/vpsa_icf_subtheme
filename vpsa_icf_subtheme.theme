@@ -5,6 +5,9 @@
  * Preprocess functions for VPSA ICF Subtheme.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
+
 /**
  * Prepares variables for the html.html.twig template.
  */
@@ -19,6 +22,34 @@ function vpsa_icf_subtheme_theme_suggestions_block_alter(array &$suggestions, ar
   if (!empty($variables['elements']['#id']) && $variables['elements']['#id'] == 'vpsa_icf_subtheme_search') {
     $suggestions[] = 'block__stanford_basic_search';
   }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Move react banner variant behaviors above other behavior plugins in the UI.
+ * Layout Paragraphs builds behavior plugin children in a #process callback, so
+ * weights are applied in #after_build after those children exist.
+ */
+function vpsa_icf_subtheme_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  if (empty($form['behavior_plugins'])) {
+    return;
+  }
+
+  $form['behavior_plugins']['#after_build'][] = 'vpsa_icf_subtheme_behavior_plugins_after_build';
+}
+
+/**
+ * After-build callback to prioritize banner variant behavior fields.
+ */
+function vpsa_icf_subtheme_behavior_plugins_after_build(array $element, FormStateInterface $form_state) {
+  foreach (Element::children($element) as $plugin_id) {
+    if (strpos($plugin_id, 'banner_variant_info') !== FALSE) {
+      $element[$plugin_id]['#weight'] = -100;
+    }
+  }
+
+  return $element;
 }
 
 /**

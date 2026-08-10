@@ -6,24 +6,6 @@
 //
 
 .vicf-banner--quote {
-  // Prefer left placement even if Behaviors overlay position is Right.
-  &.overlay-right {
-    .su-hero {
-      .su-hero__card,
-      .su-card {
-        left: 45px;
-        right: auto;
-        align-self: flex-start;
-        margin-left: 45px;
-        margin-right: auto;
-
-        @include grid-media-min('xl') {
-          left: 48px;
-          margin-left: 48px;
-        }
-      }
-    }
-  }
 
   .su-hero {
     .su-hero__card,
