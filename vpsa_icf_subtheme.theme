@@ -21,6 +21,7 @@ function vpsa_icf_subtheme_preprocess_node(array &$variables) {
       $variables['title_attributes'] = new \Drupal\Core\Template\Attribute();
     }
     $variables['title_attributes']->addClass('visually-hidden');
+    $variables['title_attributes']->addClass('hide-section');
   }
 }
 
