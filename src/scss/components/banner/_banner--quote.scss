@@ -15,15 +15,6 @@
       box-shadow: none;
       color: $su-color-white;
 
-      @include grid-media-min('md') {
-        left: 45px;
-        right: auto;
-      }
-
-      @include grid-media-min('xl') {
-        left: 48px;
-      }
-
       .su-card__contents,
       h2,
       h3,
