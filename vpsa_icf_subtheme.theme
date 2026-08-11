@@ -18,27 +18,39 @@ function vpsa_icf_subtheme_preprocess_html(&$variables) {
 /**
  * Prepares variables for the node template.
  */
-function vpsa_icf_subtheme_preprocess_node(array &$variables) {
+function vpsa_icf_subtheme_preprocess_node(&$variables) {
   if (!empty($variables['node']) && $variables['node']->getType() === 'stanford_page') {
-    if (!isset($variables['title_attributes'])) {
+    if (!isset($variables['title_attributes']) || !($variables['title_attributes'] instanceof \Drupal\Core\Template\Attribute)) {
       $variables['title_attributes'] = new \Drupal\Core\Template\Attribute();
     }
-    // $variables['title_attributes']->addClass('visually-hidden');
-    // $variables['title_attributes']->addClass('hide-section');
+    // Keep this in case a node template renders a title wrapper.
+    $variables['title_attributes']->addClass('visually-hidden');
+    $variables['title_attributes']->addClass('hide-section');
   }
 }
 
 /**
  * Prepares variables for the page title wrapper.
+ * Some themes/templates use `title_attributes`, others use `attributes`.
  */
-function vpsa_icf_subtheme_preprocess_page_title(array &$variables) {
+function vpsa_icf_subtheme_preprocess_page_title(&$variables) {
   $node = \Drupal::routeMatch()->getParameter('node');
   if ($node instanceof \Drupal\node\NodeInterface && $node->bundle() === 'stanford_page') {
-    if (!isset($variables['title_attributes'])) {
+    if (!isset($variables['title_attributes']) || !($variables['title_attributes'] instanceof \Drupal\Core\Template\Attribute)) {
       $variables['title_attributes'] = new \Drupal\Core\Template\Attribute();
     }
     $variables['title_attributes']->addClass('visually-hidden');
     $variables['title_attributes']->addClass('hide-section');
+
+    // Some page-title templates use a generic `attributes` variable.
+    if (!isset($variables['attributes']) || !($variables['attributes'] instanceof \Drupal\Core\Template\Attribute)) {
+      $variables['attributes'] = new \Drupal\Core\Template\Attribute();
+    }
+    $variables['attributes']->addClass('visually-hidden');
+    $variables['attributes']->addClass('hide-section');
+
+    // Log once so you can confirm the preprocess runs (clear logs after testing).
+    \Drupal::logger('vpsa_icf_subtheme')->notice('preprocess_page_title: added classes for stanford_page');
   }
 }
 
