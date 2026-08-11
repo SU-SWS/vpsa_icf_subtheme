@@ -23,6 +23,20 @@ function vpsa_icf_subtheme_preprocess_node(array &$variables) {
     if (!isset($variables['title_attributes'])) {
       $variables['title_attributes'] = new \Drupal\Core\Template\Attribute();
     }
+    // $variables['title_attributes']->addClass('visually-hidden');
+    // $variables['title_attributes']->addClass('hide-section');
+  }
+}
+
+/**
+ * Prepares variables for the page title wrapper.
+ */
+function vpsa_icf_subtheme_preprocess_page_title(array &$variables) {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof \Drupal\node\NodeInterface && $node->bundle() === 'stanford_page') {
+    if (!isset($variables['title_attributes'])) {
+      $variables['title_attributes'] = new \Drupal\Core\Template\Attribute();
+    }
     $variables['title_attributes']->addClass('visually-hidden');
     $variables['title_attributes']->addClass('hide-section');
   }
