@@ -1,10 +1,10 @@
-banner_variant_info:  # part of the key after the :
-  id: text_style
+text_area_variant_info:  # part of the key after the :
+  id: text_area_style
   label: 'Text Area Style'
   bundles:
     - paragraphs_type|stanford_wysiwyg
   config:
-    banner_style:
+    text_area_style:
       type: select
       title: 'Text Area Style'
       description: Select the text style & Image sizes for displaying this text area.
