@@ -20,3 +20,18 @@ function vpsa_icf_subtheme_theme_suggestions_block_alter(array &$suggestions, ar
     $suggestions[] = 'block__stanford_basic_search';
   }
 }
+
+
+function vpsa_icf_subtheme_preprocess_ds_entity_view(&$variables) {
+  // if not running on a paragraph, exit out.
+  if (!isset($variables['content']['#paragraph'])) {
+    return;
+  }
+
+  $paragraph = $variables['content']['#paragraph'];
+
+  // Process Text Area Paragraphs
+  if ($paragraph->bundle() == 'stanford_wysiwyg') {
+    vpsa_icf_subtheme_preprocess_text_area($variables);
+  }
+}

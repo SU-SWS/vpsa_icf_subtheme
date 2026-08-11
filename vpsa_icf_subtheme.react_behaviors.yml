@@ -1,0 +1,15 @@
+banner_variant_info:  # part of the key after the :
+  id: text_style
+  label: 'Text Area Style'
+  bundles:
+    - paragraphs_type|stanford_wysiwyg
+  config:
+    banner_style:
+      type: select
+      title: 'Text Area Style'
+      description: Select the text style & Image sizes for displaying this text area.
+      default_value: vpsa-text-area--regular
+      options:
+        vpsa-text-area--regular: Default (No override)
+        vpsa-text-area--fellows: Fellows Text Area variant
+      
