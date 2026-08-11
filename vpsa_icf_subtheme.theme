@@ -7,6 +7,8 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Template\Attribute;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Prepares variables for the html.html.twig template.
@@ -53,34 +55,84 @@ function vpsa_icf_subtheme_behavior_plugins_after_build(array $element, FormStat
 }
 
 /**
- * Implements hook_preprocess_HOOK() for ds_entity_view.
+ * Implements hook_preprocess_HOOK() for paragraph.
+ *
+ * Used when the banner has no Display Suite layout (default field rendering /
+ * Jumpstart UI components).
  */
-function vpsa_icf_subtheme_preprocess_ds_entity_view(&$variables) {
-  // If not running on a paragraph, exit out.
+function vpsa_icf_subtheme_preprocess_paragraph(array &$variables) {
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  $paragraph = $variables['paragraph'];
+  if ($paragraph->bundle() !== 'stanford_banner') {
+    return;
+  }
+
+  vpsa_icf_subtheme_attach_banner_variant_classes($variables['attributes'], $paragraph);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for ds_entity_view.
+ *
+ * Used when the banner uses the Display Suite Hero layout.
+ */
+function vpsa_icf_subtheme_preprocess_ds_entity_view(array &$variables) {
   if (!isset($variables['content']['#paragraph'])) {
     return;
   }
 
   $paragraph = $variables['content']['#paragraph'];
-
-  // Process Banners.
-  if ($paragraph->bundle() == 'stanford_banner') {
-    vpsa_icf_subtheme_preprocess_banner($variables);
+  if ($paragraph->bundle() !== 'stanford_banner') {
+    return;
   }
+
+  vpsa_icf_subtheme_attach_banner_variant_classes($variables['attributes'], $paragraph);
 }
 
 /**
- * Prepares variables for stanford_banner paragraphs.
+ * Implements hook_ENTITY_TYPE_view_alter() for paragraph.
+ *
+ * Fallback so variant classes still attach when a render path skips the usual
+ * paragraph/DS preprocess wrappers.
  */
-function vpsa_icf_subtheme_preprocess_banner(&$variables) {
-  $paragraph = $variables['content']['#paragraph'];
+function vpsa_icf_subtheme_paragraph_view_alter(array &$build, ParagraphInterface $paragraph, $display) {
+  if ($paragraph->bundle() !== 'stanford_banner') {
+    return;
+  }
 
-  $existing_classes = $variables['attributes']['class'] ?? [];
-  $extra_classes = array_filter([
+  if (!isset($build['#attributes'])) {
+    $build['#attributes'] = [];
+  }
+
+  vpsa_icf_subtheme_attach_banner_variant_classes($build['#attributes'], $paragraph);
+}
+
+/**
+ * Attach banner variant behavior classes to a render attribute set.
+ *
+ * @param array|\Drupal\Core\Template\Attribute $attributes
+ *   Attributes array or Attribute object, passed by reference.
+ * @param \Drupal\paragraphs\ParagraphInterface $paragraph
+ *   The banner paragraph.
+ */
+function vpsa_icf_subtheme_attach_banner_variant_classes(&$attributes, ParagraphInterface $paragraph) {
+  $classes = array_filter([
     $paragraph->getBehaviorSetting('react_paragraphs:banner_variant_info', 'banner_variant', 'vicf-banner--default'),
     $paragraph->getBehaviorSetting('react_paragraphs:banner_variant_info', 'banner_overlay'),
   ]);
 
-  // Add variant classes to banner.
-  $variables['attributes']['class'] = array_merge($existing_classes, $extra_classes);
+  if (empty($classes)) {
+    return;
+  }
+
+  if ($attributes instanceof Attribute) {
+    $attributes->addClass($classes);
+    return;
+  }
+
+  $existing = $attributes['class'] ?? [];
+  if (!is_array($existing)) {
+    $existing = $existing ? [$existing] : [];
+  }
+
+  $attributes['class'] = array_values(array_unique(array_merge($existing, $classes)));
 }
