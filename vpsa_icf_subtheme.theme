@@ -39,13 +39,16 @@ function vpsa_icf_subtheme_preprocess_page_title(&$variables) {
     if (!isset($variables['title_attributes']) || !($variables['title_attributes'] instanceof \Drupal\Core\Template\Attribute)) {
       $variables['title_attributes'] = new \Drupal\Core\Template\Attribute();
     }
+// not working yet
     $variables['title_attributes']->addClass('visually-hidden');
     $variables['title_attributes']->addClass('hide-section');
 
+// not working yet
     // Some page-title templates use a generic `attributes` variable.
     if (!isset($variables['attributes']) || !($variables['attributes'] instanceof \Drupal\Core\Template\Attribute)) {
       $variables['attributes'] = new \Drupal\Core\Template\Attribute();
     }
+// not working yet
     $variables['attributes']->addClass('visually-hidden');
     $variables['attributes']->addClass('hide-section');
 
