@@ -7,6 +7,17 @@
 
 .vicf-banner--quote {
 
+  &.overlay-right,
+  .su-hero.overlay-right {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      @include grid-media-min('xl') {
+        left: auto;
+        right: 133px;
+      }
+    }
+  }
+
   .su-hero {
     .su-hero__card,
     .su-card.su-hero__card {
@@ -14,6 +25,12 @@
       border: 0;
       box-shadow: none;
       color: $su-color-white;
+
+      @include grid-media-min('xl') {
+        left: 133px;
+        max-width: 464px;
+      }
+
 
       .su-card__contents,
       h2,
@@ -56,8 +73,10 @@
           font-weight: 600;
         }
         
-        > p {
+        > p, > .su-banner-body {
           order: 1;
+          font-size: 3rem;
+          line-height: 1;
         }
         
         > .su-card__button {
