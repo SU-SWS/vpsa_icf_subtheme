@@ -6,22 +6,23 @@
 //
 
 .vicf-banner--homepage {
-  // Prefer left placement even if Behaviors overlay position is Right.
-  &.overlay-right {
-    .su-hero {
-      .su-hero__card,
-      .su-card {
-        left: 45px;
-        right: auto;
-        align-self: flex-start;
-        margin-left: 45px;
-        margin-right: auto;
+  &.overlay-right,
+  .su-hero.overlay-right {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      @include grid-media-min('md') {
+        left: auto;
+        right: 45px;
+        margin-left: auto;
+        margin-right: 45px;
+        align-self: flex-end;
         text-align: left;
+      }
 
-        @include grid-media-min('xl') {
-          left: 48px;
-          margin-left: 48px;
-        }
+      @include grid-media-min('xl') {
+        left: auto;
+        right: 133px;
+        margin-right: 133px;
       }
     }
   }
@@ -41,8 +42,8 @@
       }
 
       @include grid-media-min('xl') {
-        left: 48px;
-        max-width: 50%;
+        left: 133px;
+        max-width: 464px;
       }
 
       .su-card__contents {
@@ -50,9 +51,9 @@
         padding-left: 0;
         padding-right: 0;
 
-        > span {
-          color: $su-color-white;
-          @include type-e;
+        > span,
+        > .su-card__superhead {
+          display: none;
         }
 
         h2,
@@ -60,7 +61,7 @@
         h4,
         .su-font-splash {
           color: $su-color-white;
-          @include type-a;
+          font-size: 5.8rem;
 
           @include responsive-spacing('margin-bottom', 0);
         }

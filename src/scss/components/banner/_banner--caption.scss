@@ -49,11 +49,22 @@
 
         @include responsive-spacing('padding', 2);
 
-        p {
+        p,
+        .su-banner-body,
+        .su-wysiwyg-text {
           color: $su-color-white;
+          font-size: 21px;
+          line-height: 140%;
           margin-bottom: 0;
           margin-left: 0;
           margin-right: 0;
+
+          p {
+            color: $su-color-white;
+            font-size: 21px;
+            line-height: 140%;
+            margin-bottom: 0;
+          }
 
           &:not(:last-child) {
             @include responsive-spacing('margin-bottom', 0);
