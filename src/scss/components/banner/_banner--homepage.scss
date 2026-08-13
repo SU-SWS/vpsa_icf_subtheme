@@ -35,6 +35,10 @@
       box-shadow: none;
       color: $su-color-white;
 
+      @include grid-media-max('sm') {
+        background-color: rgba($su-color-black, 0.7);
+      }
+
       @include grid-media-min('md') {
         left: 45px;
         right: auto;
@@ -48,8 +52,11 @@
 
       .su-card__contents {
         color: $su-color-white;
-        padding-left: 0;
-        padding-right: 0;
+
+        @include grid-media-min('md') {
+          padding-left: 0;
+          padding-right: 0;
+        }
 
         > span,
         > .su-card__superhead {
