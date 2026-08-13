@@ -26,6 +26,10 @@
       box-shadow: none;
       color: $su-color-white;
 
+      @include grid-media-max('sm') {
+        background-color: rgba($su-color-black, 0.7);
+      }
+
       @include grid-media-min('xl') {
         left: 133px;
         max-width: 464px;

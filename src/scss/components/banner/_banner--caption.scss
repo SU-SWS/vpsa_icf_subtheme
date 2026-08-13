@@ -27,6 +27,10 @@
       width: 100%;
       color: $su-color-white;
 
+      @include grid-media-max('sm') {
+        background-color: rgba($su-color-black, 0.7);
+      }
+
       @include grid-media-min('md') {
         position: absolute;
       }
@@ -48,6 +52,12 @@
         max-width: 100ch;
 
         @include responsive-spacing('padding', 2);
+
+        // TODO: check for a mixin for this
+        @media (min-width: 1024px) {
+          padding-left: 17rem;
+          padding-right: 17rem;
+        }
 
         p,
         .su-banner-body,
