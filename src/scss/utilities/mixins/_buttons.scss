@@ -9,3 +9,7 @@
 //   // @include vicf--white-icons;
 //   &:hover, &:focus { }
 // }
+
+@mixin vicf-button--primary {
+  border-radius: 3px;
+}

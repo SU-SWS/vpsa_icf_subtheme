@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+//
+// Shared Image Banner (stanford_banner) styles.
+//
+
+.ptype-stanford-banner {
+  @include grid-media-max('sm') {
+    .su-hero__media {
+      aspect-ratio: 4 / 3;
+    }
+  }
+}
