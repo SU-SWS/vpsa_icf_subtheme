@@ -70,6 +70,7 @@
         > h2, h3, h4 {
           order: 2;
           font-size: 1.25em;
+          margin-bottom: .5rem;
         }
         
         > .su-card__superhead {
@@ -81,6 +82,7 @@
           order: 1;
           font-size: 3rem;
           line-height: 1;
+          margin-bottom: 2.5rem;
 
           @include grid-media-max('sm') {
             font-size: 2.4rem;
@@ -89,6 +91,7 @@
         
         > .su-card__button {
           order: 4;
+          margin-top: 2.5rem;
         }
       }
     }
