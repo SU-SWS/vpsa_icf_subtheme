@@ -81,6 +81,10 @@
           order: 1;
           font-size: 3rem;
           line-height: 1;
+
+          @include grid-media-max('sm') {
+            font-size: 2.4rem;
+          }
         }
         
         > .su-card__button {
