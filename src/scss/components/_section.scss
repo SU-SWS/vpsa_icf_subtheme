@@ -4,3 +4,17 @@
     height: 0;
     margin-bottom: -58px;
 }
+
+.ptype-stanford-layout {
+    .layout--layout-paragraphs-three-column,
+    .layout-paragraphs-two-column--50-50 { // make sure we leave it wider for the uneven column layouts.
+
+        @media screen and (min-width: 1440px) {
+            max-width: 1100px;
+        }
+    
+        @media screen and (min-width: 1700px) {
+            max-width: 1100px; // was 1500px
+        }
+    }
+}
