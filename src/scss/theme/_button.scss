@@ -5,7 +5,7 @@
 
 .su-button {
   @include vicf-button--primary;
-  @include vicf-type-1-bold;
+  @include vicf-type-1;
 }
 
 // TODO: update big and secondary buttons to use the right type styles.
@@ -16,5 +16,5 @@
 
 .su-button--secondary {
   @include vicf-button--primary;
-  @include vicf-type-1-bold;
+  @include vicf-type-1;
 }
