@@ -115,14 +115,17 @@
     left: 60%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 220px;
-    height: 80px;
+    width: 500px;
+    height: 500px;
     background-image: url("../assets/SICF-logo-transparent.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     pointer-events: none;
     z-index: 2;
+
+    //@TODO: add responsive versions here still
+
   }
 
 }
