@@ -16,6 +16,7 @@ banner_variant_info:
         vicf-banner--quote: Quote Banner
         vicf-banner--caption: Caption Banner
         vicf-banner--homepage: Homepage Banner
+        vicf-banner--homepage-with-logo: Homepage Banner with ICF Logo Overlay
     banner_overlay:
       type: select
       title: Overlay
