@@ -1,0 +1,107 @@
+@charset "UTF-8";
+
+//
+// Caption Banner variant for stanford_banner.
+// Description-only text in a full-width, bottom-centered transparent card.
+//
+
+.vicf-banner--two-column-with-logo {
+  .su-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    .su-hero__card,
+    .su-card.su-hero__card {
+      // background-color: rgba($su-color-black, 0.45);
+      // border: 0;
+      // box-shadow: none;
+      // bottom: 0;
+      // left: 0;
+      // right: 0;
+      // top: auto;
+      margin: 0;
+      max-width: none;
+      position: relative;
+      text-align: center;
+      width: 100%;
+      color: $su-color-white;
+
+      @include grid-media-max('sm') {
+        background-color: rgba($su-color-black, 0.7);
+      }
+
+      @include grid-media-min('md') {
+        position: absolute;
+      }
+
+      // Change this - copied from the caption, but we want ot show several things and display headings above and centered and other content below, split into 2 columns.
+      > .su-card__contents {
+        > span,
+        // > h2,
+        // > h3,
+        // > h4,
+        // > .su-font-splash,
+        // > .su-card__superhead,
+        > .su-card__button {
+          display: none;
+        }
+
+        color: $su-color-white;
+        margin: 0 auto;
+        max-width: 100ch;
+
+        @include responsive-spacing('padding', 2);
+
+        // TODO: check for a mixin for this
+        @media (min-width: 1024px) {
+          padding-left: 17rem;
+          padding-right: 17rem;
+        }
+
+        p,
+        .su-banner-body,
+        .su-wysiwyg-text {
+          color: $su-color-white;
+          font-size: 21px;
+          line-height: 140%;
+          margin-bottom: 0;
+          margin-left: 0;
+          margin-right: 0;
+
+          @include grid-media-max('sm') {
+            font-size: 1.8rem;
+          }
+
+          p {
+            color: $su-color-white;
+            font-size: 21px;
+            line-height: 140%;
+            margin-bottom: 0;
+
+            @include grid-media-max('sm') {
+              font-size: 1.8rem;
+            }
+          }
+
+          &:not(:last-child) {
+            @include responsive-spacing('margin-bottom', 0);
+          }
+        }
+      }
+    }
+  }
+
+  &.overlay-right {
+    .su-hero {
+      .su-hero__card,
+      .su-card {
+        left: 0;
+        right: 0;
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center;
+      }
+    }
+  }
+}
