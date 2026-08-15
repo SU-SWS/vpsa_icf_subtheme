@@ -27,3 +27,18 @@ banner_variant_info:
         vicf-banner-overlay--light: Light tint
         vicf-banner-overlay--medium: Medium tint
         vicf-banner-overlay--dark: Dark tint
+
+text_area_variant_info:
+  id: text_area_layout
+  label: 'Text Area Layout'
+  bundles:
+    - paragraphs_type|stanford_wysiwyg
+  config:
+    banner_variant:
+      type: select
+      title: 'Text Area Layout'
+      description: Select the layout for this text area.
+      default_value: vicf-text-area--default
+      options:
+        vicf-text-area--default: Default
+        vicf-text-area--two-column: Two-Column
