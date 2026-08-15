@@ -1,0 +1,11 @@
+.su-wysiwyg-text.vpsa-text-area--fellows {
+
+    // align with the left text edge
+    .su-quote-text, 
+    p.su-quote-text {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    // image size - was already 293 to match figma, no override needed?
+} 

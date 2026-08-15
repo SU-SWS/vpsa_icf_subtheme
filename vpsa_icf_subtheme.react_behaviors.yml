@@ -1,3 +1,18 @@
+text_area_variant_info:  # part of the key after the :
+  id: text_area_style
+  label: 'Text Area Style'
+  bundles:
+    - paragraphs_type|stanford_wysiwyg
+  config:
+    text_area_style:
+      type: select
+      title: 'Text Area Style'
+      description: Select the text style & Image sizes for displaying this text area.
+      default_value: vpsa-text-area--regular
+      options:
+        vpsa-text-area--regular: Default (No override)
+        vpsa-text-area--fellows: Fellows Text Area variant
+      
 # React behaviors plugin definitions for VPSA ICF Subtheme.
 # Plugin property $defaults are defined in ReactBehaviorsPluginManager.
 banner_variant_info:
