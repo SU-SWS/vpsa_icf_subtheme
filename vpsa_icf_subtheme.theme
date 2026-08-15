@@ -187,3 +187,45 @@ function vpsa_icf_subtheme_attach_banner_variant_classes(&$attributes, Paragraph
 
   $attributes['class'] = array_values(array_unique(array_merge($existing, $classes)));
 }
+
+/**
+ * Preprocess function for text area paragraph.
+ */
+function vpsa_icf_subtheme_preprocess_text_area(array &$variables) {
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  if (!isset($variables['paragraph'])) {
+    return;
+  }
+
+  $paragraph = $variables['paragraph'];
+  if ($paragraph->bundle() !== 'stanford_wysiwyg') {
+    return;
+  }
+
+  vpsa_icf_subtheme_attach_text_area_variant_classes($variables['attributes'], $paragraph);
+}
+
+/**
+ * Attach text area variant behavior classes to a render attribute set.
+ */
+function vpsa_icf_subtheme_attach_text_area_variant_classes(&$attributes, ParagraphInterface $paragraph) {
+  $classes = array_filter([
+    $paragraph->getBehaviorSetting('react_paragraphs:text_area_variant_info', 'text_area_style', 'vpsa-text-area--regular'),
+  ]);
+
+  if (empty($classes)) {
+    return;
+  }
+
+  if ($attributes instanceof Attribute) {
+    $attributes->addClass($classes);
+    return;
+  }
+
+  $existing = $attributes['class'] ?? [];
+  if (!is_array($existing)) {
+    $existing = $existing ? [$existing] : [];
+  }
+
+  $attributes['class'] = array_values(array_unique(array_merge($existing, $classes)));
+}
