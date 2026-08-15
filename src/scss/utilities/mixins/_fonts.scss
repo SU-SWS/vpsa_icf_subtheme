@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+// VPSA ICF Subtheme button mixins. Prefix all mixin names with 'vicf-'.
+//
+// Example:
+// @mixin vicf-button--primary {
+//   // If you override a link color, also override the :after pseudo-element
+//   // so Decanter icons match the link color.
+//   // @include vicf--white-icons;
+//   &:hover, &:focus { }
+// }
+
+@mixin vicf-type-5 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 130%;
+  letter-spacing: 0.32px;
+
+  @media (min-width: 576px) {
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: 0.32px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 4.2rem;
+    font-weight: 400;
+    letter-spacing: 0.42px;
+  }
+
+  @media (min-width: 992px) {
+    font-size: 5.5rem;
+    font-weight: 400;
+    letter-spacing: 0.55px;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 5.5rem;
+    font-weight: 400;
+    letter-spacing: 0.55px;
+  }
+
+  @media (min-width: 1500px) {
+    font-size: 5.8rem;
+    font-weight: 400;
+    line-height: 140%;
+    letter-spacing: 0.58px;
+  }
+}
+
+
+@mixin vicf-type-5-semibold {
+  @include vicf-type-5;
+
+  @media (min-width: 768px) {
+    font-weight: 600;
+  }
+}
+
+
+@mixin vicf-type-5-bold {
+  @include vicf-type-5;
+
+  @media (min-width: 768px) {
+    font-weight: 700;
+  }
+}
+
+
+@mixin vicf-type-1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 120%;
+
+  @media (min-width: 576px) {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 120%;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 130%;
+  }
+
+  @media (min-width: 992px) {
+    font-size: 2.3rem;
+    font-weight: 400;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 2.3rem;
+    font-weight: 400;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1500px) {
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 140%;
+  }
+}
+
+@mixin vicf-type-1-semibold {
+  @include vicf-type-1;
+
+  @media (min-width: 768px) {
+    font-weight: 600;
+  }
+}
+
+@mixin vicf-type-1-bold {
+  @include vicf-type-1;
+
+  @media (min-width: 768px) {
+    font-weight: 700;
+  }
+}
+
