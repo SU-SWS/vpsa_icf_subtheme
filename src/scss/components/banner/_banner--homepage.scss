@@ -5,7 +5,8 @@
 // Larger left-aligned text with no card background.
 //
 
-.vicf-banner--homepage {
+.vicf-banner--homepage,
+.vicf-banner--homepage-with-logo {
   &.overlay-right,
   .su-hero.overlay-right {
     .su-hero__card,
@@ -100,4 +101,28 @@
       }
     }
   }
+}
+
+
+.vicf-banner--homepage-with-logo {
+
+  // Add a logo overlay to the homepage banner when this is selected.
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 80px;
+    background-image: url("../../../assets/SICF-logo-transparent.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    pointer-events: none;
+    z-index: 2;
+  }
+
 }
