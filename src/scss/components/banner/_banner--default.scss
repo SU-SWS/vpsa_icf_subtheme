@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+//
+// Default Image Banner card styles.
+// Matches shared quote/homepage card positioning and tinted card chrome.
+//
+
+.vicf-banner--default {
+  &.overlay-right,
+  .su-hero.overlay-right {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      @include grid-media-min('xl') {
+        left: auto;
+        right: 133px;
+      }
+    }
+  }
+
+  .su-hero {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      background-color: rgba($su-color-black, 0.55);
+      border: 0;
+      box-shadow: none;
+      color: $su-color-white;
+
+      @include grid-media-max('sm') {
+        background-color: rgba($su-color-black, 0.7);
+      }
+
+      @include grid-media-min('xl') {
+        left: 133px;
+        max-width: 464px;
+      }
+
+      .su-card__contents,
+      h2,
+      h3,
+      h4,
+      p,
+      span {
+        color: $su-color-white;
+      }
+
+      a:not(.su-button):not(.su-button--secondary):not(.su-button--big) {
+        color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+        }
+      }
+
+      .su-button--secondary {
+        color: $su-color-white;
+        border-color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+          border-color: $su-color-white;
+        }
+      }
+    }
+  }
+}
