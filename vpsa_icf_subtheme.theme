@@ -129,7 +129,7 @@ function vpsa_icf_subtheme_preprocess_ds_entity_view(array &$variables) {
 
   // Process Text Area Paragraphs
   if ($paragraph->bundle() == 'stanford_wysiwyg') {
-    vpsa_icf_subtheme_preprocess_text_area($variables);
+    // vpsa_icf_subtheme_preprocess_text_area($variables);
   }
 }
   if ($paragraph->bundle() !== 'stanford_banner') {
