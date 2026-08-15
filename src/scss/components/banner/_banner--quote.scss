@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+//
+// Quote Banner variant for stanford_banner.
+// Text sits in a left-aligned card with a transparent tinted background.
+//
+
+.vicf-banner--quote {
+
+  &.overlay-right,
+  .su-hero.overlay-right {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      @include grid-media-min('xl') {
+        left: auto;
+        right: 133px;
+      }
+    }
+  }
+
+  .su-hero {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      background-color: rgba($su-color-black, 0.55);
+      border: 0;
+      box-shadow: none;
+      color: $su-color-white;
+
+      @include grid-media-max('sm') {
+        background-color: rgba($su-color-black, 0.7);
+      }
+
+      @include grid-media-min('xl') {
+        left: 133px;
+        max-width: 464px;
+      }
+
+
+      .su-card__contents,
+      h2,
+      h3,
+      h4,
+      p,
+      span {
+        color: $su-color-white;
+      }
+
+      a:not(.su-button):not(.su-button--secondary):not(.su-button--big) {
+        color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+        }
+      }
+
+      .su-button--secondary {
+        color: $su-color-white;
+        border-color: $su-color-white;
+
+        &:hover,
+        &:focus {
+          color: $su-color-white;
+          border-color: $su-color-white;
+        }
+      }
+
+      .su-card__contents {
+
+        > h2, h3, h4 {
+          order: 2;
+          font-size: 1.25em;
+          margin-bottom: .5rem;
+        }
+        
+        > .su-card__superhead {
+          order: 3;
+          font-weight: 600;
+        }
+        
+        > p, > .su-banner-body {
+          order: 1;
+          font-size: 3rem;
+          line-height: 1;
+          margin-bottom: 2.5rem;
+
+          @include grid-media-max('sm') {
+            font-size: 2.4rem;
+          }
+        }
+        
+        > .su-card__button {
+          order: 4;
+          margin-top: 2.5rem;
+        }
+      }
+    }
+  }
+}

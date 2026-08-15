@@ -13,3 +13,47 @@ text_area_variant_info:  # part of the key after the :
         vpsa-text-area--regular: Default (No override)
         vpsa-text-area--fellows: Fellows Text Area variant
       
+# React behaviors plugin definitions for VPSA ICF Subtheme.
+# Plugin property $defaults are defined in ReactBehaviorsPluginManager.
+banner_variant_info:
+  id: banner_type
+  label: 'Banner Paragraphs Type'
+  bundles:
+    - paragraphs_type|stanford_banner
+  config:
+    banner_variant:
+      type: select
+      title: 'Banner Style'
+      description: Select the display style for this image banner.
+      default_value: vicf-banner--default
+      options:
+        vicf-banner--default: Default
+        vicf-banner--quote: Quote Banner
+        vicf-banner--caption: Caption Banner
+        vicf-banner--homepage: Homepage Banner
+        vicf-banner--homepage-with-logo: Homepage Banner with ICF Logo Overlay
+        # vicf-banner--two-column-with-logo: Two-Column Banner with ICF Logo Overlay
+    banner_overlay:
+      type: select
+      title: Overlay
+      description: Add a tinted overlay over the banner image to improve text contrast.
+      empty_option: None
+      options:
+        vicf-banner-overlay--light: Light tint
+        vicf-banner-overlay--medium: Medium tint
+        vicf-banner-overlay--dark: Dark tint
+
+text_area_variant_info:
+  id: text_area_layout
+  label: 'Text Area Layout'
+  bundles:
+    - paragraphs_type|stanford_wysiwyg
+  config:
+    banner_variant:
+      type: select
+      title: 'Text Area Layout'
+      description: Select the layout for this text area.
+      default_value: vicf-text-area--default
+      options:
+        vicf-text-area--default: Default
+        vicf-text-area--two-column: Two-Column

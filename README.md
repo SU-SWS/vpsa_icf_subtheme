@@ -2,11 +2,18 @@
 
 Stanford Sites subtheme built on `stanford_basic`, scaffolded from `stanford_starter`.
 
-## Setup
+## Developer Setup
 
-1. `npm install`
-2. `npm run build` — compile CSS once
-3. `npm run watch` — compile CSS on file changes
+1. Install dependencies:
+   - `npm install`
+2. Build assets once:
+   - `npm run build`
+3. Watch for changes and rebuild automatically:
+   - `npm run watch`
+
+> If you use `nvm`, run `nvm use` first to ensure the correct Node version is active.
+
+This project uses webpack to assemble the CSS, JavaScript, and image assets required by the theme.
 
 ## SCSS structure
 

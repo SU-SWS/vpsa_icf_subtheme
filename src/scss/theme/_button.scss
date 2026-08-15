@@ -2,9 +2,9 @@
 
 // VPSA ICF Subtheme button theme overrides.
 // Use mixins from /src/scss/utilities/mixins/_buttons.scss.
-//
-// Example:
-// .su-button {
-//   @include vicf-button--primary;
-//   &:hover, &:focus { }
-// }
+
+.su-button,
+.su-button--big,
+.su-button--secondary {
+  @include vicf-button--primary;
+}
