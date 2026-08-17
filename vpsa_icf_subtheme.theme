@@ -9,6 +9,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
+use Drupal\views\ViewExecutable;
 
 /**
  * Prepares variables for the html.html.twig template.
@@ -58,6 +60,28 @@ function vpsa_icf_subtheme_preprocess_page_title(&$variables) {
 function vpsa_icf_subtheme_theme_suggestions_block_alter(array &$suggestions, array $variables) {
   if (!empty($variables['elements']['#id']) && $variables['elements']['#id'] == 'vpsa_icf_subtheme_search') {
     $suggestions[] = 'block__stanford_basic_search';
+  }
+}
+
+/**
+ * Implements hook_better_exposed_filters_options_alter().
+ *
+ * Stanford Sites locks Views config (read-only active store), so switch the
+ * people_filtered tags widget from hierarchy radios to the combo box at runtime.
+ */
+function vpsa_icf_subtheme_better_exposed_filters_options_alter(array &$options, ViewExecutable $view, DisplayPluginBase $display) {
+  if ($view->id() !== 'people_filtered') {
+    return;
+  }
+
+  if (empty($options['filter']) || !is_array($options['filter'])) {
+    return;
+  }
+
+  foreach ($options['filter'] as &$filter_options) {
+    if (($filter_options['plugin_id'] ?? '') === 'taxonomy_label_hierarchy_checkbox') {
+      $filter_options['plugin_id'] = 'taxonomy_label_hierarchy';
+    }
   }
 }
 
