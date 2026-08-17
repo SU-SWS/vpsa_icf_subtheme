@@ -15,7 +15,8 @@
 
   &.node--layout-full {
 
-    .content:has(> .jumpstart-ui--two-column) {
+    // if the content has a two column layout with a second column, add the poppy light background
+    .content:has(> .jumpstart-ui--two-column > div:nth-child(2)) {
       background-color: $vicf-color-poppy-light;
     }
   }
