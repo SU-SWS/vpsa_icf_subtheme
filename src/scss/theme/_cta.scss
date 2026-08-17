@@ -9,7 +9,7 @@
 //  the ticket said just in text area and local footer.. Other areas won't be overridden unless we change this.
 .su-local-footer ,
 .su-wysiwyg-text { 
-    .su-link {
+    .su-link:not(.su-button) {
         color: $su-color-digital-red;
 
         &:hover, &:focus {

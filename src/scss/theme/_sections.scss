@@ -58,7 +58,7 @@
       }
 
       // set normal text that is not headings to be split into 2 columns for 2 buttons.
-      & > p {
+      .su-wysiwyg-text > p {
         display: flex;
         justify-content: space-around;
         padding: 60px 0;
@@ -70,8 +70,9 @@
       &::after {
         content: "";
         position: absolute;
-        left: calc(50% - (268px / 2) );
-        top: -20px;
+        // left: calc(50% - (268px / 2) );
+        left: 50%;
+        top: 200px;
         transform: translate(-50%, -50%);
         width: 268px;
         height: 268px;
