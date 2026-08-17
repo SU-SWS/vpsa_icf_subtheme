@@ -67,7 +67,7 @@ function vpsa_icf_subtheme_theme_suggestions_block_alter(array &$suggestions, ar
  * Implements hook_better_exposed_filters_options_alter().
  *
  * Stanford Sites locks Views config (read-only active store), so switch the
- * people_filtered tags widget from hierarchy radios to the combo box at runtime.
+ * people_filtered tags widget to the default single select at runtime.
  */
 function vpsa_icf_subtheme_better_exposed_filters_options_alter(array &$options, ViewExecutable $view, DisplayPluginBase $display) {
   if ($view->id() !== 'people_filtered') {
@@ -80,8 +80,59 @@ function vpsa_icf_subtheme_better_exposed_filters_options_alter(array &$options,
 
   foreach ($options['filter'] as &$filter_options) {
     if (($filter_options['plugin_id'] ?? '') === 'taxonomy_label_hierarchy_checkbox') {
-      $filter_options['plugin_id'] = 'taxonomy_label_hierarchy';
+      $filter_options['plugin_id'] = 'default';
     }
+  }
+}
+
+/**
+ * Implements hook_form_views_exposed_form_alter().
+ *
+ * Force the people_filtered tags filter to a single-select with custom labels.
+ * Views config keeps "allow multiple selections" locked on.
+ */
+function vpsa_icf_subtheme_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state) {
+  $view = $form_state->get('view');
+  if (!$view instanceof ViewExecutable || $view->id() !== 'people_filtered') {
+    return;
+  }
+
+  if (empty($form['tags']) || ($form['tags']['#type'] ?? '') !== 'select') {
+    return;
+  }
+
+  $form['tags']['#multiple'] = FALSE;
+  unset($form['tags']['#size']);
+  // Avoid Chosen turning this back into a multi/combo widget.
+  $form['tags']['#chosen'] = FALSE;
+
+  $options = $form['tags']['#options'] ?? [];
+  if (!array_key_exists('All', $options)) {
+    $options = ['All' => ''] + $options;
+  }
+
+  $relabeled = [];
+  foreach ($options as $value => $label) {
+    if ((string) $value === 'All') {
+      $relabeled[$value] = t('All Fellows');
+      continue;
+    }
+
+    $text = trim(html_entity_decode(strip_tags((string) $label)));
+    // Hierarchy selects often prefix child terms with dashes (e.g. "-2023").
+    $text = ltrim($text, "-–— \t");
+    if (preg_match('/^\d{4}$/', $text)) {
+      $relabeled[$value] = t('@year Fellows', ['@year' => $text]);
+      continue;
+    }
+
+    $relabeled[$value] = $label;
+  }
+  $form['tags']['#options'] = $relabeled;
+
+  $form['tags']['#default_value'] = $form['tags']['#default_value'] ?? 'All';
+  if (is_array($form['tags']['#default_value'])) {
+    $form['tags']['#default_value'] = reset($form['tags']['#default_value']) ?: 'All';
   }
 }
 

@@ -6,6 +6,14 @@
       display: flex;
       align-items: center;
 
+      .views-exposed-form {
+        label[for="edit-tags"],
+        .form-item-tags > label,
+        legend {
+          @include hide-visually;
+        }
+      }
+
       .views-infinite-scroll-content-wrapper ul.su-list-unstyled {
         grid-template-columns: repeat(1, minmax(0, 1fr));
 
