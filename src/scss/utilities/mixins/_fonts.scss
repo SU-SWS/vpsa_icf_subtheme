@@ -64,10 +64,7 @@
 
 @mixin vicf-type-5-bold {
   @include vicf-type-5;
-
-  @media (min-width: 768px) {
-    font-weight: 700;
-  }
+  font-weight: 700;
 
   @media (min-width: 1500px) {
     font-weight: 900;
@@ -113,18 +110,12 @@
 
 @mixin vicf-type-3-semibold {
   @include vicf-type-3;
-
-  @media (min-width: 768px) {
-    font-weight: 600;
-  }
+  font-weight: 600;
 }
 
 @mixin vicf-type-3-bold {
   @include vicf-type-3;
-
-  @media (min-width: 768px) {
-    font-weight: 700;
-  }
+  font-weight: 700;
 }
 
 
@@ -165,18 +156,18 @@
 
 @mixin vicf-type-2-semibold {
   @include vicf-type-2;
-
+  font-weight: 600;
+  
   @media (min-width: 768px) {
-    font-weight: 600;
     line-height: 130%;
   }
 }
 
 @mixin vicf-type-2-bold {
   @include vicf-type-2;
+  font-weight: 700;
 
   @media (min-width: 768px) {
-    font-weight: 700;
     line-height: 130%;
   }
 }
@@ -220,18 +211,12 @@
 
 @mixin vicf-type-1-semibold {
   @include vicf-type-1;
-
-  @media (min-width: 768px) {
-    font-weight: 600;
-  }
+  font-weight: 600;
 }
 
 @mixin vicf-type-1-bold {
   @include vicf-type-1;
-
-  @media (min-width: 768px) {
-    font-weight: 700;
-  }
+  font-weight: 700;
 }
 
 
@@ -268,17 +253,11 @@
 
 @mixin vicf-type-0-semibold {
   @include vicf-type-0;
-
-  @media (min-width: 768px) {
-    font-weight: 600;
-  }
+  font-weight: 600;
 }
 
 @mixin vicf-type-0-bold {
   @include vicf-type-0;
-
-  @media (min-width: 768px) {
-    font-weight: 700;
-  }
+  font-weight: 700;
 }
 
