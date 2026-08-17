@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+//
+// Shared Image Banner (stanford_banner) styles.
+//
+
+.stanford-person.su-person-photo {
+  padding: 10px 0px;
+
+  .su-card__contents {
+    text-align: center;
+    
+    @media (max-width: 575px) {
+      padding-top: 10px;
+    }
+
+    .su-person-short-title {
+      max-width: 90%;
+      margin: auto;
+    }
+  }
+
+  img, picture {
+    max-width: 200px;
+
+    @media (min-width: 576px) {
+      max-width: 150px;
+    }
+  }
+}

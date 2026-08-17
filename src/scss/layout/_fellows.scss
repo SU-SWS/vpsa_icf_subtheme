@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.page-fellows {
+  .stanford-page {
+    .stanford-people-grid.people-filtered {
+      display: flex;
+      align-items: center;
+
+      .views-infinite-scroll-content-wrapper ul.su-list-unstyled {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+
+        @media (min-width: 576px) {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        @media (min-width: 992px) {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        @media (min-width: 1200px) {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .su-card.su-card--minimal {
+          justify-items: center;
+        }
+      }
+    }
+  }
+}
