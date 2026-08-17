@@ -10,4 +10,11 @@
       aspect-ratio: 4 / 3;
     }
   }
+
+  .su-hero {
+    .su-button,
+    .su-card__button a {
+      @include vicf-type-0;
+    }
+  }
 }

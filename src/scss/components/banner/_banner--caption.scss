@@ -63,25 +63,15 @@
         .su-banner-body,
         .su-wysiwyg-text {
           color: $su-color-white;
-          font-size: 21px;
-          line-height: 140%;
+          @include vicf-type-1;
           margin-bottom: 0;
           margin-left: 0;
           margin-right: 0;
 
-          @include grid-media-max('sm') {
-            font-size: 1.8rem;
-          }
-
           p {
             color: $su-color-white;
-            font-size: 21px;
-            line-height: 140%;
+            @include vicf-type-1;
             margin-bottom: 0;
-
-            @include grid-media-max('sm') {
-              font-size: 1.8rem;
-            }
           }
 
           &:not(:last-child) {

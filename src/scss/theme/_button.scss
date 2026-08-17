@@ -3,8 +3,18 @@
 // VPSA ICF Subtheme button theme overrides.
 // Use mixins from /src/scss/utilities/mixins/_buttons.scss.
 
-.su-button,
-.su-button--big,
+.su-button {
+  @include vicf-button--primary;
+  @include vicf-type-0;
+}
+
+// TODO: update big and secondary buttons to use the right type styles.
+.su-button--big {
+  @include vicf-button--primary;
+  @include vicf-type-1-bold;
+}
+
 .su-button--secondary {
   @include vicf-button--primary;
+  @include vicf-type-1;
 }

@@ -69,18 +69,15 @@
         h4,
         .su-font-splash {
           color: $su-color-white;
-          font-size: 5.8rem;
-
-          @include grid-media-max('sm') {
-            font-size: 3.2rem;
-          }
+          @include vicf-type-5-bold;
 
           @include responsive-spacing('margin-bottom', 0);
         }
 
-        p {
+        p,
+        .su-banner-body {
           color: $su-color-white;
-          @include type-c;
+          @include vicf-type-2;
         }
       }
 

@@ -43,6 +43,13 @@
         color: $su-color-white;
       }
 
+      .su-card__contents {
+        p,
+        .su-banner-body {
+          @include vicf-type-2;
+        }
+      }
+
       a:not(.su-button):not(.su-button--secondary):not(.su-button--big) {
         color: $su-color-white;
 
