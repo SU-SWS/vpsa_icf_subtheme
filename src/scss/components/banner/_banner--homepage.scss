@@ -74,9 +74,10 @@
           @include responsive-spacing('margin-bottom', 0);
         }
 
-        p {
+        p,
+        .su-banner-body {
           color: $su-color-white;
-          @include type-c;
+          @include vicf-type-2;
         }
       }
 
