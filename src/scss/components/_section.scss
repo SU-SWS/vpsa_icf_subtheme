@@ -17,8 +17,10 @@
             max-width: 1100px; // was 1500px
         }
 
-        figcaption {
+        .su-media__caption {
+            @include vicf-type-0;
             text-align: left;
+            color: $su-color-black;
         }
     }
 }
