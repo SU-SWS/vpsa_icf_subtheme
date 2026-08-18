@@ -6,6 +6,9 @@
 //
 
 // Katria might remove this - checking 2 directions but i think we might remove this file.
+// .vicf-banner--homepage-with-logo 
+// .su-hero .su-hero__card 
+
 .vicf-banner--two-column-with-logo {
   .su-hero {
     display: flex;
@@ -50,7 +53,7 @@
 
         color: $su-color-white;
         margin: 0 auto;
-        max-width: 100ch;
+        max-width: 80ch;
 
         @include responsive-spacing('padding', 2);
 
