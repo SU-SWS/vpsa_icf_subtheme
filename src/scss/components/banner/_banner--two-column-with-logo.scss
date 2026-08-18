@@ -6,8 +6,7 @@
 //
 
 // Katria might remove this - checking 2 directions but i think we might remove this file.
-// .vicf-banner--homepage-with-logo 
-// .su-hero .su-hero__card 
+
 
 .vicf-banner--two-column-with-logo {
   .su-hero {
@@ -94,15 +93,15 @@
     }
   }
 
-  &.overlay-right {
+  &.overlay-right { // don't allow right? or style the logo to the left?
     .su-hero {
       .su-hero__card,
       .su-card {
-        left: 0;
-        right: 0;
-        margin-left: 0;
-        margin-right: 0;
-        text-align: center;
+      //   left: 0;
+      //   right: 0;
+      //   margin-left: 0;
+      //   margin-right: 0;
+      //   text-align: center;
       }
     }
   }

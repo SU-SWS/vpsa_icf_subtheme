@@ -113,7 +113,7 @@
   &::after {
     content: "";
     position: absolute;
-    left: 60%;
+    left: 70%;
     top: 50%;
     transform: translate(-50%, -50%);
     width: 500px;
@@ -126,7 +126,9 @@
     z-index: 2;
 
       //@TODO: add responsive versions here still
-
+    .su-hero .su-hero__card .su-card__contents {
+      max-width: 90%;
+    }
   }
 
 }
