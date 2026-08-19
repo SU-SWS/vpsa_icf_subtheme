@@ -9,6 +9,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
+use Drupal\views\ViewExecutable;
 
 /**
  * Prepares variables for the html.html.twig template.
@@ -59,6 +61,167 @@ function vpsa_icf_subtheme_theme_suggestions_block_alter(array &$suggestions, ar
   if (!empty($variables['elements']['#id']) && $variables['elements']['#id'] == 'vpsa_icf_subtheme_search') {
     $suggestions[] = 'block__stanford_basic_search';
   }
+}
+
+/**
+ * Implements hook_views_pre_view().
+ *
+ * Views config is read-only on Stanford Sites. Force the tags exposed filter to
+ * single-select before handlers/form build so Form API is not given a scalar
+ * while still expecting tags[] (that mismatch fatals → 502).
+ */
+function vpsa_icf_subtheme_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+  if ($view->id() !== 'people_filtered') {
+    return;
+  }
+
+  $filters = $view->display_handler->getOption('filters');
+  if (!is_array($filters)) {
+    return;
+  }
+
+  $changed = FALSE;
+  foreach ($filters as $id => $filter) {
+    if (empty($filter['exposed'])) {
+      continue;
+    }
+    if (($filter['expose']['identifier'] ?? '') !== 'tags') {
+      continue;
+    }
+    if (!empty($filter['expose']['multiple'])) {
+      $filters[$id]['expose']['multiple'] = FALSE;
+      $changed = TRUE;
+    }
+  }
+
+  if ($changed) {
+    $view->display_handler->setOption('filters', $filters);
+  }
+}
+
+/**
+ * Implements hook_views_pre_build().
+ *
+ * Ensure live filter handlers also treat tags as single-value.
+ */
+function vpsa_icf_subtheme_views_pre_build(ViewExecutable $view) {
+  if ($view->id() !== 'people_filtered' || empty($view->filter)) {
+    return;
+  }
+
+  foreach ($view->filter as $filter) {
+    if (empty($filter->options['exposed'])) {
+      continue;
+    }
+    if (($filter->options['expose']['identifier'] ?? '') !== 'tags') {
+      continue;
+    }
+    $filter->options['expose']['multiple'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_better_exposed_filters_options_alter().
+ *
+ * Stanford Sites locks Views config, so switch the people_filtered tags
+ * (year) widget to the Default single select at runtime.
+ */
+function vpsa_icf_subtheme_better_exposed_filters_options_alter(array &$options, ViewExecutable $view, DisplayPluginBase $display) {
+  if ($view->id() !== 'people_filtered') {
+    return;
+  }
+
+  if (empty($options['filter']) || !is_array($options['filter'])) {
+    return;
+  }
+
+  foreach ($options['filter'] as &$filter_options) {
+    if (($filter_options['plugin_id'] ?? '') === 'taxonomy_label_hierarchy_checkbox') {
+      $filter_options['plugin_id'] = 'default';
+    }
+  }
+  unset($filter_options);
+}
+
+/**
+ * Implements hook_form_views_exposed_form_alter().
+ *
+ * Relabel people_filtered tags options for the Fellows listing.
+ */
+function vpsa_icf_subtheme_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state) {
+  $view = $form_state->get('view');
+  if (!$view instanceof ViewExecutable || $view->id() !== 'people_filtered') {
+    return;
+  }
+
+  if (empty($form['tags']) || ($form['tags']['#type'] ?? '') !== 'select') {
+    return;
+  }
+
+  unset($form['tags']['#size']);
+  // Avoid Chosen turning this into a multi/combo widget.
+  $form['tags']['#chosen'] = FALSE;
+  $form['tags']['#multiple'] = FALSE;
+
+  $options = $form['tags']['#options'] ?? [];
+  if (!array_key_exists('All', $options)) {
+    $options = ['All' => ''] + $options;
+  }
+
+  $form['tags']['#options'] = vpsa_icf_subtheme_relabel_fellows_tag_options($options);
+
+  $default = $form['tags']['#default_value'] ?? 'All';
+  if (is_array($default)) {
+    $default = reset($default) ?: 'All';
+  }
+  $form['tags']['#default_value'] = $default;
+}
+
+/**
+ * Relabel Fellows tags filter options.
+ *
+ * @param array $options
+ *   Select options, possibly with optgroups.
+ *
+ * @return array
+ *   Relabeled options.
+ */
+function vpsa_icf_subtheme_relabel_fellows_tag_options(array $options) {
+  $relabeled = [];
+  foreach ($options as $value => $label) {
+    if (is_array($label)) {
+      $relabeled[$value] = vpsa_icf_subtheme_relabel_fellows_tag_options($label);
+      continue;
+    }
+    $relabeled[$value] = vpsa_icf_subtheme_relabel_fellows_tag_option((string) $value, $label);
+  }
+  return $relabeled;
+}
+
+/**
+ * Relabel a single Fellows tags filter option.
+ *
+ * @param string $value
+ *   Option value.
+ * @param mixed $label
+ *   Option label.
+ *
+ * @return mixed
+ *   Relabeled label.
+ */
+function vpsa_icf_subtheme_relabel_fellows_tag_option($value, $label) {
+  if ($value === 'All') {
+    return t('All Fellows');
+  }
+
+  $text = trim(html_entity_decode(strip_tags((string) $label)));
+  // Hierarchy selects often prefix child terms with dashes (e.g. "-2023").
+  $text = ltrim($text, "-–— \t");
+  if (preg_match('/^\d{4}$/', $text)) {
+    return t('@year Fellows', ['@year' => $text]);
+  }
+
+  return $label;
 }
 
 /**
