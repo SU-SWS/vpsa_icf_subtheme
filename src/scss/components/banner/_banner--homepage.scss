@@ -116,7 +116,8 @@
     left: 70%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 35vw;
+    max-width: 500px;
     height: 500px;
     background-image: url("../assets/SICF-logo-transparent.png");
     background-repeat: no-repeat;
@@ -125,13 +126,34 @@
     pointer-events: none;
     z-index: 2;
 
+    @media screen and (max-width: 767px) {
+      left: 50%;
+      top: 35vw;
+      transform: translate(-50%, -50%);
+      width: 55vw;
+    }
     
   }
 
     //@TODO: add responsive versions here still
-    .su-hero .su-hero__card .su-card__contents {
-      max-width: 90%;
+    .su-hero .su-hero__card  {
+      @media screen and (max-width: 767px) {
+        background: none;
+      }
+
+      .su-card__contents {
+        max-width: 90%;
+
+        @media screen and (max-width: 767px) {
+          color: $su-color-black;
+          h2, h3, h4, span {
+            color: $su-color-black;
+
+          }
+        }
+      }
     }
 }
+
 
 // .vicf-banner--homepage-with-logo .su-hero .su-hero__card .su-card__contents
