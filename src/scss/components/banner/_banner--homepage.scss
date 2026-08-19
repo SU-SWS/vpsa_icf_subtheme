@@ -44,7 +44,7 @@
       }
 
       @include grid-media-min('md') {
-        background-color: rgba($su-color-black, 0.7);
+        // background-color: rgba($su-color-black, 0.7);
         left: 45px;
         right: auto;
         max-width: 55%;
