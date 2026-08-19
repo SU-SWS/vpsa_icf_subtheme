@@ -26,6 +26,8 @@
 }
 
 .content > .jumpstart-ui--two-column.centered-container {
-    width: 100%;
-    max-width: 100%;
+    @media screen and (max-width: 1499px) {
+        width: 100%;
+        max-width: 100%;
+    }
 }
