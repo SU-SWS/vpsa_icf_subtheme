@@ -12,6 +12,15 @@
         legend {
           @include hide-visually;
         }
+
+        #preact-tags,
+        .preact-filter.taxonomy-label-hierarchy-checkbox {
+          display: none !important;
+        }
+
+        .vpsa-fellows-tags-filter {
+          margin: 0;
+        }
       }
 
       .views-infinite-scroll-content-wrapper ul.su-list-unstyled {

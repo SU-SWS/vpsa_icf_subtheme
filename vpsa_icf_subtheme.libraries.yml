@@ -14,3 +14,10 @@ allpages:
 #      dist/css/components.css: {}
 #    state:
 #      dist/css/state.css: {}
+
+fellows_tags_filter:
+  js:
+    js/fellows-tags-filter.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
