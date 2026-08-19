@@ -61,8 +61,9 @@
       .su-wysiwyg-text > p {
         display: flex;
         justify-content: space-between;
-        padding: 25vw 0 20px; // will place the icon above the 2 buttons for smaller screens
-       
+        padding: 35vw 0 20px; // will place the icon above the 2 buttons for smaller screens
+       flex-wrap: wrap;
+
         @media screen and (min-width: 600px) {
 
           padding: 30vw 0 20px; // will place the icon above the 2 buttons for smaller screens
@@ -76,8 +77,13 @@
           justify-content: space-around;
           padding: 100px 0;
         }
-    //@TODO: add responsive versions here still - corresponds with top positioning on line 75 below.
         
+        a {
+          @media screen and (max-width: 767px) {
+            margin-bottom: 20px;
+
+          }
+        }
       }
 
       // add logo centered between buttons
