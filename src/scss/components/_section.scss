@@ -24,3 +24,10 @@
         }
     }
 }
+
+.content > .jumpstart-ui--two-column.centered-container {
+    @media screen and (max-width: 1499px) {
+        width: 100%;
+        max-width: 100%;
+    }
+}
