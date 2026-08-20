@@ -4,7 +4,7 @@
 // Shared Image Banner (stanford_banner) styles.
 //
 
-.node--stanford-person {
+.node--stanford-person, .ds-entity--stanford-person {
   .su-card {
 
     .stanford-person.su-person-photo {
@@ -32,4 +32,9 @@
       }
     }
   }
+}
+
+// Fix the width in this case since the short title inside it is just text with no css selectors.
+.node--stanford-person.ds-entity--stanford-person .su-card .su-card__contents {
+  max-width: 90%;
 }
