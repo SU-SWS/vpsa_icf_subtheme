@@ -4,27 +4,32 @@
 // Shared Image Banner (stanford_banner) styles.
 //
 
-.stanford-person.su-person-photo {
-  padding: 10px 0px;
+.node--stanford-person {
+  .su-card {
 
-  .su-card__contents {
-    text-align: center;
+    .stanford-person.su-person-photo {
+      padding: 10px 0px;
+
+      img, picture {
+        max-width: 200px;
+
+        @media (min-width: 576px) {
+          max-width: 150px;
+        }
+      }
+    }
     
-    @media (max-width: 575px) {
-      padding-top: 10px;
-    }
+    .su-card__contents {
+      text-align: center;
+      
+      @media (max-width: 575px) {
+        padding-top: 10px;
+      }
 
-    .su-person-short-title {
-      max-width: 90%;
-      margin: auto;
-    }
-  }
-
-  img, picture {
-    max-width: 200px;
-
-    @media (min-width: 576px) {
-      max-width: 150px;
+      .su-person-short-title {
+        max-width: 90%;
+        margin: auto;
+      }
     }
   }
 }
