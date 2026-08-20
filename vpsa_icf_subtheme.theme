@@ -9,7 +9,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
 use Drupal\paragraphs\ParagraphInterface;
-use Drupal\views\ViewExecutable;
 
 /**
  * Prepares variables for the html.html.twig template.
@@ -63,75 +62,18 @@ function vpsa_icf_subtheme_theme_suggestions_block_alter(array &$suggestions, ar
 }
 
 /**
- * Implements hook_form_views_exposed_form_alter().
+ * Implements hook_preprocess_HOOK() for views_view.
  *
- * Relabel people_filtered tags options and attach a small script that presents
- * a single select. Do not change Views/BEF multiple or widget plugins here —
- * those runtime swaps fatal on Stanford Sites (502).
+ * Attach Fellows tags dropdown script. Labels/select UI are client-side only so
+ * we never alter the locked people_filtered exposed form (that caused 502s).
  */
-function vpsa_icf_subtheme_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state) {
-  $view = $form_state->get('view');
-  if (!$view instanceof ViewExecutable || $view->id() !== 'people_filtered') {
+function vpsa_icf_subtheme_preprocess_views_view(array &$variables) {
+  if (($variables['id'] ?? '') !== 'people_filtered') {
     return;
   }
-
-  if (empty($form['tags'])) {
-    return;
+  if (!empty($variables['view'])) {
+    $variables['view']->element['#attached']['library'][] = 'vpsa_icf_subtheme/fellows_tags_filter';
   }
-
-  $form['#attached']['library'][] = 'vpsa_icf_subtheme/fellows_tags_filter';
-
-  if (($form['tags']['#type'] ?? '') === 'select' && !empty($form['tags']['#options'])) {
-    $form['tags']['#chosen'] = FALSE;
-    $form['tags']['#options'] = vpsa_icf_subtheme_relabel_fellows_tag_options($form['tags']['#options']);
-  }
-}
-
-/**
- * Relabel Fellows tags filter options.
- *
- * @param array $options
- *   Select options, possibly with optgroups.
- *
- * @return array
- *   Relabeled options.
- */
-function vpsa_icf_subtheme_relabel_fellows_tag_options(array $options) {
-  $relabeled = [];
-  foreach ($options as $value => $label) {
-    if (is_array($label)) {
-      $relabeled[$value] = vpsa_icf_subtheme_relabel_fellows_tag_options($label);
-      continue;
-    }
-    $relabeled[$value] = vpsa_icf_subtheme_relabel_fellows_tag_option((string) $value, $label);
-  }
-  return $relabeled;
-}
-
-/**
- * Relabel a single Fellows tags filter option.
- *
- * @param string $value
- *   Option value.
- * @param mixed $label
- *   Option label.
- *
- * @return mixed
- *   Relabeled label.
- */
-function vpsa_icf_subtheme_relabel_fellows_tag_option($value, $label) {
-  if ($value === 'All') {
-    return t('All Fellows');
-  }
-
-  $text = trim(html_entity_decode(strip_tags((string) $label)));
-  // Hierarchy selects often prefix child terms with dashes (e.g. "-2023").
-  $text = ltrim($text, "-–— \t");
-  if (preg_match('/^\d{4}$/', $text)) {
-    return t('@year Fellows', ['@year' => $text]);
-  }
-
-  return $label;
 }
 
 /**
