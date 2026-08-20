@@ -62,6 +62,48 @@
     }
   }
 
+  function syncOpenState(select, wrapper) {
+    const setOpen = (open) => {
+      wrapper.classList.toggle('is-open', Boolean(open));
+    };
+
+    const matchesOpen = () => {
+      try {
+        return select.matches(':open');
+      }
+      catch (e) {
+        return false;
+      }
+    };
+
+    // Chromium / Safari: fires when the picker opens or closes.
+    select.addEventListener('toggle', () => {
+      setOpen(matchesOpen());
+    });
+
+    // Fallback when :open / toggle is unavailable.
+    select.addEventListener('mousedown', () => {
+      window.requestAnimationFrame(() => {
+        setOpen(matchesOpen() || true);
+      });
+    });
+
+    select.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
+      if (event.key === ' ' || event.key === 'Enter' || event.key === 'ArrowDown') {
+        window.requestAnimationFrame(() => {
+          setOpen(matchesOpen() || true);
+        });
+      }
+    });
+
+    select.addEventListener('blur', () => setOpen(false));
+    select.addEventListener('change', () => setOpen(false));
+  }
+
   Drupal.behaviors.vpsaFellowsTagsFilter = {
     attach(context) {
       once('vpsa-fellows-tags-filter', '.people-filtered form.bef-exposed-form', context).forEach((form) => {
@@ -100,6 +142,7 @@
         select.addEventListener('change', () => {
           applyValue(realSelect, select.value);
         });
+        syncOpenState(select, wrapper);
 
         wrapper.appendChild(label);
         wrapper.appendChild(select);

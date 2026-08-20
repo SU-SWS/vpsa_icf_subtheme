@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+// VPSA ICF Subtheme select mixins. Prefix all mixin names with 'vicf-'.
+//
+// Apply to a wrapper around the <select>. The chevron lives on the wrapper
+// (::after) so it can rotate independently of the select text.
+//
+// Example:
+// .my-filter {
+//   @include vicf-select--button;
+// }
+//
+// Optional: add .is-open on the wrapper while the menu is open (for browsers
+// without :open / :has support). Prefer CSS :has(select:open) when available.
+
+@mixin vicf-select--button {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+
+  select,
+  .form-select {
+    @include vicf-button--primary;
+    @include vicf-type-0;
+
+    appearance: none;
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+    min-height: 2.5rem;
+    padding: 0.6em 2.5em 0.6em 1.25em;
+    border: 0;
+    background-color: $su-color-digital-red;
+    background-image: none;
+    color: $su-color-white;
+    cursor: pointer;
+    line-height: 1.3;
+
+    &:hover,
+    &:focus {
+      background-color: $su-color-digital-red-dark;
+      color: $su-color-white;
+      outline: none;
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba($su-color-digital-red, 0.35);
+    }
+
+    option {
+      background-color: $su-color-white;
+      color: $su-color-black;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 1em;
+    width: 0.75em;
+    height: 0.5em;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23ffffff' d='M1.4 0.6 6 5.2 10.6 0.6 12 2 6 8 0 2z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 0.2s ease;
+  }
+
+  &:has(select:open)::after,
+  &.is-open::after {
+    transform: translateY(-50%) rotate(180deg);
+  }
+}
