@@ -1,27 +1,41 @@
 @charset "UTF-8";
 
+// Fellows listing: filter UI + people grid. Not limited to .page-fellows so
+// debug aliases (e.g. /fellows-debug) get the same treatment.
+.stanford-people-grid.people-filtered {
+  .views-exposed-form {
+    label[for="edit-tags"],
+    .form-item-tags > label,
+    #preact-tags > .form-item > label,
+    .hierarchy-preact-checkbox legend {
+      @include hide-visually;
+    }
+
+    // Preact radios stay in the DOM for the real tags[] field, but are hidden.
+    #preact-tags {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .vpsa-fellows-tags-filter {
+      margin: 0 0 1rem;
+    }
+  }
+}
+
 .page-fellows {
   .stanford-page {
     .stanford-people-grid.people-filtered {
       display: flex;
       align-items: center;
-
-      .views-exposed-form {
-        label[for="edit-tags"],
-        .form-item-tags > label,
-        legend {
-          @include hide-visually;
-        }
-
-        #preact-tags,
-        .preact-filter.taxonomy-label-hierarchy-checkbox {
-          display: none !important;
-        }
-
-        .vpsa-fellows-tags-filter {
-          margin: 0;
-        }
-      }
+      flex-wrap: wrap;
 
       .views-infinite-scroll-content-wrapper ul.su-list-unstyled {
         grid-template-columns: repeat(1, minmax(0, 1fr));

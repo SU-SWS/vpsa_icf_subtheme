@@ -2,87 +2,79 @@
  * @file
  * Present people_filtered tags as a single select with Fellows labels.
  *
- * Keeps the original Views field (often tags[]) intact so Form API / Views
- * do not fatal the way runtime BEF/multiple overrides did.
+ * Inserts a visible select *outside* #preact-tags (which we hide), and drives
+ * the real tags[] field so Views/BEF keep working without PHP overrides.
  */
 (function (Drupal, once) {
-  function relabelOption(value, label) {
-    const text = String(label || '')
+  const ALL_VALUE = '__all__';
+
+  function yearLabel(text) {
+    const cleaned = String(text || '')
       .replace(/<[^>]*>/g, '')
       .replace(/&amp;/g, '&')
       .trim()
       .replace(/^[-–—\s]+/, '');
-
-    if (value === 'All' || value === '') {
-      return Drupal.t('All Fellows');
-    }
-    if (/^\d{4}$/.test(text)) {
-      return Drupal.t('@year Fellows', { '@year': text });
-    }
-    return text || label;
+    return cleaned;
   }
 
-  function collectOptions(select) {
-    const options = [];
-    Array.from(select.options).forEach((option) => {
-      // Skip empty placeholder duplicates; keep "All".
-      options.push({
-        value: option.value,
-        label: relabelOption(option.value, option.textContent),
-      });
+  function collectOptions(realSelect) {
+    const options = [{ value: ALL_VALUE, label: Drupal.t('All Fellows') }];
+    Array.from(realSelect.options).forEach((option) => {
+      const text = yearLabel(option.textContent);
+      if (/^\d{4}$/.test(text)) {
+        options.push({
+          value: option.value,
+          label: Drupal.t('@year Fellows', { '@year': text }),
+        });
+      }
     });
     return options;
   }
 
-  function currentValue(select) {
-    if (select.multiple) {
-      const selected = Array.from(select.selectedOptions).map((o) => o.value);
-      if (!selected.length || selected.includes('All')) {
-        return 'All';
-      }
-      return selected[0];
+  function currentValue(realSelect) {
+    const selected = Array.from(realSelect.selectedOptions)
+      .map((option) => option.value)
+      .filter(Boolean);
+    if (!selected.length) {
+      return ALL_VALUE;
     }
-    return select.value || 'All';
+    // Prefer a year tid if one is selected.
+    const yearOption = Array.from(realSelect.options).find((option) => (
+      selected.includes(option.value) && /^\d{4}$/.test(yearLabel(option.textContent))
+    ));
+    return yearOption ? yearOption.value : ALL_VALUE;
   }
 
-  function applyValue(select, value) {
-    if (select.multiple) {
-      Array.from(select.options).forEach((option) => {
-        option.selected = value === 'All' ? option.value === 'All' || option.value === '' : option.value === value;
-      });
-      // Ensure "All" clears other selections.
-      if (value === 'All') {
-        Array.from(select.options).forEach((option) => {
-          option.selected = option.value === 'All' || option.value === '';
-        });
-      }
+  function applyValue(realSelect, value) {
+    Array.from(realSelect.options).forEach((option) => {
+      option.selected = value !== ALL_VALUE && option.value === value;
+    });
+
+    // Notify Chosen / BEF / Preact listeners.
+    if (typeof window.jQuery === 'function') {
+      const $select = window.jQuery(realSelect);
+      $select.trigger('chosen:updated');
+      $select.trigger('change');
     }
     else {
-      select.value = value;
+      realSelect.dispatchEvent(new Event('input', { bubbles: true }));
+      realSelect.dispatchEvent(new Event('change', { bubbles: true }));
     }
-
-    select.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   Drupal.behaviors.vpsaFellowsTagsFilter = {
     attach(context) {
       once('vpsa-fellows-tags-filter', '.people-filtered form.bef-exposed-form', context).forEach((form) => {
-        const realSelect = form.querySelector('#edit-tags, select[name="tags"], select[name="tags[]"]');
-        if (!realSelect || realSelect.dataset.vpsaFellowsSelect === '1') {
+        const realSelect = form.querySelector('#edit-tags, select[name="tags[]"], select[name="tags"]');
+        if (!realSelect || form.querySelector('[data-vpsa-fellows-tags]')) {
           return;
         }
 
-        const preact = form.querySelector('#preact-tags, .preact-filter, .taxonomy-label-hierarchy-checkbox');
-        if (preact) {
-          preact.setAttribute('hidden', 'hidden');
-          preact.style.display = 'none';
+        const preact = form.querySelector('#preact-tags');
+        const options = collectOptions(realSelect);
+        if (options.length < 2) {
+          return;
         }
-
-        // Hide the native multi/select; drive it from our single select.
-        realSelect.classList.add('visually-hidden');
-        realSelect.setAttribute('aria-hidden', 'true');
-        realSelect.tabIndex = -1;
-        realSelect.dataset.vpsaFellowsSelect = '1';
 
         const wrapper = document.createElement('div');
         wrapper.className = 'form-item vpsa-fellows-tags-filter';
@@ -97,7 +89,7 @@
         select.className = 'form-select';
         select.setAttribute('data-vpsa-fellows-tags', '1');
 
-        collectOptions(realSelect).forEach((item) => {
+        options.forEach((item) => {
           const option = document.createElement('option');
           option.value = item.value;
           option.textContent = item.label;
@@ -111,7 +103,20 @@
 
         wrapper.appendChild(label);
         wrapper.appendChild(select);
-        realSelect.parentNode.insertBefore(wrapper, realSelect);
+
+        // Place visible select before the Preact block, then hide Preact UI.
+        if (preact && preact.parentNode) {
+          preact.parentNode.insertBefore(wrapper, preact);
+          preact.setAttribute('hidden', 'hidden');
+          preact.setAttribute('aria-hidden', 'true');
+          preact.style.display = 'none';
+        }
+        else {
+          form.insertBefore(wrapper, form.firstChild);
+          realSelect.classList.add('visually-hidden');
+        }
+
+        realSelect.dataset.vpsaFellowsSelect = '1';
       });
     },
   };
