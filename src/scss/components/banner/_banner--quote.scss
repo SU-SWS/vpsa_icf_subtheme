@@ -4,10 +4,13 @@
 // Quote Banner variant for stanford_banner.
 // Text sits in a left-aligned card with a transparent tinted background.
 //
+// Class may be on a paragraph wrapper OR on .su-hero itself (edit preview).
+//
 
 .vicf-banner--quote {
 
   &.overlay-right,
+  &.su-hero.overlay-right,
   .su-hero.overlay-right {
     .su-hero__card,
     .su-card.su-hero__card {
@@ -18,16 +21,15 @@
     }
   }
 
-  // Text stack order applies wherever the card contents render (page + preview).
+  // Text stack order (page + edit preview).
   .su-card__contents {
-    // Required for `order` — without flex, markup falls back to DOM order
-    // (superhead → headline → body).
     display: flex;
     flex-direction: column;
 
     // Visual order: body → headline → superhead → button
     > .su-banner-body,
     > .su-wysiwyg-text,
+    > .field--name-su-banner-body,
     > p {
       order: 1;
       @include vicf-type-2;
@@ -54,41 +56,40 @@
     }
   }
 
-  .su-hero {
-    .su-hero__card,
-    .su-card.su-hero__card {
-      background-color: rgba($su-color-black, 0.55);
-      border: 0;
-      box-shadow: none;
+  // Card chrome — works when variant class is on wrapper or on .su-hero.
+  .su-hero__card,
+  .su-card.su-hero__card {
+    background-color: rgba($su-color-black, 0.55);
+    border: 0;
+    box-shadow: none;
+    color: $su-color-white;
+
+    @include grid-media-max('sm') {
+      background-color: rgba($su-color-black, 0.7);
+    }
+
+    @include grid-media-min('xl') {
+      left: 133px;
+      max-width: 464px;
+    }
+
+    .su-card__contents,
+    h2,
+    h3,
+    h4,
+    p,
+    span {
       color: $su-color-white;
+    }
 
-      @include grid-media-max('sm') {
-        background-color: rgba($su-color-black, 0.7);
-      }
+    .su-button--secondary {
+      color: $su-color-white;
+      border-color: $su-color-white;
 
-      @include grid-media-min('xl') {
-        left: 133px;
-        max-width: 464px;
-      }
-
-      .su-card__contents,
-      h2,
-      h3,
-      h4,
-      p,
-      span {
-        color: $su-color-white;
-      }
-
-      .su-button--secondary {
+      &:hover,
+      &:focus {
         color: $su-color-white;
         border-color: $su-color-white;
-
-        &:hover,
-        &:focus {
-          color: $su-color-white;
-          border-color: $su-color-white;
-        }
       }
     }
   }

@@ -2,12 +2,13 @@
 
 //
 // Homepage Banner variant for stanford_banner.
-// Larger left-aligned text with no card background.
+// Class may be on a paragraph wrapper OR on .su-hero itself (edit preview).
 //
 
 .vicf-banner--homepage,
 .vicf-banner--homepage-with-logo {
   &.overlay-right,
+  &.su-hero.overlay-right,
   .su-hero.overlay-right {
     .su-hero__card,
     .su-card.su-hero__card {
@@ -28,7 +29,6 @@
     }
   }
 
-  // Typography/visibility wherever card contents render (page + preview).
   .su-card__contents {
     @media screen and (min-width: 768px) {
       color: $su-color-white;
@@ -58,7 +58,8 @@
 
     p,
     .su-banner-body,
-    .su-wysiwyg-text {
+    .su-wysiwyg-text,
+    .field--name-su-banner-body {
       color: $su-color-white;
       @include vicf-type-2;
     }
@@ -75,34 +76,30 @@
     }
   }
 
-  .su-hero {
-    .su-hero__card,
-    .su-card.su-hero__card {
-      background: transparent;
-      border: 0;
-      box-shadow: none;
+  .su-hero__card,
+  .su-card.su-hero__card {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
 
-      @media screen and (min-width: 768px) {
-        color: $su-color-white;
-      }
+    @media screen and (min-width: 768px) {
+      color: $su-color-white;
+    }
 
-      @include grid-media-min('md') {
-        left: 45px;
-        right: auto;
-        max-width: 55%;
-      }
+    @include grid-media-min('md') {
+      left: 45px;
+      right: auto;
+      max-width: 55%;
+    }
 
-      @include grid-media-min('xl') {
-        left: 133px;
-        max-width: 464px;
-      }
+    @include grid-media-min('xl') {
+      left: 133px;
+      max-width: 464px;
     }
   }
 }
 
 .vicf-banner--homepage-with-logo {
-
-  // Add a logo overlay to the homepage banner when this is selected.
   position: relative;
 
   &::after {
@@ -144,8 +141,8 @@
     }
   }
 
-  //@TODO: add responsive versions here still
-  .su-hero .su-hero__card {
+  .su-hero__card,
+  .su-card.su-hero__card {
     @media screen and (max-width: 767px) {
       background: none;
     }

@@ -14,12 +14,6 @@ allpages:
 #      dist/css/components.css: {}
 #    state:
 #      dist/css/state.css: {}
-  js:
-    # Keep banner edit/preview canvases in sync with Banner Style / Overlay.
-    js/banner-variant-preview.js: {}
-  dependencies:
-    - core/drupal
-    - core/once
 
 fellows_tags_filter:
   js:

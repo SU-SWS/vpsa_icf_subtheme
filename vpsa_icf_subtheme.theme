@@ -160,8 +160,9 @@ function vpsa_icf_subtheme_preprocess_ds_entity_view(array &$variables) {
 /**
  * Implements hook_ENTITY_TYPE_view_alter() for paragraph.
  *
- * Fallback so variant classes still attach when a render path skips the usual
- * paragraph/DS preprocess wrappers.
+ * Attaches variant classes to the paragraph wrapper and pushes them onto a
+ * render stack so nested Jumpstart UI hero/card patterns (edit preview) can
+ * pick them up in preprocess — no client-side JS required.
  */
 function vpsa_icf_subtheme_paragraph_view_alter(array &$build, ParagraphInterface $paragraph, $display) {
   if ($paragraph->bundle() === 'stanford_banner') {
@@ -169,6 +170,16 @@ function vpsa_icf_subtheme_paragraph_view_alter(array &$build, ParagraphInterfac
       $build['#attributes'] = [];
     }
     vpsa_icf_subtheme_attach_banner_variant_classes($build['#attributes'], $paragraph);
+
+    $classes = array_values(array_filter([
+      vpsa_icf_subtheme_get_banner_behavior_setting($paragraph, 'banner_variant', 'vicf-banner--default'),
+      vpsa_icf_subtheme_get_banner_behavior_setting($paragraph, 'banner_overlay'),
+    ]));
+    if ($classes) {
+      $build['#vicf_banner_classes'] = $classes;
+      $build['#pre_render'][] = 'vpsa_icf_subtheme_banner_pre_render_inject_classes';
+      $build['#post_render'][] = 'vpsa_icf_subtheme_banner_post_render_pop_classes';
+    }
   }
 
   if ($paragraph->bundle() === 'stanford_wysiwyg') {
@@ -176,6 +187,128 @@ function vpsa_icf_subtheme_paragraph_view_alter(array &$build, ParagraphInterfac
       $build['#attributes'] = [];
     }
     vpsa_icf_subtheme_attach_text_area_variant_classes($build['#attributes'], $paragraph);
+  }
+}
+
+/**
+ * Pre-render: push banner classes for nested hero preprocess + inject into tree.
+ */
+function vpsa_icf_subtheme_banner_pre_render_inject_classes(array $element) {
+  $classes = $element['#vicf_banner_classes'] ?? [];
+  if ($classes) {
+    $stack = &drupal_static('vpsa_icf_banner_class_stack', []);
+    $stack[] = $classes;
+    vpsa_icf_subtheme_inject_banner_classes_recursive($element, $classes);
+  }
+  return $element;
+}
+
+/**
+ * Post-render: pop banner classes after the paragraph (and nested hero) finish.
+ */
+function vpsa_icf_subtheme_banner_post_render_pop_classes($markup, array $element) {
+  $stack = &drupal_static('vpsa_icf_banner_class_stack', []);
+  array_pop($stack);
+  return $markup;
+}
+
+/**
+ * Recursively add banner classes to hero-like render children.
+ */
+function vpsa_icf_subtheme_inject_banner_classes_recursive(array &$element, array $classes) {
+  $theme = (string) ($element['#theme'] ?? '');
+  $type = (string) ($element['#type'] ?? '');
+  $id = (string) ($element['#id'] ?? ($element['#pattern_id'] ?? ($element['#component'] ?? '')));
+  $component = (string) ($element['#component_id'] ?? '');
+
+  $is_hero = (
+    strpos($theme, 'hero') !== FALSE
+    || strpos($id, 'hero') !== FALSE
+    || strpos($component, 'hero') !== FALSE
+    || ($type === 'pattern' && strpos($id, 'hero') !== FALSE)
+    || ($type === 'component' && strpos((string) ($element['#component'] ?? ''), 'hero') !== FALSE)
+  );
+
+  if ($is_hero) {
+    vpsa_icf_subtheme_add_classes_to_attribute_bucket($element, '#attributes', $classes);
+    vpsa_icf_subtheme_add_classes_to_attribute_bucket($element, '#wrapper_attributes', $classes);
+    // SDC / UI Patterns 2 props.attributes
+    if (isset($element['#props']) && is_array($element['#props'])) {
+      if (!isset($element['#props']['attributes'])) {
+        $element['#props']['attributes'] = [];
+      }
+      if ($element['#props']['attributes'] instanceof Attribute) {
+        $element['#props']['attributes']->addClass($classes);
+      }
+      elseif (is_array($element['#props']['attributes'])) {
+        $existing = $element['#props']['attributes']['class'] ?? [];
+        if (!is_array($existing)) {
+          $existing = $existing ? [$existing] : [];
+        }
+        $element['#props']['attributes']['class'] = array_values(array_unique(array_merge($existing, $classes)));
+      }
+    }
+  }
+
+  foreach (Element::children($element) as $key) {
+    if (is_array($element[$key])) {
+      vpsa_icf_subtheme_inject_banner_classes_recursive($element[$key], $classes);
+    }
+  }
+}
+
+/**
+ * Add CSS classes to a render-array attribute property.
+ */
+function vpsa_icf_subtheme_add_classes_to_attribute_bucket(array &$element, $key, array $classes) {
+  if (!isset($element[$key])) {
+    $element[$key] = [];
+  }
+  if ($element[$key] instanceof Attribute) {
+    $element[$key]->addClass($classes);
+    return;
+  }
+  if (!is_array($element[$key])) {
+    return;
+  }
+  $existing = $element[$key]['class'] ?? [];
+  if (!is_array($existing)) {
+    $existing = $existing ? [$existing] : [];
+  }
+  $element[$key]['class'] = array_values(array_unique(array_merge($existing, $classes)));
+}
+
+/**
+ * Implements hook_preprocess().
+ *
+ * When a hero pattern/component renders inside a stanford_banner paragraph,
+ * stamp the active variant/overlay classes onto its root attributes.
+ */
+function vpsa_icf_subtheme_preprocess(array &$variables, $hook) {
+  if (strpos($hook, 'hero') === FALSE) {
+    return;
+  }
+
+  $stack = &drupal_static('vpsa_icf_banner_class_stack', []);
+  $classes = $stack ? end($stack) : [];
+  if (!$classes) {
+    return;
+  }
+
+  foreach (['attributes', 'wrapper_attributes'] as $key) {
+    if (!isset($variables[$key])) {
+      continue;
+    }
+    if ($variables[$key] instanceof Attribute) {
+      $variables[$key]->addClass($classes);
+    }
+    elseif (is_array($variables[$key])) {
+      $existing = $variables[$key]['class'] ?? [];
+      if (!is_array($existing)) {
+        $existing = $existing ? [$existing] : [];
+      }
+      $variables[$key]['class'] = array_values(array_unique(array_merge($existing, $classes)));
+    }
   }
 }
 

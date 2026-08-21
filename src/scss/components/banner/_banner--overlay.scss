@@ -3,13 +3,15 @@
 //
 // Banner image overlay tints.
 // Applied alongside Banner Style variants to improve white text contrast.
+// Class may be on a paragraph wrapper OR on .su-hero itself (edit preview).
 //
 
 @mixin vicf-banner-overlay($opacity) {
   position: relative;
 
-  .su-hero,
-  &.su-hero {
+  // When class is on .su-hero, tint this element; otherwise tint nested .su-hero.
+  &.su-hero,
+  .su-hero {
     position: relative;
 
     &::after {
