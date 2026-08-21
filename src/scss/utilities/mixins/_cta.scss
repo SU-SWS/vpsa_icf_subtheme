@@ -9,11 +9,12 @@
 
 @mixin vicf-link {
   color: $su-color-digital-red;
-  text-decoration: underline;
+  text-decoration: none;
 
   &:hover,
   &:focus {
     color: $su-color-digital-red-dark;
+    text-decoration: underline;
   }
 
   // Keep Decanter / extlink icons in sync with the text color.
