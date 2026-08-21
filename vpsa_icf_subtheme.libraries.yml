@@ -14,11 +14,17 @@ allpages:
 #      dist/css/components.css: {}
 #    state:
 #      dist/css/state.css: {}
+  js:
+    # Keep banner edit/preview canvases in sync with Banner Style / Overlay.
+    js/banner-variant-preview.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
 
 fellows_tags_filter:
   js:
-    # Run in <head> so the custom select mounts before first paint when possible.
-    js/fellows-tags-filter.js: { header: true, weight: -20 }
+    # Footer (default) so Drupal/once are always available before this runs.
+    js/fellows-tags-filter.js: {}
   dependencies:
     - core/drupal
     - core/once

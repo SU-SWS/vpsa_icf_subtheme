@@ -2,32 +2,37 @@
  * @file
  * Present people_filtered tags as a single select with Fellows labels.
  *
- * Inserts a visible select *outside* #preact-tags (which we hide), and drives
- * the real tags[] field so Views/BEF keep working without PHP overrides.
+ * Inserts a visible select *outside* #preact-tags (which we hide via CSS once
+ * this mounts), and drives the real tags[] field so Views/BEF keep working.
  */
 (function (Drupal, once) {
   const ALL_VALUE = '__all__';
 
   function yearLabel(text) {
-    const cleaned = String(text || '')
+    return String(text || '')
       .replace(/<[^>]*>/g, '')
       .replace(/&amp;/g, '&')
       .trim()
+      // Hierarchy options look like "-2023".
       .replace(/^[-–—\s]+/, '');
-    return cleaned;
   }
 
   function collectOptions(realSelect) {
     const options = [{ value: ALL_VALUE, label: Drupal.t('All Fellows') }];
+    const seen = new Set();
+
     Array.from(realSelect.options).forEach((option) => {
       const text = yearLabel(option.textContent);
-      if (/^\d{4}$/.test(text)) {
-        options.push({
-          value: option.value,
-          label: Drupal.t('@year Fellows', { '@year': text }),
-        });
+      if (!/^\d{4}$/.test(text) || seen.has(option.value)) {
+        return;
       }
+      seen.add(option.value);
+      options.push({
+        value: option.value,
+        label: Drupal.t('@year Fellows', { '@year': text }),
+      });
     });
+
     return options;
   }
 
@@ -38,7 +43,6 @@
     if (!selected.length) {
       return ALL_VALUE;
     }
-    // Prefer a year tid if one is selected.
     const yearOption = Array.from(realSelect.options).find((option) => (
       selected.includes(option.value) && /^\d{4}$/.test(yearLabel(option.textContent))
     ));
@@ -50,7 +54,6 @@
       option.selected = value !== ALL_VALUE && option.value === value;
     });
 
-    // Notify Chosen / BEF / Preact listeners.
     if (typeof window.jQuery === 'function') {
       const $select = window.jQuery(realSelect);
       $select.trigger('chosen:updated');
@@ -76,12 +79,10 @@
       }
     };
 
-    // Chromium / Safari: fires when the picker opens or closes.
     select.addEventListener('toggle', () => {
       setOpen(matchesOpen());
     });
 
-    // Fallback when :open / toggle is unavailable.
     select.addEventListener('mousedown', () => {
       window.requestAnimationFrame(() => {
         setOpen(matchesOpen() || true);
@@ -104,12 +105,26 @@
     select.addEventListener('change', () => setOpen(false));
   }
 
+  function findRealSelect(form) {
+    return form.querySelector(
+      'select[data-drupal-selector="edit-tags"], #edit-tags, select[name="tags[]"], select[name="tags"]',
+    );
+  }
+
+  function isFellowsFilterForm(form) {
+    return Boolean(
+      form.closest('.people-filtered')
+      || form.querySelector('#preact-tags')
+      || findRealSelect(form),
+    );
+  }
+
   function mountFilter(form) {
     if (form.querySelector('[data-vpsa-fellows-tags]')) {
       return true;
     }
 
-    const realSelect = form.querySelector('#edit-tags, select[name="tags[]"], select[name="tags"]');
+    const realSelect = findRealSelect(form);
     if (!realSelect) {
       return false;
     }
@@ -149,7 +164,6 @@
     wrapper.appendChild(label);
     wrapper.appendChild(select);
 
-    // Place visible select before the Preact block (Preact stays hidden via CSS).
     if (preact && preact.parentNode) {
       preact.parentNode.insertBefore(wrapper, preact);
     }
@@ -164,20 +178,24 @@
 
   Drupal.behaviors.vpsaFellowsTagsFilter = {
     attach(context) {
-      // .people-filtered is on the view wrapper; form is a descendant.
-      once('vpsa-fellows-tags-filter', '.people-filtered form.bef-exposed-form', context).forEach((form) => {
+      // Match the form itself so AJAX/BigPipe contexts still work. Do not require
+      // `.people-filtered` as an ancestor inside `context` (that breaks once()).
+      once('vpsa-fellows-tags-filter', 'form.bef-exposed-form', context).forEach((form) => {
+        if (!isFellowsFilterForm(form)) {
+          return;
+        }
+
         if (mountFilter(form)) {
           return;
         }
 
-        // tags[] options may not be ready on first attach — retry briefly.
         const observer = new MutationObserver(() => {
           if (mountFilter(form)) {
             observer.disconnect();
           }
         });
         observer.observe(form, { childList: true, subtree: true });
-        window.setTimeout(() => observer.disconnect(), 10000);
+        window.setTimeout(() => observer.disconnect(), 15000);
       });
     },
   };

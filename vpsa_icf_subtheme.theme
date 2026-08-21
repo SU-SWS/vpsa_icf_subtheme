@@ -77,6 +77,19 @@ function vpsa_icf_subtheme_preprocess_views_view(array &$variables) {
 }
 
 /**
+ * Implements hook_preprocess_HOOK() for views_exposed_form.
+ *
+ * Backup attach path when the view preprocess wrapper is skipped (e.g. some
+ * paragraph-embedded Views renders).
+ */
+function vpsa_icf_subtheme_preprocess_views_exposed_form(array &$variables) {
+  $form_id = $variables['form']['#form_id'] ?? ($variables['form']['#id'] ?? '');
+  if (is_string($form_id) && strpos($form_id, 'people_filtered') !== FALSE) {
+    $variables['form']['#attached']['library'][] = 'vpsa_icf_subtheme/fellows_tags_filter';
+  }
+}
+
+/**
  * Implements hook_form_alter().
  *
  * Move react banner variant behaviors above other behavior plugins in the UI.
@@ -167,6 +180,25 @@ function vpsa_icf_subtheme_paragraph_view_alter(array &$build, ParagraphInterfac
 }
 
 /**
+ * Read a banner behavior setting, trying known react_paragraphs plugin IDs.
+ */
+function vpsa_icf_subtheme_get_banner_behavior_setting(ParagraphInterface $paragraph, $key, $default = NULL) {
+  $plugin_ids = [
+    'react_paragraphs:banner_variant_info',
+    'react_paragraphs:vpsa_icf_subtheme_banner_variant_info',
+  ];
+
+  foreach ($plugin_ids as $plugin_id) {
+    $value = $paragraph->getBehaviorSetting($plugin_id, $key);
+    if ($value !== NULL && $value !== '') {
+      return $value;
+    }
+  }
+
+  return $default;
+}
+
+/**
  * Attach banner variant behavior classes to a render attribute set.
  *
  * @param array|\Drupal\Core\Template\Attribute $attributes
@@ -176,8 +208,8 @@ function vpsa_icf_subtheme_paragraph_view_alter(array &$build, ParagraphInterfac
  */
 function vpsa_icf_subtheme_attach_banner_variant_classes(&$attributes, ParagraphInterface $paragraph) {
   $classes = array_filter([
-    $paragraph->getBehaviorSetting('react_paragraphs:banner_variant_info', 'banner_variant', 'vicf-banner--default'),
-    $paragraph->getBehaviorSetting('react_paragraphs:banner_variant_info', 'banner_overlay'),
+    vpsa_icf_subtheme_get_banner_behavior_setting($paragraph, 'banner_variant', 'vicf-banner--default'),
+    vpsa_icf_subtheme_get_banner_behavior_setting($paragraph, 'banner_overlay'),
   ]);
 
   if (empty($classes)) {

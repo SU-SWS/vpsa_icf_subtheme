@@ -20,8 +20,8 @@
       display: none !important;
     }
 
-    // Preact radios stay in the DOM for the real tags[] field, but are hidden
-    // from first paint — before fellows-tags-filter.js runs.
+    // Hide Preact radios from first paint until fellows-tags-filter.js
+    // injects .vpsa-fellows-tags-filter in their place.
     #preact-tags,
     .hierarchy-preact-checkbox {
       position: absolute !important;
@@ -33,20 +33,6 @@
       clip: rect(0, 0, 0, 0) !important;
       white-space: nowrap !important;
       border: 0 !important;
-    }
-
-    // Red button-shaped placeholder until the custom select is injected.
-    &:not(:has(.vpsa-fellows-tags-filter))::before {
-      @include vicf-button--primary;
-      @include vicf-type-0;
-
-      content: '';
-      display: inline-block;
-      width: 100%;
-      min-height: 2.5rem;
-      margin: 0 0 1rem;
-      background-color: $su-color-digital-red;
-      vertical-align: top;
     }
 
     .vpsa-fellows-tags-filter {
