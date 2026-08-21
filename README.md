@@ -48,3 +48,11 @@ The following Stanford Sites section background colors are overridden in `src/sc
 | SCSS variable | `$vicf-color-[name]` | `$vicf-color-navy` |
 | SCSS mixin | `vicf-[name]` | `vicf-button--primary` |
 | CSS class | `.vicf-[component]` | `.vicf-card` |
+
+## Banner edit previews (`vpsa_icf_banner`)
+
+Stanford Sites edits content under Claro/Gin, so this theme’s PHP and CSS do not run in Layout Paragraphs / paragraph widget previews. The companion module in `modules/vpsa_icf_banner` applies `vicf-banner--*` classes and attaches `vpsa_icf_subtheme/allpages` during those previews.
+
+1. Copy or symlink `modules/vpsa_icf_banner` into the site’s `modules/custom/` (Drupal does not discover modules inside a theme directory).
+2. Enable: `drush en vpsa_icf_banner -y`
+3. Clear caches.

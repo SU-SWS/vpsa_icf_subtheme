@@ -1,0 +1,7 @@
+name: 'VPSA ICF Banner'
+type: module
+description: 'Applies Image Banner variant/overlay classes and theme CSS in Layout Paragraphs and form previews (admin theme).'
+package: Stanford
+core_version_requirement: ^9 || ^10 || ^11
+dependencies:
+  - paragraphs:paragraphs
