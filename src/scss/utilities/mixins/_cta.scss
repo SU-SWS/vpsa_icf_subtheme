@@ -3,7 +3,45 @@
 // VPSA ICF Subtheme CTA and link mixins. Prefix all mixin names with 'vicf-'.
 //
 // Example:
-// @mixin vicf-cta--primary {
-//   // Include hover and focus.
-//   // @include vicf--white-icons;
+// a:not(.su-button) {
+//   @include vicf-link;
 // }
+
+@mixin vicf-link {
+  color: $su-color-digital-red;
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    color: $su-color-digital-red-dark;
+  }
+
+  // Keep Decanter / extlink icons in sync with the text color.
+  &.su-link--external,
+  &.su-link--mailto,
+  &.su-link--action,
+  &.su-link--download,
+  &.su-link--video,
+  &.su-link--jump,
+  &.su-link--top,
+  &.su-link--internal,
+  &.ext {
+    &::after {
+      background-color: $su-color-digital-red;
+    }
+
+    &:hover::after,
+    &:focus::after {
+      background-color: $su-color-digital-red-dark;
+    }
+  }
+
+  svg.mailto {
+    fill: $su-color-digital-red;
+  }
+
+  &:hover svg.mailto,
+  &:focus svg.mailto {
+    fill: $su-color-digital-red-dark;
+  }
+}

@@ -1,19 +1,11 @@
 @charset "UTF-8";
 
 // VPSA ICF Subtheme CTA and link theme overrides.
-// Use mixins from /src/scss/utilities/mixins/_cta.scss.
+// Text links: digital red. Buttons (.su-button*) keep their own styles.
 
-
-
-// Override the default link color for the subtheme. This is a global override for all links, including those in buttons and CTAs.
-//  the ticket said just in text area and local footer.. Other areas won't be overridden unless we change this.
-.su-local-footer ,
-.su-wysiwyg-text { 
-    .su-link:not(.su-button) {
-        color: $su-color-digital-red;
-
-        &:hover, &:focus {
-            color: $su-color-digital-red-dark;
-        }
-    }
+.content,
+.su-local-footer {
+  a:not(.su-button):not(.su-button--secondary):not(.su-button--big):not(.button) {
+    @include vicf-link;
+  }
 }

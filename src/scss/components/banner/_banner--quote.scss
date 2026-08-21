@@ -45,15 +45,6 @@
         color: $su-color-white;
       }
 
-      a:not(.su-button):not(.su-button--secondary):not(.su-button--big) {
-        color: $su-color-white;
-
-        &:hover,
-        &:focus {
-          color: $su-color-white;
-        }
-      }
-
       .su-button--secondary {
         color: $su-color-white;
         border-color: $su-color-white;
