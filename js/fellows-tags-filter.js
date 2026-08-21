@@ -147,12 +147,9 @@
         wrapper.appendChild(label);
         wrapper.appendChild(select);
 
-        // Place visible select before the Preact block, then hide Preact UI.
+        // Place visible select before the Preact block (Preact stays hidden via CSS).
         if (preact && preact.parentNode) {
           preact.parentNode.insertBefore(wrapper, preact);
-          preact.setAttribute('hidden', 'hidden');
-          preact.setAttribute('aria-hidden', 'true');
-          preact.style.display = 'none';
         }
         else {
           form.insertBefore(wrapper, form.firstChild);
