@@ -28,6 +28,53 @@
     }
   }
 
+  // Typography/visibility wherever card contents render (page + preview).
+  .su-card__contents {
+    @media screen and (min-width: 768px) {
+      color: $su-color-white;
+    }
+
+    @include grid-media-min('md') {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    > span,
+    > .su-card__superhead {
+      display: none;
+    }
+
+    h2,
+    h3,
+    h4,
+    .su-font-splash {
+      @media screen and (min-width: 768px) {
+        color: $su-color-white;
+      }
+
+      @include vicf-type-5-bold;
+      @include responsive-spacing('margin-bottom', 0);
+    }
+
+    p,
+    .su-banner-body,
+    .su-wysiwyg-text {
+      color: $su-color-white;
+      @include vicf-type-2;
+    }
+  }
+
+  .su-button--secondary {
+    color: $su-color-white;
+    border-color: $su-color-white;
+
+    &:hover,
+    &:focus {
+      color: $su-color-white;
+      border-color: $su-color-white;
+    }
+  }
+
   .su-hero {
     .su-hero__card,
     .su-card.su-hero__card {
@@ -39,12 +86,7 @@
         color: $su-color-white;
       }
 
-      @include grid-media-max('sm') { // was sm
-        // background-color: rgba($su-color-black, 0.7);
-      }
-
       @include grid-media-min('md') {
-        // background-color: rgba($su-color-black, 0.7);
         left: 45px;
         right: auto;
         max-width: 55%;
@@ -54,56 +96,9 @@
         left: 133px;
         max-width: 464px;
       }
-
-      .su-card__contents {
-        @media screen and (min-width: 768px) {
-            color: $su-color-white;
-        }
-
-        @include grid-media-min('md') {
-          padding-left: 0;
-          padding-right: 0;
-        }
-
-        > span,
-        > .su-card__superhead {
-          display: none;
-        }
-
-        h2,
-        h3,
-        h4,
-        .su-font-splash {
-          @media screen and (min-width: 768px) {
-            color: $su-color-white;
-          }
-
-          @include vicf-type-5-bold;
-
-          @include responsive-spacing('margin-bottom', 0);
-        }
-
-        p,
-        .su-banner-body {
-          color: $su-color-white;
-          @include vicf-type-2;
-        }
-      }
-
-      .su-button--secondary {
-        color: $su-color-white;
-        border-color: $su-color-white;
-
-        &:hover,
-        &:focus {
-          color: $su-color-white;
-          border-color: $su-color-white;
-        }
-      }
     }
   }
 }
-
 
 .vicf-banner--homepage-with-logo {
 
@@ -132,29 +127,27 @@
       transform: translate(-50%, -50%);
       width: 55vw;
     }
-    
   }
 
-  //@TODO: add responsive versions here still
-  .su-hero .su-hero__card  {
+  .su-card__contents {
+    max-width: 90%;
+
     @media screen and (max-width: 767px) {
-      background: none;
-    }
+      color: $su-color-black;
 
-    .su-card__contents {
-      max-width: 90%;
-
-      @media screen and (max-width: 767px) {
+      h2,
+      h3,
+      h4,
+      span {
         color: $su-color-black;
-        
-        h2, h3, h4, span {
-          color: $su-color-black;
-
-        }
       }
     }
   }
+
+  //@TODO: add responsive versions here still
+  .su-hero .su-hero__card {
+    @media screen and (max-width: 767px) {
+      background: none;
+    }
+  }
 }
-
-
-// .vicf-banner--homepage-with-logo .su-hero .su-hero__card .su-card__contents

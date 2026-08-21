@@ -6,6 +6,53 @@
 //
 
 .vicf-banner--caption {
+
+  // Hide non-description fields wherever card contents render (page + preview).
+  .su-card__contents {
+    color: $su-color-white;
+    margin: 0 auto;
+    max-width: 100ch;
+    text-align: center;
+
+    @include responsive-spacing('padding', 2);
+
+    // TODO: check for a mixin for this
+    @media (min-width: 1024px) {
+      padding-left: 17rem;
+      padding-right: 17rem;
+    }
+
+    > span,
+    > h2,
+    > h3,
+    > h4,
+    > .su-font-splash,
+    > .su-card__superhead,
+    > .su-card__button {
+      display: none;
+    }
+
+    p,
+    .su-banner-body,
+    .su-wysiwyg-text {
+      color: $su-color-white;
+      @include vicf-type-1;
+      margin-bottom: 0;
+      margin-left: 0;
+      margin-right: 0;
+
+      p {
+        color: $su-color-white;
+        @include vicf-type-1;
+        margin-bottom: 0;
+      }
+
+      &:not(:last-child) {
+        @include responsive-spacing('margin-bottom', 0);
+      }
+    }
+  }
+
   .su-hero {
     display: flex;
     flex-direction: column;
@@ -34,64 +81,19 @@
       @include grid-media-min('md') {
         position: absolute;
       }
-
-      // Caption banner shows description only.
-      > .su-card__contents {
-        > span,
-        > h2,
-        > h3,
-        > h4,
-        > .su-font-splash,
-        > .su-card__superhead,
-        > .su-card__button {
-          display: none;
-        }
-
-        color: $su-color-white;
-        margin: 0 auto;
-        max-width: 100ch;
-
-        @include responsive-spacing('padding', 2);
-
-        // TODO: check for a mixin for this
-        @media (min-width: 1024px) {
-          padding-left: 17rem;
-          padding-right: 17rem;
-        }
-
-        p,
-        .su-banner-body,
-        .su-wysiwyg-text {
-          color: $su-color-white;
-          @include vicf-type-1;
-          margin-bottom: 0;
-          margin-left: 0;
-          margin-right: 0;
-
-          p {
-            color: $su-color-white;
-            @include vicf-type-1;
-            margin-bottom: 0;
-          }
-
-          &:not(:last-child) {
-            @include responsive-spacing('margin-bottom', 0);
-          }
-        }
-      }
     }
   }
 
-  &.overlay-right {
-    .su-hero {
-      .su-hero__card,
-      .su-card {
-        left: 0;
-        right: 0;
-        margin-left: 0;
-        margin-right: 0;
-        text-align: center;
-      }
+  &.overlay-right,
+  .su-hero.overlay-right {
+    .su-hero__card,
+    .su-card.su-hero__card,
+    .su-card {
+      left: 0;
+      right: 0;
+      margin-left: 0;
+      margin-right: 0;
+      text-align: center;
     }
   }
 }

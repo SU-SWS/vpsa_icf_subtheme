@@ -6,7 +6,10 @@
 //
 
 @mixin vicf-banner-overlay($opacity) {
-  .su-hero {
+  position: relative;
+
+  .su-hero,
+  &.su-hero {
     position: relative;
 
     &::after {

@@ -17,6 +17,36 @@
     }
   }
 
+  // Typography/color wherever card contents render (page + preview).
+  .su-card__contents {
+    color: $su-color-white;
+
+    h2,
+    h3,
+    h4,
+    p,
+    span {
+      color: $su-color-white;
+    }
+
+    p,
+    .su-banner-body,
+    .su-wysiwyg-text {
+      @include vicf-type-2;
+    }
+  }
+
+  .su-button--secondary {
+    color: $su-color-white;
+    border-color: $su-color-white;
+
+    &:hover,
+    &:focus {
+      color: $su-color-white;
+      border-color: $su-color-white;
+    }
+  }
+
   .su-hero {
     .su-hero__card,
     .su-card.su-hero__card {
@@ -32,33 +62,6 @@
       @include grid-media-min('xl') {
         left: 133px;
         max-width: 464px;
-      }
-
-      .su-card__contents,
-      h2,
-      h3,
-      h4,
-      p,
-      span {
-        color: $su-color-white;
-      }
-
-      .su-card__contents {
-        p,
-        .su-banner-body {
-          @include vicf-type-2;
-        }
-      }
-
-      .su-button--secondary {
-        color: $su-color-white;
-        border-color: $su-color-white;
-
-        &:hover,
-        &:focus {
-          color: $su-color-white;
-          border-color: $su-color-white;
-        }
       }
     }
   }

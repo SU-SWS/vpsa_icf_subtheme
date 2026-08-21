@@ -1,14 +1,59 @@
 @charset "UTF-8";
 
 //
-// Caption Banner variant for stanford_banner.
-// Description-only text in a full-width, bottom-centered transparent card.
+// Two-column banner with logo overlay (experimental / may be removed).
 //
 
-// Katria might remove this - checking 2 directions but i think we might remove this file.
-
-
 .vicf-banner--two-column-with-logo {
+
+  // Typography/visibility wherever card contents render (page + preview).
+  .su-card__contents {
+    color: $su-color-white;
+    margin: 0 auto;
+    max-width: 80ch;
+    text-align: center;
+
+    @include responsive-spacing('padding', 2);
+
+    @media (min-width: 1024px) {
+      padding-left: 17rem;
+      padding-right: 17rem;
+    }
+
+    > span,
+    > .su-card__button {
+      display: none;
+    }
+
+    h2,
+    h3,
+    h4,
+    .su-font-splash {
+      color: $su-color-white;
+      @include vicf-type-3-bold;
+    }
+
+    p,
+    .su-banner-body,
+    .su-wysiwyg-text {
+      color: $su-color-white;
+      @include vicf-type-2;
+      margin-bottom: 0;
+      margin-left: 0;
+      margin-right: 0;
+
+      p {
+        color: $su-color-white;
+        @include vicf-type-2;
+        margin-bottom: 0;
+      }
+
+      &:not(:last-child) {
+        @include responsive-spacing('margin-bottom', 0);
+      }
+    }
+  }
+
   .su-hero {
     display: flex;
     flex-direction: column;
@@ -16,13 +61,6 @@
 
     .su-hero__card,
     .su-card.su-hero__card {
-      // background-color: rgba($su-color-black, 0.45);
-      // border: 0;
-      // box-shadow: none;
-      // bottom: 0;
-      // left: 0;
-      // right: 0;
-      // top: auto;
       margin: 0;
       max-width: none;
       position: relative;
@@ -36,72 +74,6 @@
 
       @include grid-media-min('md') {
         position: absolute;
-      }
-
-      // Change this - copied from the caption, but we want ot show several things and display headings above and centered and other content below, split into 2 columns.
-      > .su-card__contents {
-        > span,
-        // > h2,
-        // > h3,
-        // > h4,
-        // > .su-font-splash,
-        // > .su-card__superhead,
-        > .su-card__button {
-          display: none;
-        }
-
-        color: $su-color-white;
-        margin: 0 auto;
-        max-width: 80ch;
-
-        @include responsive-spacing('padding', 2);
-
-        // TODO: check for a mixin for this
-        @media (min-width: 1024px) {
-          padding-left: 17rem;
-          padding-right: 17rem;
-        }
-
-        h2,
-        h3,
-        h4,
-        .su-font-splash {
-          color: $su-color-white;
-          @include vicf-type-3-bold;
-        }
-
-        p,
-        .su-banner-body,
-        .su-wysiwyg-text {
-          color: $su-color-white;
-          @include vicf-type-2;
-          margin-bottom: 0;
-          margin-left: 0;
-          margin-right: 0;
-
-          p {
-            color: $su-color-white;
-            @include vicf-type-2;
-            margin-bottom: 0;
-          }
-
-          &:not(:last-child) {
-            @include responsive-spacing('margin-bottom', 0);
-          }
-        }
-      }
-    }
-  }
-
-  &.overlay-right { // don't allow right? or style the logo to the left?
-    .su-hero {
-      .su-hero__card,
-      .su-card {
-      //   left: 0;
-      //   right: 0;
-      //   margin-left: 0;
-      //   margin-right: 0;
-      //   text-align: center;
       }
     }
   }
