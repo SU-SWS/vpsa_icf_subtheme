@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+//
+// Site branding lockup (header).
+//
+
+#block-vpsa-icf-subtheme-branding.su-lockup {
+  .su-lockup__cell2 {
+    @media (min-width: 1024px) {
+      max-width: 495px;
+    }
+  }
+}
