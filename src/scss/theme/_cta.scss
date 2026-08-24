@@ -8,4 +8,14 @@
   a:not(.su-button):not(.su-button--secondary):not(.su-button--big):not(.button) {
     @include vicf-link;
   }
+
+  a.mailto {
+    &::after {
+      background-color: $su-color-digital-red;
+    
+      &:hover, &:focus {
+        color: $su-color-digital-red-dark;
+      }
+    }
+  }
 }

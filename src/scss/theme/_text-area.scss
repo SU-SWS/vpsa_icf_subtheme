@@ -9,6 +9,10 @@
   .su-quote-text,
   p.su-quote-text {
     @include vicf-type-2;
+    @media (min-width: 1200px) {
+      line-height: 140%;
+    }
+    
   }
 
   // Embedded media images default to 293px square.
