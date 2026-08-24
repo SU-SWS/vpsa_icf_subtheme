@@ -10,6 +10,21 @@
   p.su-quote-text {
     @include vicf-type-2;
   }
+
+  // Embedded media images default to 293px square.
+  .media-entity-wrapper.image,
+  .media.image {
+    width: 293px;
+    max-width: 100%;
+  }
+
+  .media-entity-wrapper.image img,
+  .media.image img {
+    width: 293px;
+    height: 293px;
+    max-width: 100%;
+    object-fit: cover;
+  }
 }
 
 .su-wysiwyg-text.vpsa-text-area--fellows {
@@ -19,5 +34,4 @@
     margin-left: 0;
     margin-right: 0;
   }
-  // image size - was already 293 to match figma, no override needed?
 }
