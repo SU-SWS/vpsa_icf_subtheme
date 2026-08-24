@@ -1,4 +1,17 @@
 @charset "UTF-8";
 
 // VPSA ICF Subtheme CKEditor 5 styles.
-// Add any editor-specific overrides here.
+// Keep editor Quote style in sync with front-end `.su-quote-text`.
+
+$su-image-path: '~decanter/core/src/img';
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+
+@import 'decanter/core/src/scss/decanter-no-markup';
+@import './utilities/index';
+
+.ck-content {
+  .su-quote-text,
+  p.su-quote-text {
+    @include vicf-type-2;
+  }
+}

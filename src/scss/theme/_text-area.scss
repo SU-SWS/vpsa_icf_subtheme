@@ -1,11 +1,23 @@
+@charset "UTF-8";
+
+//
+// Text area / WYSIWYG paragraph styles.
+//
+
+// Quote style from the WYSIWYG Styles dropdown (stanford_text_editor).
+.su-wysiwyg-text {
+  .su-quote-text,
+  p.su-quote-text {
+    @include vicf-type-2;
+  }
+}
+
 .su-wysiwyg-text.vpsa-text-area--fellows {
-
-    // align with the left text edge
-    .su-quote-text, 
-    p.su-quote-text {
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    // image size - was already 293 to match figma, no override needed?
-} 
+  // Align with the left text edge.
+  .su-quote-text,
+  p.su-quote-text {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  // image size - was already 293 to match figma, no override needed?
+}
