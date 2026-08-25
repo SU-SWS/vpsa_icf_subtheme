@@ -69,6 +69,7 @@
           grid-template-columns: repeat(4, minmax(0, 1fr));
         }
 
+        // NOTE: this is just for the fellows page, not sure if we want it for other pages.
         .su-card.su-card--minimal {
           justify-items: center;
         }

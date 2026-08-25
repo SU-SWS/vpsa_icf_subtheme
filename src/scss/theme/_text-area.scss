@@ -9,7 +9,7 @@
   .su-quote-text,
   p.su-quote-text {
     @include vicf-type-2;
-    @media (min-width: 1200px) {
+    @media (min-width: 992px) {
       line-height: 140%;
     }
     
