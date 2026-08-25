@@ -12,10 +12,11 @@
   a.mailto {
     &::after {
       background-color: $su-color-digital-red;
-    
-      &:hover, &:focus {
-        color: $su-color-digital-red-dark;
-      }
+    }
+
+    &:hover::after,
+    &:focus::after {
+      background-color: $su-color-digital-red;
     }
   }
 }

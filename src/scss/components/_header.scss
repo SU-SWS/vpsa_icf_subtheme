@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 //
-// Site branding lockup (header).
+// Site branding lockup + mobile masthead menu.
 //
 
 #block-vpsa-icf-subtheme-branding.su-lockup {
@@ -15,10 +15,44 @@
   .su-lockup__cell2 {
     @include vicf-type-3;
     max-width: 495px;
+    margin-top: 4px;
+
+    @media (max-width: 767px) {
+      margin-top: 0;
+    }
 
     @media (max-width: 892px) {
       padding-left: 0;
       border-left: none;
+    }
+  }
+}
+
+// Keep the hamburger aligned with the top of the lockup when the site name wraps.
+.su-masthead {
+  .su-masthead--inner {
+    @include grid-media-max('md') {
+      position: relative;
+      align-items: flex-start;
+    }
+  }
+
+  .region-menu {
+    @include grid-media-max('md') {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10011;
+      margin-top: 0;
+      align-self: flex-start;
+    }
+  }
+
+  .preact-main-menu {
+    @include grid-media-max('md') {
+      > button {
+        margin-top: 0;
+      }
     }
   }
 }

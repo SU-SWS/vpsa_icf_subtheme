@@ -13,11 +13,11 @@
 
   &:hover,
   &:focus {
-    color: $su-color-digital-red-dark;
+    color: $su-color-black;
     text-decoration: underline;
   }
 
-  // Keep Decanter / extlink icons in sync with the text color.
+  // Keep Decanter / extlink icons digital red (do not follow text hover color).
   &.su-link--external,
   &.su-link--mailto,
   &.su-link--action,
@@ -33,7 +33,7 @@
 
     &:hover::after,
     &:focus::after {
-      background-color: $su-color-digital-red-dark;
+      background-color: $su-color-digital-red;
     }
   }
 
@@ -43,6 +43,6 @@
 
   &:hover svg.mailto,
   &:focus svg.mailto {
-    fill: $su-color-digital-red-dark;
+    fill: $su-color-digital-red;
   }
 }
