@@ -53,7 +53,7 @@
       }
 
       @include vicf-type-5-bold;
-      @include responsive-spacing('margin-bottom', 0);
+      margin-bottom: 0px;
     }
 
     p,
@@ -128,7 +128,8 @@
 
   .su-card__contents {
     max-width: 90%;
-
+    @include responsive-spacing('margin-bottom', 0);
+    
     @media screen and (max-width: 767px) {
       color: $su-color-black;
 

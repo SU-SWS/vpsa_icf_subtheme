@@ -1,15 +1,13 @@
 @charset "UTF-8";
 
 //
-// Site branding lockup (header).
+// Site branding lockup (footer).
 //
 
-#block-vpsa-icf-subtheme-branding.su-lockup {
+.su-local-footer.su-lockup {
   .su-lockup__cell2 {
     @include vicf-type-3;
-    @media (max-width: 768px) {
-      border-left: none;
-    }
+
     @media (min-width: 1024px) {
       max-width: 495px;
     }
