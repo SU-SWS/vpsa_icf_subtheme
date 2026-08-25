@@ -5,13 +5,20 @@
 //
 
 #block-vpsa-icf-subtheme-branding.su-lockup {
+  .su-lockup__cell1 {
+
+    @media (max-width: 892px) {
+      padding-right: 0;
+      border-right: none;
+    }
+  }
   .su-lockup__cell2 {
     @include vicf-type-3;
-    @media (max-width: 768px) {
+    max-width: 495px;
+
+    @media (max-width: 892px) {
+      padding-left: 0;
       border-left: none;
-    }
-    @media (min-width: 1024px) {
-      max-width: 495px;
     }
   }
 }
