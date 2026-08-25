@@ -50,3 +50,12 @@
     }
   }
 }
+
+// Active main-nav item (Preact menu uses aria-current / iscurrent).
+// !important beats styled-components runtime styles from the menu island.
+.preact-main-menu {
+  a[aria-current='page'],
+  a[iscurrent='true'] {
+    color: $su-color-black !important;
+  }
+}
