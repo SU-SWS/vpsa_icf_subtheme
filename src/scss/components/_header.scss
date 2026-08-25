@@ -5,22 +5,32 @@
 //
 
 #block-vpsa-icf-subtheme-branding.su-lockup {
-  .su-lockup__cell1 {
-
-    @media (max-width: 892px) {
-      padding-right: 0;
-      border-right: none;
-    }
+  > a {
+    container-type: inline-size;
+    container-name: vicf-lockup;
   }
+
   .su-lockup__cell2 {
     @include vicf-type-3;
     max-width: 495px;
     margin-top: 4px;
+  }
+}
 
-    @media (max-width: 892px) {
-      padding-left: 0;
-      border-left: none;
-    }
+// When the lockup is too narrow for wordmark + name side-by-side, cell2 wraps
+// under cell1 — drop the vertical rule so it does not float between rows.
+@container vicf-lockup (max-width: 42rem) {
+  .su-lockup__cell1 {
+    border-right: none;
+    margin-right: 0;
+    padding-right: 0;
+    max-width: none;
+  }
+
+  .su-lockup__cell2 {
+    border-left: none;
+    padding-left: 0;
+    flex-basis: 100%;
   }
 }
 

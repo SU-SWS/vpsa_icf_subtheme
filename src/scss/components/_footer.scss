@@ -5,10 +5,16 @@
 //
 
 .su-local-footer .su-lockup {
+  > a {
+    container-type: inline-size;
+    container-name: vicf-lockup;
+  }
+
   .su-lockup__cell2 {
     @include vicf-type-3;
+    margin-top: 4px;
 
-    @media (min-width: 1024px) {
+    @media (min-width: 768px) {
       max-width: 495px;
     }
   }
