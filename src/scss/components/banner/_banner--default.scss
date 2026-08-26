@@ -12,8 +12,7 @@
     .su-hero__card,
     .su-card.su-hero__card {
       @include grid-media-min('xl') {
-        left: auto;
-        right: 133px;
+        @include vicf-banner-card-inset-right(133px);
       }
     }
   }
@@ -60,7 +59,7 @@
     }
 
     @include grid-media-min('xl') {
-      left: 133px;
+      @include vicf-banner-card-inset-left(133px);
       max-width: 464px;
     }
   }

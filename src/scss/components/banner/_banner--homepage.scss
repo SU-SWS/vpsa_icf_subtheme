@@ -13,18 +13,15 @@
     .su-hero__card,
     .su-card.su-hero__card {
       @include grid-media-min('md') {
-        left: auto;
-        right: 45px;
+        @include vicf-banner-card-inset-right(45px);
         margin-left: auto;
-        margin-right: 45px;
+        margin-right: 0;
         align-self: flex-end;
         text-align: left;
       }
 
       @include grid-media-min('xl') {
-        left: auto;
-        right: 133px;
-        margin-right: 133px;
+        @include vicf-banner-card-inset-right(133px);
       }
     }
   }
@@ -87,13 +84,12 @@
     }
 
     @include grid-media-min('md') {
-      left: 45px;
-      right: auto;
+      @include vicf-banner-card-inset-left(45px);
       max-width: 55%;
     }
 
     @include grid-media-min('xl') {
-      left: 133px;
+      @include vicf-banner-card-inset-left(133px);
       max-width: 604px;
     }
   }
