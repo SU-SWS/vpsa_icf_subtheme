@@ -82,16 +82,21 @@
     }
 
     @include grid-media-min('md') {
+      // Same centering as .layout-background > .layout (margin: auto + max-width).
       position: absolute;
-      // Align to the 1440px content column; gutter only below 1600px.
-      left: #{"calc((100% - #{$vicf-banner-content-max}) / 2)"};
-      right: #{"calc((100% - #{$vicf-banner-content-max}) / 2)"};
-      width: auto;
+      left: 0;
+      right: 0;
+      width: 100%;
       max-width: $vicf-banner-content-max;
+      margin-left: auto;
+      margin-right: auto;
 
       @media (max-width: 1599px) {
-        left: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
-        right: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+        left: $vicf-content-gutter;
+        right: $vicf-content-gutter;
+        width: auto;
+        margin-left: 0;
+        margin-right: 0;
       }
     }
   }
@@ -102,15 +107,17 @@
     .su-hero__card,
     .su-card.su-hero__card,
     .su-card {
-      left: #{"calc((100% - #{$vicf-banner-content-max}) / 2)"};
-      right: #{"calc((100% - #{$vicf-banner-content-max}) / 2)"};
-      margin-left: 0;
-      margin-right: 0;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
       text-align: center;
 
       @media (max-width: 1599px) {
-        left: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
-        right: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+        left: $vicf-content-gutter;
+        right: $vicf-content-gutter;
+        margin-left: 0;
+        margin-right: 0;
       }
     }
   }

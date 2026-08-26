@@ -37,9 +37,9 @@
         z-index: 0;
       }
 
+      // z-index only — do not force position (caption cards need absolute).
       .su-hero__card,
       .su-card {
-        position: relative;
         z-index: 2;
       }
     }

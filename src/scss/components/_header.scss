@@ -55,6 +55,7 @@
     [data-island='main-menu-island'] {
       flex: 0 1 auto;
       min-width: 0;
+      width: unset;
     }
 
     // Override Decanter’s masthead flex-column(4) — search is no longer a
@@ -62,7 +63,7 @@
     .su-site-search {
       flex: 1 1 16rem;
       min-width: 12rem;
-      max-width: 30rem;
+      max-width: 22rem;
       width: auto;
 
       > form {
