@@ -6,13 +6,14 @@
 
 // Match section content column (.layout-background > .layout).
 $vicf-banner-content-max: 1440px;
-// Matches section horizontal padding below 1600px.
+// Match section horizontal padding at each breakpoint.
 $vicf-content-gutter: 160px;
+$vicf-content-gutter-md: 6rem;
+$vicf-content-gutter-sm: 2rem;
 
 // Keep hero cards inside the 1440px content column on wide screens.
-// Align to the column edge (with the design inset as a minimum) — do not
-// add the inset again on top of the column offset, and do not apply the
-// 160px section gutter on wide screens.
+// Align to the column edge (with the design inset as a minimum).
+// Section gutters apply only below 1600px (narrower breakpoints last).
 @mixin vicf-banner-card-inset-left($inset) {
   // String-wrap so Sass does not treat max() as its own math function.
   left: #{"max(#{$inset}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
@@ -20,6 +21,14 @@ $vicf-content-gutter: 160px;
 
   @media (max-width: 1599px) {
     left: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 991px) {
+    left: #{"max(#{$inset}, #{$vicf-content-gutter-md}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 767px) {
+    left: #{"max(#{$inset}, #{$vicf-content-gutter-sm}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
   }
 }
 
@@ -29,6 +38,14 @@ $vicf-content-gutter: 160px;
 
   @media (max-width: 1599px) {
     right: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 991px) {
+    right: #{"max(#{$inset}, #{$vicf-content-gutter-md}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 767px) {
+    right: #{"max(#{$inset}, #{$vicf-content-gutter-sm}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
   }
 }
 

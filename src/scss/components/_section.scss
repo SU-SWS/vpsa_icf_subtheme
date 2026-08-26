@@ -8,6 +8,7 @@
 }
 
 // Full-bleed section backgrounds; content column capped at 1440px.
+// Gutters: smallest breakpoint last so it wins when multiple queries match.
 .layout-background {
   > .layout {
     max-width: 1440px;
@@ -20,6 +21,11 @@
     @media (max-width: 1599px) {
       padding-left: 160px;
       padding-right: 160px;
+    }
+
+    @media (max-width: 991px) {
+      padding-left: 6rem;
+      padding-right: 6rem;
     }
 
     @media (max-width: 767px) {
