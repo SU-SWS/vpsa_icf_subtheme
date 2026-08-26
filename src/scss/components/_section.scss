@@ -1,33 +1,41 @@
+@charset "UTF-8";
+
 .hide-section {
-    /* Note this may be used with setting the title inside to 'visually-hidden' and then hiding the section space. */
-    display: none;
-    height: 0;
-    margin-bottom: -58px;
+  /* Note this may be used with setting the title inside to 'visually-hidden' and then hiding the section space. */
+  display: none;
+  height: 0;
+  margin-bottom: -58px;
+}
+
+// Full-bleed section backgrounds; content column capped at 1440px.
+.layout-background {
+  > .layout {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  // Image banners inside a layout should still span the full viewport.
+  > .layout:has(.su-hero) {
+    max-width: none;
+  }
 }
 
 .ptype-stanford-layout {
-    .layout--layout-paragraphs-three-column,
-    .layout-paragraphs-two-column--50-50 { // make sure we leave it wider for the uneven column layouts.
-
-        @media screen and (min-width: 1440px) {
-            max-width: 1100px;
-        }
-    
-        @media screen and (min-width: 1700px) {
-            max-width: 1100px; // was 1500px
-        }
-
-        .su-media__caption {
-            @include vicf-type-0;
-            text-align: left;
-            color: $su-color-black;
-        }
+  .layout--layout-paragraphs-three-column,
+  .layout-paragraphs-two-column--50-50 {
+    .su-media__caption {
+      @include vicf-type-0;
+      text-align: left;
+      color: $su-color-black;
     }
+  }
 }
 
 .content > .jumpstart-ui--two-column.centered-container {
-    @media screen and (max-width: 1499px) {
-        width: 100%;
-        max-width: 100%;
-    }
+  @media screen and (max-width: 1499px) {
+    width: 100%;
+    max-width: 100%;
+  }
 }
