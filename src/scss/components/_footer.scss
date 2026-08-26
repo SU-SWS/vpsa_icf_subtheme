@@ -5,17 +5,25 @@
 //
 
 .su-local-footer .su-lockup {
-  > a {
-    container-type: inline-size;
-    container-name: vicf-lockup;
-  }
-
   .su-lockup__cell2 {
     @include vicf-type-3;
     margin-top: 4px;
 
     @media (min-width: 768px) {
       max-width: 495px;
+    }
+  }
+
+  @include grid-media-max('md') {
+    .su-lockup__cell1 {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+    }
+
+    .su-lockup__cell2 {
+      border-left: none;
+      padding-left: 0;
     }
   }
 }

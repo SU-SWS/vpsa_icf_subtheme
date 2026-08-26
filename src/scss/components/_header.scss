@@ -5,37 +5,29 @@
 //
 
 #block-vpsa-icf-subtheme-branding.su-lockup {
-  > a {
-    container-type: inline-size;
-    container-name: vicf-lockup;
-  }
-
   .su-lockup__cell2 {
     @include vicf-type-3;
     max-width: 495px;
     margin-top: 4px;
   }
-}
 
-// When the lockup is too narrow for wordmark + name side-by-side, cell2 wraps
-// under cell1 — drop the vertical rule so it does not float between rows.
-@container vicf-lockup (max-width: 42rem) {
-  .su-lockup__cell1 {
-    border-right: none;
-    margin-right: 0;
-    padding-right: 0;
-    max-width: none;
-  }
+  // When the masthead is narrow enough that the name sits under the wordmark,
+  // drop the vertical rule (Decanter only draws it from md up).
+  @include grid-media-max('md') {
+    .su-lockup__cell1 {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+    }
 
-  .su-lockup__cell2 {
-    border-left: none;
-    padding-left: 0;
-    flex-basis: 100%;
+    .su-lockup__cell2 {
+      border-left: none;
+      padding-left: 0;
+    }
   }
 }
 
 // Keep the hamburger top-aligned with the lockup when the site name wraps.
-// Avoid absolute top:0 — that ignores masthead padding and sits too high.
 .su-masthead {
   .su-masthead--inner {
     @include grid-media-max('md') {
