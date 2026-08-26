@@ -62,6 +62,32 @@ function vpsa_icf_subtheme_theme_suggestions_block_alter(array &$suggestions, ar
 }
 
 /**
+ * Implements hook_preprocess_HOOK() for page.
+ *
+ * Block layout config is read-only on Stanford Sites. Move the site search
+ * block from the Search region into the Menu region at render time. Leave
+ * header links (Make a Gift, etc.) in Search.
+ */
+function vpsa_icf_subtheme_preprocess_page(array &$variables) {
+  if (empty($variables['page']['search']) || !isset($variables['page']['menu'])) {
+    return;
+  }
+
+  foreach (Element::children($variables['page']['search']) as $key) {
+    $block = $variables['page']['search'][$key];
+    $block_id = (string) ($block['#id'] ?? $key);
+
+    // Machine name used by stanford_basic search placement in this subtheme.
+    if ($block_id !== 'vpsa_icf_subtheme_search' && $key !== 'vpsa_icf_subtheme_search') {
+      continue;
+    }
+
+    $variables['page']['menu'][$key] = $block;
+    unset($variables['page']['search'][$key]);
+  }
+}
+
+/**
  * Implements hook_preprocess_HOOK() for views_view.
  *
  * Attach Fellows tags dropdown script. Labels/select UI are client-side only so
