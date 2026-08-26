@@ -83,8 +83,8 @@
 
     @include grid-media-min('md') {
       position: absolute;
-      left: #{"max(0px, calc((100% - #{$vicf-banner-content-max}) / 2))"};
-      right: #{"max(0px, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+      left: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+      right: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
       width: auto;
       max-width: $vicf-banner-content-max;
     }
@@ -96,8 +96,8 @@
     .su-hero__card,
     .su-card.su-hero__card,
     .su-card {
-      left: #{"max(0px, calc((100% - #{$vicf-banner-content-max}) / 2))"};
-      right: #{"max(0px, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+      left: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+      right: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
       margin-left: 0;
       margin-right: 0;
       text-align: center;

@@ -14,11 +14,25 @@
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+    box-sizing: border-box;
+
+    // Keep content off the viewport edges below the 1440 centered range.
+    @media (max-width: 1599px) {
+      padding-left: 160px;
+      padding-right: 160px;
+    }
+
+    @media (max-width: 767px) {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
 
   // Image banners inside a layout should still span the full viewport.
   > .layout:has(.su-hero) {
     max-width: none;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
