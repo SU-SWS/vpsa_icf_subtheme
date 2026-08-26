@@ -83,10 +83,16 @@
 
     @include grid-media-min('md') {
       position: absolute;
-      left: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
-      right: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+      // Align to the 1440px content column; gutter only below 1600px.
+      left: #{"calc((100% - #{$vicf-banner-content-max}) / 2)"};
+      right: #{"calc((100% - #{$vicf-banner-content-max}) / 2)"};
       width: auto;
       max-width: $vicf-banner-content-max;
+
+      @media (max-width: 1599px) {
+        left: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+        right: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+      }
     }
   }
 
@@ -96,11 +102,16 @@
     .su-hero__card,
     .su-card.su-hero__card,
     .su-card {
-      left: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
-      right: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+      left: #{"calc((100% - #{$vicf-banner-content-max}) / 2)"};
+      right: #{"calc((100% - #{$vicf-banner-content-max}) / 2)"};
       margin-left: 0;
       margin-right: 0;
       text-align: center;
+
+      @media (max-width: 1599px) {
+        left: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+        right: #{"max(#{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+      }
     }
   }
 }

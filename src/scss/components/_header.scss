@@ -35,10 +35,41 @@
     }
   }
 
+  // Search was moved into Menu via preprocess_page — sit beside the nav and wrap.
   .region-menu {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    row-gap: 1rem;
+
     @include grid-media-max('md') {
       align-self: flex-start;
       margin-top: 0;
+    }
+
+    // Nav / Preact menu island.
+    .main,
+    .preact-main-menu,
+    [data-island='main-menu-island'] {
+      flex: 0 1 auto;
+      min-width: 0;
+    }
+
+    // Override Decanter’s masthead flex-column(4) — search is no longer a
+    // direct masthead sibling; size it within this flex row instead.
+    .su-site-search {
+      flex: 1 1 16rem;
+      min-width: 12rem;
+      max-width: 30rem;
+      width: auto;
+
+      > form {
+        margin-left: 0;
+        width: 100%;
+        max-width: 100%;
+      }
     }
   }
 }

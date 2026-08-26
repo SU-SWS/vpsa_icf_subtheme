@@ -9,18 +9,27 @@ $vicf-banner-content-max: 1440px;
 // Matches section horizontal padding below 1600px.
 $vicf-content-gutter: 160px;
 
-// Inset a left-aligned hero card from the 1440px content column edge,
-// and never closer to the viewport edge than the section gutter.
+// Keep hero cards inside the 1440px content column on wide screens.
+// Align to the column edge (with the design inset as a minimum) — do not
+// add the inset again on top of the column offset, and do not apply the
+// 160px section gutter on wide screens.
 @mixin vicf-banner-card-inset-left($inset) {
   // String-wrap so Sass does not treat max() as its own math function.
-  left: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2 + #{$inset}))"};
+  left: #{"max(#{$inset}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
   right: auto;
+
+  @media (max-width: 1599px) {
+    left: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
 }
 
-// Inset a right-aligned hero card from the 1440px content column edge.
 @mixin vicf-banner-card-inset-right($inset) {
   left: auto;
-  right: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2 + #{$inset}))"};
+  right: #{"max(#{$inset}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+
+  @media (max-width: 1599px) {
+    right: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
 }
 
 .ptype-stanford-banner {
