@@ -133,6 +133,10 @@
       left: 80%;
     }
 
+    @media screen and (max-width: 991px) {
+      left: 75%;
+    }
+
     @media screen and (max-width: 767px) {
       left: 50%;
       top: 35vw;
