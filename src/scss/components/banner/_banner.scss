@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+//
+// Shared Image Banner (stanford_banner) styles.
+//
+
+// Match section content column (.layout-background > .layout).
+$vicf-banner-content-max: 1440px;
+// Match section horizontal padding at each breakpoint.
+$vicf-content-gutter: 160px;
+$vicf-content-gutter-md: 6rem;
+$vicf-content-gutter-sm: 2rem;
+
+// Keep hero cards inside the 1440px content column on wide screens.
+// Align to the column edge (with the design inset as a minimum).
+// Section gutters apply only below 1600px (narrower breakpoints last).
+@mixin vicf-banner-card-inset-left($inset) {
+  // String-wrap so Sass does not treat max() as its own math function.
+  left: #{"max(#{$inset}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  right: auto;
+
+  @media (max-width: 1599px) {
+    left: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 991px) {
+    left: #{"max(#{$inset}, #{$vicf-content-gutter-md}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 767px) {
+    left: #{"max(#{$inset}, #{$vicf-content-gutter-sm}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+}
+
+@mixin vicf-banner-card-inset-right($inset) {
+  left: auto;
+  right: #{"max(#{$inset}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+
+  @media (max-width: 1599px) {
+    right: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 991px) {
+    right: #{"max(#{$inset}, #{$vicf-content-gutter-md}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 767px) {
+    right: #{"max(#{$inset}, #{$vicf-content-gutter-sm}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+}
+
+.ptype-stanford-banner {
+  @include grid-media-max('sm') {
+    .su-hero__media {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  .su-hero {
+    .su-button,
+    .su-card__button a {
+      @include vicf-type-0;
+    }
+  }
+}

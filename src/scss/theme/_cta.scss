@@ -1,4 +1,22 @@
 @charset "UTF-8";
 
 // VPSA ICF Subtheme CTA and link theme overrides.
-// Use mixins from /src/scss/utilities/mixins/_cta.scss.
+// Text links: digital red. Buttons (.su-button*) keep their own styles.
+
+.content,
+.su-local-footer {
+  a:not(.su-button):not(.su-button--secondary):not(.su-button--big):not(.button) {
+    @include vicf-link;
+  }
+
+  a.mailto {
+    &::after {
+      background-color: $su-color-digital-red;
+    }
+
+    &:hover::after,
+    &:focus::after {
+      background-color: $su-color-digital-red;
+    }
+  }
+}

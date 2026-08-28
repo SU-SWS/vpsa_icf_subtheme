@@ -2,11 +2,18 @@
 
 Stanford Sites subtheme built on `stanford_basic`, scaffolded from `stanford_starter`.
 
-## Setup
+## Developer Setup
 
-1. `npm install`
-2. `npm run build` — compile CSS once
-3. `npm run watch` — compile CSS on file changes
+1. Install dependencies:
+   - `npm install`
+2. Build assets once:
+   - `npm run build`
+3. Watch for changes and rebuild automatically:
+   - `npm run watch`
+
+> If you use `nvm`, run `nvm use` first to ensure the correct Node version is active.
+
+This project uses webpack to assemble the CSS, JavaScript, and image assets required by the theme.
 
 ## SCSS structure
 
@@ -41,3 +48,11 @@ The following Stanford Sites section background colors are overridden in `src/sc
 | SCSS variable | `$vicf-color-[name]` | `$vicf-color-navy` |
 | SCSS mixin | `vicf-[name]` | `vicf-button--primary` |
 | CSS class | `.vicf-[component]` | `.vicf-card` |
+
+## Banner edit previews (`vpsa_icf_banner`)
+
+Stanford Sites edits content under Claro/Gin, so this theme’s PHP and CSS do not run in Layout Paragraphs / paragraph widget previews. The companion module in `modules/vpsa_icf_banner` applies `vicf-banner--*` classes and attaches `vpsa_icf_subtheme/allpages` during those previews.
+
+1. Copy or symlink `modules/vpsa_icf_banner` into the site’s `modules/custom/` (Drupal does not discover modules inside a theme directory).
+2. Enable: `drush en vpsa_icf_banner -y`
+3. Clear caches.

@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+//
+// Text area / WYSIWYG paragraph styles.
+//
+
+// Quote style from the WYSIWYG Styles dropdown (stanford_text_editor).
+.su-wysiwyg-text {
+  .su-quote-text,
+  p.su-quote-text {
+    @include vicf-type-2;
+    @media (min-width: 992px) {
+      line-height: 140%;
+    }
+    
+  }
+
+  // Embedded media images default to 293px square.
+  .media-entity-wrapper.image,
+  .media.image {
+    width: 293px;
+    max-width: 100%;
+  }
+
+  .media-entity-wrapper.image img,
+  .media.image img {
+    width: 293px;
+    height: 293px;
+    max-width: 100%;
+    object-fit: cover;
+  }
+}
+
+.su-wysiwyg-text.vpsa-text-area--fellows {
+  // Align with the left text edge.
+  .su-quote-text,
+  p.su-quote-text {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

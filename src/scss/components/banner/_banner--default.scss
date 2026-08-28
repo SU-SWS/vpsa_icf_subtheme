@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+//
+// Default Image Banner card styles.
+// Class may be on a paragraph wrapper OR on .su-hero itself (edit preview).
+//
+
+.vicf-banner--default {
+  &.overlay-right,
+  &.su-hero.overlay-right,
+  .su-hero.overlay-right {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      @include grid-media-min('xl') {
+        @include vicf-banner-card-inset-right(133px);
+      }
+    }
+  }
+
+  .su-card__contents {
+    color: $su-color-white;
+
+    h2,
+    h3,
+    h4,
+    p,
+    span {
+      color: $su-color-white;
+    }
+
+    p,
+    .su-banner-body,
+    .su-wysiwyg-text,
+    .field--name-su-banner-body {
+      @include vicf-type-2;
+    }
+  }
+
+  .su-button--secondary {
+    color: $su-color-white;
+    border-color: $su-color-white;
+
+    &:hover,
+    &:focus {
+      color: $su-color-white;
+      border-color: $su-color-white;
+    }
+  }
+
+  .su-hero__card,
+  .su-card.su-hero__card {
+    background-color: rgba($su-color-black, 0.55);
+    border: 0;
+    box-shadow: none;
+    color: $su-color-white;
+
+    @include grid-media-max('sm') {
+      background-color: rgba($su-color-black, 0.7);
+    }
+
+    @include grid-media-min('xl') {
+      @include vicf-banner-card-inset-left(133px);
+      max-width: 464px;
+    }
+  }
+}

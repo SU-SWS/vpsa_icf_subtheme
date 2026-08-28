@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+//
+// Caption Banner variant for stanford_banner.
+// Description-only text in a full-width, bottom-centered transparent card.
+//
+// Class may be on a paragraph wrapper OR on .su-hero itself (edit preview).
+//
+
+.vicf-banner--caption {
+
+  &.su-hero,
+  .su-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .su-card__contents {
+    color: $su-color-white;
+    margin: 0 auto;
+    max-width: 100ch;
+    text-align: center;
+
+    @include responsive-spacing('padding', 2);
+
+    @media (min-width: 1024px) {
+      padding-left: 17rem;
+      padding-right: 17rem;
+    }
+
+    > span,
+    > h2,
+    > h3,
+    > h4,
+    > .su-font-splash,
+    > .su-card__superhead,
+    > .su-card__button {
+      display: none;
+    }
+
+    p,
+    .su-banner-body,
+    .su-wysiwyg-text,
+    .field--name-su-banner-body {
+      color: $su-color-white;
+      @include vicf-type-1;
+      margin-bottom: 0;
+      margin-left: 0;
+      margin-right: 0;
+
+      p {
+        color: $su-color-white;
+        @include vicf-type-1;
+        margin-bottom: 0;
+      }
+
+      &:not(:last-child) {
+        @include responsive-spacing('margin-bottom', 0);
+      }
+    }
+  }
+
+  .su-hero__card,
+  .su-card.su-hero__card {
+    background-color: rgba($su-color-black, 0.45);
+    border: 0;
+    box-shadow: none;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    margin: 0;
+    max-width: none;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    color: $su-color-white;
+
+    @include grid-media-max('sm') {
+      background-color: rgba($su-color-black, 0.7);
+      // Match section gutter below 768px.
+      padding-left: $vicf-content-gutter-sm;
+      padding-right: $vicf-content-gutter-sm;
+      box-sizing: border-box;
+    }
+
+    @include grid-media-min('md') {
+      // Same centering as .layout-background > .layout (margin: auto + max-width).
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-width: $vicf-banner-content-max;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 0;
+      padding-right: 0;
+
+      @media (max-width: 1599px) {
+        left: $vicf-content-gutter;
+        right: $vicf-content-gutter;
+        width: auto;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      @media (max-width: 991px) {
+        left: $vicf-content-gutter-md;
+        right: $vicf-content-gutter-md;
+      }
+    }
+  }
+
+  &.overlay-right,
+  &.su-hero.overlay-right,
+  .su-hero.overlay-right {
+    .su-hero__card,
+    .su-card.su-hero__card,
+    .su-card {
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+
+      @media (max-width: 1599px) {
+        left: $vicf-content-gutter;
+        right: $vicf-content-gutter;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      @media (max-width: 991px) {
+        left: $vicf-content-gutter-md;
+        right: $vicf-content-gutter-md;
+      }
+    }
+  }
+}

@@ -1,0 +1,258 @@
+@charset "UTF-8";
+
+// VPSA ICF Subtheme button mixins. Prefix all mixin names with 'vicf-'.
+//
+// Example:
+// @mixin vicf-button--primary {
+//   // If you override a link color, also override the :after pseudo-element
+//   // so Decanter icons match the link color.
+//   // @include vicf--white-icons;
+//   &:hover, &:focus { }
+// }
+
+@mixin vicf-type-5 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 130%;
+  letter-spacing: 0.32px;
+
+  @media (min-width: 576px) {
+    font-size: 3.2rem;
+    letter-spacing: 0.32px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 4.2rem;
+    font-weight: 400;
+    letter-spacing: 0.42px;
+  }
+
+  @media (min-width: 992px) {
+    font-size: 5.5rem;
+    letter-spacing: 0.55px;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 5.5rem;
+    letter-spacing: 0.55px;
+  }
+
+  @media (min-width: 1500px) {
+    font-size: 5.8rem;
+    line-height: 140%;
+    letter-spacing: 0.58px;
+  }
+}
+
+
+@mixin vicf-type-5-semibold {
+  @include vicf-type-5;
+
+  @media (min-width: 768px) {
+    font-weight: 600;
+  }
+
+  @media (min-width: 1500px) {
+    font-weight: 700;
+  }
+}
+
+
+@mixin vicf-type-5-bold {
+  @include vicf-type-5;
+  font-weight: 700;
+
+  // Reassert after base type-5 drops to 400 at 768px+.
+  @media (min-width: 768px) {
+    font-weight: 700;
+  }
+
+  @media (min-width: 1500px) {
+    font-weight: 900;
+  }
+}
+
+
+@mixin vicf-type-3 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 120%;
+
+  @media (min-width: 576px) {
+    font-size: 2.4rem;
+    line-height: 120%;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 2.9rem;
+    font-weight: 400;
+    line-height: 130%;
+  }
+
+  @media (min-width: 992px) {
+    font-size: 3.5rem;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 3.5rem;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1500px) {
+    font-size: 3.7rem;
+    line-height: 140%;
+  }
+}
+
+@mixin vicf-type-3-semibold {
+  @include vicf-type-3;
+  font-weight: 600;
+
+  @media (min-width: 768px) {
+    font-weight: 600;
+  }
+}
+
+@mixin vicf-type-3-bold {
+  @include vicf-type-3;
+  font-weight: 700;
+
+  @media (min-width: 768px) {
+    font-weight: 700;
+  }
+}
+
+
+
+@mixin vicf-type-2 {
+  font-size: 2.1rem;
+  font-weight: 400;
+  line-height: 120%;
+
+  @media (min-width: 576px) {
+    font-size: 2.1rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 2.4rem;
+  }
+
+  @media (min-width: 992px) {
+    font-size: 2.8rem;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 2.8rem;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1500px) {
+    font-size: 3rem;
+    line-height: 140%;
+  }
+}
+
+@mixin vicf-type-2-semibold {
+  @include vicf-type-2;
+  font-weight: 600;
+  
+  @media (min-width: 768px) {
+    line-height: 130%;
+  }
+}
+
+@mixin vicf-type-2-bold {
+  @include vicf-type-2;
+  font-weight: 700;
+
+  @media (min-width: 768px) {
+    line-height: 130%;
+  }
+}
+
+
+@mixin vicf-type-1 {
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 120%;
+
+  @media (min-width: 576px) {
+    font-size: 1.8rem;
+    line-height: 120%;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 2rem;
+    line-height: 130%;
+  }
+
+  @media (min-width: 992px) {
+    font-size: 2.3rem;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 2.3rem;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1500px) {
+    font-size: 2.4rem;
+    line-height: 140%;
+  }
+}
+
+@mixin vicf-type-1-semibold {
+  @include vicf-type-1;
+  font-weight: 600;
+}
+
+@mixin vicf-type-1-bold {
+  @include vicf-type-1;
+  font-weight: 700;
+}
+
+
+@mixin vicf-type-0 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 120%;
+
+  @media (min-width: 576px) {
+    font-size: 1.6rem;
+    line-height: 120%;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.7rem;
+    line-height: normal;
+  }
+
+  @media (min-width: 992px) {
+    font-size: 1.8rem;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 1.8rem;
+    line-height: 130%;
+  }
+
+  @media (min-width: 1500px) {
+    font-size: 1.9rem;
+    line-height: 140%;
+  }
+}
+
+@mixin vicf-type-0-semibold {
+  @include vicf-type-0;
+  font-weight: 600;
+}
+
+@mixin vicf-type-0-bold {
+  @include vicf-type-0;
+  font-weight: 700;
+}
+

@@ -5,11 +5,51 @@
  * Preprocess functions for VPSA ICF Subtheme.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Template\Attribute;
+use Drupal\paragraphs\ParagraphInterface;
+
 /**
  * Prepares variables for the html.html.twig template.
  */
 function vpsa_icf_subtheme_preprocess_html(&$variables) {
   $variables['stanford_basic_path'] = \Drupal::service('extension.list.theme')->getPath('stanford_basic');
+}
+
+/**
+ * Prepares variables for the node template.
+ */
+function vpsa_icf_subtheme_preprocess_node(&$variables) {
+  if (!empty($variables['node']) && $variables['node']->getType() === 'stanford_page') {
+    if (!isset($variables['title_attributes']) || !($variables['title_attributes'] instanceof Attribute)) {
+      $variables['title_attributes'] = new Attribute();
+    }
+    // Keep this in case a node template renders a title wrapper.
+    $variables['title_attributes']->addClass('visually-hidden');
+    $variables['title_attributes']->addClass('hide-section');
+  }
+}
+
+/**
+ * Prepares variables for the page title wrapper.
+ */
+function vpsa_icf_subtheme_preprocess_page_title(&$variables) {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof \Drupal\node\NodeInterface && $node->bundle() === 'stanford_page') {
+    if (!isset($variables['title_attributes']) || !($variables['title_attributes'] instanceof Attribute)) {
+      $variables['title_attributes'] = new Attribute();
+    }
+    $variables['title_attributes']->addClass('visually-hidden');
+    $variables['title_attributes']->addClass('hide-section');
+
+    // Some page-title templates use a generic `attributes` variable.
+    if (!isset($variables['attributes']) || !($variables['attributes'] instanceof Attribute)) {
+      $variables['attributes'] = new Attribute();
+    }
+    $variables['attributes']->addClass('visually-hidden');
+    $variables['attributes']->addClass('hide-section');
+  }
 }
 
 /**
@@ -19,4 +59,228 @@ function vpsa_icf_subtheme_theme_suggestions_block_alter(array &$suggestions, ar
   if (!empty($variables['elements']['#id']) && $variables['elements']['#id'] == 'vpsa_icf_subtheme_search') {
     $suggestions[] = 'block__stanford_basic_search';
   }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page.
+ *
+ * Block layout config is read-only on Stanford Sites. Move the site search
+ * block from the Search region into the Menu region at render time. Leave
+ * header links (Make a Gift, etc.) in Search.
+ */
+function vpsa_icf_subtheme_preprocess_page(array &$variables) {
+  if (empty($variables['page']['search']) || !isset($variables['page']['menu'])) {
+    return;
+  }
+
+  foreach (Element::children($variables['page']['search']) as $key) {
+    $block = $variables['page']['search'][$key];
+    $block_id = (string) ($block['#id'] ?? $key);
+
+    // Machine name used by stanford_basic search placement in this subtheme.
+    if ($block_id !== 'vpsa_icf_subtheme_search' && $key !== 'vpsa_icf_subtheme_search') {
+      continue;
+    }
+
+    $variables['page']['menu'][$key] = $block;
+    unset($variables['page']['search'][$key]);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for views_view.
+ *
+ * Attach Fellows tags dropdown script. Labels/select UI are client-side only so
+ * we never alter the locked people_filtered exposed form (that caused 502s).
+ */
+function vpsa_icf_subtheme_preprocess_views_view(array &$variables) {
+  if (($variables['id'] ?? '') !== 'people_filtered') {
+    return;
+  }
+  if (!empty($variables['view'])) {
+    $variables['view']->element['#attached']['library'][] = 'vpsa_icf_subtheme/fellows_tags_filter';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for views_exposed_form.
+ *
+ * Backup attach path when the view preprocess wrapper is skipped (e.g. some
+ * paragraph-embedded Views renders).
+ */
+function vpsa_icf_subtheme_preprocess_views_exposed_form(array &$variables) {
+  $form_id = $variables['form']['#form_id'] ?? ($variables['form']['#id'] ?? '');
+  if (is_string($form_id) && strpos($form_id, 'people_filtered') !== FALSE) {
+    $variables['form']['#attached']['library'][] = 'vpsa_icf_subtheme/fellows_tags_filter';
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Move react banner variant behaviors above other behavior plugins in the UI.
+ * Layout Paragraphs builds behavior plugin children in a #process callback, so
+ * weights are applied in #after_build after those children exist.
+ */
+function vpsa_icf_subtheme_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  if (empty($form['behavior_plugins'])) {
+    return;
+  }
+
+  $form['behavior_plugins']['#after_build'][] = 'vpsa_icf_subtheme_behavior_plugins_after_build';
+}
+
+/**
+ * After-build callback to prioritize banner variant behavior fields.
+ */
+function vpsa_icf_subtheme_behavior_plugins_after_build(array $element, FormStateInterface $form_state) {
+  foreach (Element::children($element) as $plugin_id) {
+    if (strpos($plugin_id, 'banner_variant_info') !== FALSE) {
+      $element[$plugin_id]['#weight'] = -100;
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for paragraph.
+ *
+ * Used when the banner has no Display Suite layout (default field rendering /
+ * Jumpstart UI components).
+ */
+function vpsa_icf_subtheme_preprocess_paragraph(array &$variables) {
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  $paragraph = $variables['paragraph'];
+
+  if ($paragraph->bundle() === 'stanford_banner') {
+    vpsa_icf_subtheme_attach_banner_variant_classes($variables['attributes'], $paragraph);
+  }
+
+  if ($paragraph->bundle() === 'stanford_wysiwyg') {
+    vpsa_icf_subtheme_attach_text_area_variant_classes($variables['attributes'], $paragraph);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for ds_entity_view.
+ *
+ * Used when the banner uses the Display Suite Hero layout.
+ */
+function vpsa_icf_subtheme_preprocess_ds_entity_view(array &$variables) {
+  if (!isset($variables['content']['#paragraph'])) {
+    return;
+  }
+
+  $paragraph = $variables['content']['#paragraph'];
+
+  if ($paragraph->bundle() === 'stanford_banner') {
+    vpsa_icf_subtheme_attach_banner_variant_classes($variables['attributes'], $paragraph);
+  }
+
+  if ($paragraph->bundle() === 'stanford_wysiwyg') {
+    vpsa_icf_subtheme_attach_text_area_variant_classes($variables['attributes'], $paragraph);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view_alter() for paragraph.
+ *
+ * Front-end only. Edit/Layout Paragraphs previews use Claro/Gin, so the
+ * companion module vpsa_icf_banner owns preview class + CSS attachment.
+ */
+function vpsa_icf_subtheme_paragraph_view_alter(array &$build, ParagraphInterface $paragraph, $display) {
+  if ($paragraph->bundle() === 'stanford_banner') {
+    if (!isset($build['#attributes'])) {
+      $build['#attributes'] = [];
+    }
+    vpsa_icf_subtheme_attach_banner_variant_classes($build['#attributes'], $paragraph);
+  }
+
+  if ($paragraph->bundle() === 'stanford_wysiwyg') {
+    if (!isset($build['#attributes'])) {
+      $build['#attributes'] = [];
+    }
+    vpsa_icf_subtheme_attach_text_area_variant_classes($build['#attributes'], $paragraph);
+  }
+}
+
+/**
+ * Read a banner behavior setting, trying known react_paragraphs plugin IDs.
+ */
+function vpsa_icf_subtheme_get_banner_behavior_setting(ParagraphInterface $paragraph, $key, $default = NULL) {
+  $plugin_ids = [
+    'react_paragraphs:banner_variant_info',
+    'react_paragraphs:vpsa_icf_subtheme_banner_variant_info',
+  ];
+
+  foreach ($plugin_ids as $plugin_id) {
+    $value = $paragraph->getBehaviorSetting($plugin_id, $key);
+    if ($value !== NULL && $value !== '') {
+      return $value;
+    }
+  }
+
+  return $default;
+}
+
+/**
+ * Attach banner variant behavior classes to a render attribute set.
+ *
+ * @param array|\Drupal\Core\Template\Attribute $attributes
+ *   Attributes array or Attribute object, passed by reference.
+ * @param \Drupal\paragraphs\ParagraphInterface $paragraph
+ *   The banner paragraph.
+ */
+function vpsa_icf_subtheme_attach_banner_variant_classes(&$attributes, ParagraphInterface $paragraph) {
+  $classes = array_filter([
+    vpsa_icf_subtheme_get_banner_behavior_setting($paragraph, 'banner_variant', 'vicf-banner--default'),
+    vpsa_icf_subtheme_get_banner_behavior_setting($paragraph, 'banner_overlay'),
+  ]);
+
+  if (empty($classes)) {
+    return;
+  }
+
+  if ($attributes instanceof Attribute) {
+    $attributes->addClass($classes);
+    return;
+  }
+
+  $existing = $attributes['class'] ?? [];
+  if (!is_array($existing)) {
+    $existing = $existing ? [$existing] : [];
+  }
+
+  $attributes['class'] = array_values(array_unique(array_merge($existing, $classes)));
+}
+
+/**
+ * Attach text area variant behavior classes to a render attribute set.
+ *
+ * @param array|\Drupal\Core\Template\Attribute $attributes
+ *   Attributes array or Attribute object, passed by reference.
+ * @param \Drupal\paragraphs\ParagraphInterface $paragraph
+ *   The wysiwyg paragraph.
+ */
+function vpsa_icf_subtheme_attach_text_area_variant_classes(&$attributes, ParagraphInterface $paragraph) {
+  $classes = array_filter([
+    $paragraph->getBehaviorSetting('react_paragraphs:text_area_variant_info', 'text_area_style', 'vpsa-text-area--regular'),
+  ]);
+
+  if (empty($classes)) {
+    return;
+  }
+
+  if ($attributes instanceof Attribute) {
+    $attributes->addClass($classes);
+    return;
+  }
+
+  $existing = $attributes['class'] ?? [];
+  if (!is_array($existing)) {
+    $existing = $existing ? [$existing] : [];
+  }
+
+  $attributes['class'] = array_values(array_unique(array_merge($existing, $classes)));
 }

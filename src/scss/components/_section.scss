@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+.hide-section {
+  /* Note this may be used with setting the title inside to 'visually-hidden' and then hiding the section space. */
+  display: none;
+  height: 0;
+  margin-bottom: -58px;
+}
+
+// Full-bleed section backgrounds; content column capped at 1440px.
+// Gutters: smallest breakpoint last so it wins when multiple queries match.
+.layout-background {
+  > .layout {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+
+    // Keep content off the viewport edges below the 1440 centered range.
+    @media (max-width: 1599px) {
+      padding-left: 160px;
+      padding-right: 160px;
+    }
+
+    @media (max-width: 991px) {
+      padding-left: 6rem;
+      padding-right: 6rem;
+    }
+
+    @media (max-width: 767px) {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  // Image banners inside a layout should still span the full viewport.
+  > .layout:has(.su-hero) {
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.ptype-stanford-layout {
+  .layout--layout-paragraphs-three-column,
+  .layout-paragraphs-two-column--50-50 {
+    .su-media__caption {
+      @include vicf-type-0;
+      text-align: left;
+      color: $su-color-black;
+    }
+  }
+}
+
+.content > .jumpstart-ui--two-column.centered-container {
+  @media screen and (max-width: 1499px) {
+    width: 100%;
+    max-width: 100%;
+  }
+}

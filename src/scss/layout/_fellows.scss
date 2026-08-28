@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+// Fellows listing: filter UI + people grid. Not limited to .page-fellows so
+// debug aliases (e.g. /fellows-debug) get the same treatment.
+.stanford-people-grid.people-filtered {
+  .views-exposed-form {
+    width: 182px;
+
+    label[for="edit-tags"],
+    .form-item-tags > label,
+    #preact-tags > .form-item > label,
+    .hierarchy-preact-checkbox legend {
+      @include hide-visually;
+    }
+
+    // Hide BEF Apply immediately (do not wait for Drupal's .js / js-hide).
+    .form-actions,
+    .form-actions .form-submit,
+    input[data-drupal-selector="edit-submit-people-filtered"] {
+      display: none !important;
+    }
+
+    // Hide Preact radios from first paint until fellows-tags-filter.js
+    // injects .vpsa-fellows-tags-filter in their place.
+    #preact-tags,
+    .hierarchy-preact-checkbox {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .vpsa-fellows-tags-filter {
+      @include vicf-select--button;
+      margin: 0 0 1rem;
+    }
+  }
+}
+
+.page-fellows {
+  .stanford-page {
+
+    .paragraph.stanford-filtered-lists.su-list-headline {
+      @include hide-visually;
+      position: static;
+      height: 30px;
+    }
+
+    .stanford-people-grid.people-filtered {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .views-infinite-scroll-content-wrapper ul.su-list-unstyled {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+
+        @media (min-width: 576px) {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        @media (min-width: 992px) {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        @media (min-width: 1200px) {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        // NOTE: this is just for the fellows page, not sure if we want it for other pages.
+        .su-card.su-card--minimal {
+          justify-items: center;
+        }
+      }
+    }
+  }
+}

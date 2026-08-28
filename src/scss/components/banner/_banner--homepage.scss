@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+//
+// Homepage Banner variant for stanford_banner.
+// Class may be on a paragraph wrapper OR on .su-hero itself (edit preview).
+//
+
+.vicf-banner--homepage,
+.vicf-banner--homepage-with-logo {
+  &.overlay-right,
+  &.su-hero.overlay-right,
+  .su-hero.overlay-right {
+    .su-hero__card,
+    .su-card.su-hero__card {
+      @include grid-media-min('md') {
+        @include vicf-banner-card-inset-right(45px);
+        margin-left: auto;
+        margin-right: 0;
+        align-self: flex-end;
+        text-align: left;
+      }
+
+      @include grid-media-min('xl') {
+        @include vicf-banner-card-inset-right(133px);
+      }
+    }
+  }
+
+  .su-card__contents {
+    @media screen and (min-width: 768px) {
+      color: $su-color-white;
+    }
+
+    @include grid-media-min('md') {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    > span,
+    > .su-card__superhead {
+      display: none;
+    }
+
+    h2,
+    h3,
+    h4,
+    .su-font-splash {
+      @media screen and (min-width: 768px) {
+        color: $su-color-white;
+      }
+
+      @include vicf-type-5-bold;
+      margin-bottom: 0px;
+    }
+
+    p,
+    .su-banner-body,
+    .su-wysiwyg-text,
+    .field--name-su-banner-body {
+      color: $su-color-white;
+      @include vicf-type-2;
+    }
+  }
+
+  .su-button--secondary {
+    color: $su-color-white;
+    border-color: $su-color-white;
+
+    &:hover,
+    &:focus {
+      color: $su-color-white;
+      border-color: $su-color-white;
+    }
+  }
+
+  .su-hero__card,
+  .su-card.su-hero__card {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+
+    @media screen and (min-width: 768px) {
+      color: $su-color-white;
+    }
+
+    @include grid-media-min('md') {
+      @include vicf-banner-card-inset-left(45px);
+      max-width: 55%;
+    }
+
+    @include grid-media-min('xl') {
+      @include vicf-banner-card-inset-left(133px);
+      max-width: 604px;
+    }
+  }
+}
+
+// Homepage (no logo): description matches heading — black under 768px.
+.vicf-banner--homepage {
+  .su-card__contents {
+    p,
+    .su-banner-body,
+    .su-wysiwyg-text,
+    .field--name-su-banner-body {
+      @media screen and (max-width: 767px) {
+        color: $su-color-black;
+      }
+    }
+  }
+}
+
+.vicf-banner--homepage-with-logo {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 70%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 35vw;
+    max-width: 500px;
+    height: 500px;
+    background-image: url("../assets/SICF-logo-transparent.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    pointer-events: none;
+    z-index: 2;
+
+
+    @media screen and (max-width: 1160px) {
+      left: 80%;
+    }
+
+    @media screen and (max-width: 991px) {
+      left: 75%;
+    }
+
+    @media screen and (max-width: 767px) {
+      left: 50%;
+      top: 35vw;
+      transform: translate(-50%, -50%);
+      width: 55vw;
+    }
+  }
+
+  .su-card__contents {
+    max-width: 90%;
+    @include responsive-spacing('margin-bottom', 0);
+
+    @media screen and (max-width: 767px) {
+      color: $su-color-black;
+
+      h2,
+      h3,
+      h4,
+      span {
+        color: $su-color-black;
+      }
+    }
+  }
+
+  .su-hero__card,
+  .su-card.su-hero__card {
+    @media screen and (max-width: 767px) {
+      background: none;
+    }
+  }
+}

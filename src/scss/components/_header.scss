@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+//
+// Site branding lockup + mobile masthead menu.
+//
+
+#block-vpsa-icf-subtheme-branding.su-lockup {
+  .su-lockup__cell2 {
+    @include vicf-type-3;
+    max-width: 495px;
+    margin-top: 4px;
+  }
+
+  // When the masthead is narrow enough that the name sits under the wordmark,
+  // drop the vertical rule (Decanter only draws it from md up).
+  @include grid-media-max('md') {
+    .su-lockup__cell1 {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+    }
+
+    .su-lockup__cell2 {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+}
+
+// Keep the hamburger top-aligned with the lockup when the site name wraps.
+.su-masthead {
+  .su-masthead--inner {
+    @include grid-media-max('md') {
+      align-items: flex-start;
+    }
+  }
+
+  // Search was moved into Menu via preprocess_page — sit beside the nav and wrap.
+  .region-menu {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    row-gap: 1rem;
+
+    @include grid-media-max('md') {
+      align-self: flex-start;
+      margin-top: 0;
+    }
+
+    // Nav / Preact menu island.
+    .main,
+    .preact-main-menu,
+    [data-island='main-menu-island'] {
+      flex: 0 1 auto;
+      min-width: 0;
+      width: unset;
+    }
+
+    // Override Decanter’s masthead flex-column(4) — search is no longer a
+    // direct masthead sibling; size it within this flex row instead.
+    .su-site-search {
+      flex: 1 1 16rem;
+      min-width: 12rem;
+      max-width: 22rem;
+      width: auto;
+
+      > form {
+        margin-left: 0;
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+// Active main-nav item (Preact menu uses aria-current / iscurrent).
+// !important beats styled-components runtime styles from the menu island.
+.preact-main-menu {
+  a[aria-current='page'],
+  a[iscurrent='true'] {
+    color: $su-color-black !important;
+  }
+}

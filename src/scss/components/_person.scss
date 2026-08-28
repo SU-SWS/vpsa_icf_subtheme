@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+//
+// Shared Image Banner (stanford_banner) styles.
+//
+
+.node--stanford-person, .ds-entity--stanford-person {
+  .su-card {
+
+    .stanford-person.su-person-photo {
+      padding: 10px 0px;
+
+      img, picture {
+        max-width: 225px;
+
+        @media (min-width: 576px) {
+          max-width: 180px;
+        }
+      }
+    }
+    
+    .su-card__contents {
+      text-align: center;
+      
+      @media (max-width: 575px) {
+        padding-top: 10px;
+      }
+
+      .su-person-short-title {
+        @include vicf-type-1;
+        max-width: 90%;
+        margin: auto;
+      }
+
+      h3 {
+        @include vicf-type-1-bold;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// Fix the width in this case since the short title inside it is just text with no css selectors.
+.node--stanford-person.ds-entity--stanford-person .su-card .su-card__contents {
+  @include vicf-type-1;
+  max-width: 90%;
+
+  h3 {
+    @include vicf-type-1-bold;
+    margin-bottom: 0;
+  }
+}

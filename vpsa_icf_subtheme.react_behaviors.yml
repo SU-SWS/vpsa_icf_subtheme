@@ -1,0 +1,44 @@
+text_area_variant_info:  # part of the key after the :
+  id: text_area_style
+  label: 'Text Area Style'
+  bundles:
+    - paragraphs_type|stanford_wysiwyg
+  config:
+    text_area_style:
+      type: select
+      title: 'Text Area Style'
+      description: Select the text style & Image sizes for displaying this text area.
+      default_value: vpsa-text-area--regular
+      options:
+        vpsa-text-area--regular: Default (No override)
+        vpsa-text-area--fellows: Fellows Text Area variant
+      
+# React behaviors plugin definitions for VPSA ICF Subtheme.
+# Plugin property $defaults are defined in ReactBehaviorsPluginManager.
+banner_variant_info:
+  id: banner_type
+  label: 'Banner Paragraphs Type'
+  bundles:
+    - paragraphs_type|stanford_banner
+  config:
+    banner_variant:
+      type: select
+      title: 'Banner Style'
+      description: Select the display style for this image banner.
+      default_value: vicf-banner--default
+      options:
+        vicf-banner--default: Default
+        vicf-banner--quote: Quote Banner
+        vicf-banner--caption: Caption Banner
+        vicf-banner--homepage: Homepage Banner
+        vicf-banner--homepage-with-logo: Homepage Banner with ICF Logo Overlay
+        # vicf-banner--two-column-with-logo: Two-Column Banner with ICF Logo Overlay
+    banner_overlay:
+      type: select
+      title: Overlay
+      description: Add a tinted overlay over the banner image to improve text contrast.
+      empty_option: None
+      options:
+        vicf-banner-overlay--light: Light tint
+        vicf-banner-overlay--medium: Medium tint
+        vicf-banner-overlay--dark: Dark tint

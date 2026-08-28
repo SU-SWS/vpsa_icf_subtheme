@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+//
+// Banner image overlay tints.
+// Applied alongside Banner Style variants to improve white text contrast.
+// Class may be on a paragraph wrapper OR on .su-hero itself (edit preview).
+//
+
+@mixin vicf-banner-overlay($opacity) {
+  position: relative;
+
+  // When class is on .su-hero, tint this element; otherwise tint nested .su-hero.
+  &.su-hero,
+  .su-hero {
+    position: relative;
+
+    &::after {
+      // Tint overlays only apply from 768px up; mobile cards use their own tint.
+      display: none;
+
+      @include grid-media-min('md') {
+        background-color: rgba($su-color-black, $opacity);
+        bottom: 0;
+        content: '';
+        display: block;
+        left: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
+      }
+    }
+
+    @include grid-media-min('md') {
+      .su-hero__media {
+        z-index: 0;
+      }
+
+      // z-index only — do not force position (caption cards need absolute).
+      .su-hero__card,
+      .su-card {
+        z-index: 2;
+      }
+    }
+  }
+}
+
+.vicf-banner-overlay--light {
+  @include vicf-banner-overlay(0.25);
+}
+
+.vicf-banner-overlay--medium {
+  @include vicf-banner-overlay(0.45);
+}
+
+.vicf-banner-overlay--dark {
+  @include vicf-banner-overlay(0.65);
+}

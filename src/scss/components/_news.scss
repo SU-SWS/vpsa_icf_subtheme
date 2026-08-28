@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+//
+// Stanford News teasers.
+//
+
+.su-news-vertical-teaser,
+.ds-entity--stanford-news {
+  // Hide the Decanter action/external arrow after the title.
+  .su-card__link::after,
+  .su-link--action::after,
+  .su-link--external::after,
+  h2.su-link::after {
+    display: none !important;
+  }
+
+  .su-news-date {
+    display: none;
+  }
+}
