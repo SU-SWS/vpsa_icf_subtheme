@@ -105,6 +105,11 @@
         margin-right: 0;
       }
 
+      @media (max-width: 1199px) {
+        left: $vicf-content-gutter-lg;
+        right: $vicf-content-gutter-lg;
+      }
+
       @media (max-width: 991px) {
         left: $vicf-content-gutter-md;
         right: $vicf-content-gutter-md;
@@ -129,6 +134,11 @@
         right: $vicf-content-gutter;
         margin-left: 0;
         margin-right: 0;
+      }
+
+      @media (max-width: 1199px) {
+        left: $vicf-content-gutter-lg;
+        right: $vicf-content-gutter-lg;
       }
 
       @media (max-width: 991px) {

@@ -8,6 +8,7 @@
 $vicf-banner-content-max: 1440px;
 // Match section horizontal padding at each breakpoint.
 $vicf-content-gutter: 160px;
+$vicf-content-gutter-lg: 100px;
 $vicf-content-gutter-md: 6rem;
 $vicf-content-gutter-sm: 2rem;
 
@@ -21,6 +22,10 @@ $vicf-content-gutter-sm: 2rem;
 
   @media (max-width: 1599px) {
     left: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 1199px) {
+    left: #{"max(#{$inset}, #{$vicf-content-gutter-lg}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
   }
 
   @media (max-width: 991px) {
@@ -38,6 +43,10 @@ $vicf-content-gutter-sm: 2rem;
 
   @media (max-width: 1599px) {
     right: #{"max(#{$inset}, #{$vicf-content-gutter}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
+  }
+
+  @media (max-width: 1199px) {
+    right: #{"max(#{$inset}, #{$vicf-content-gutter-lg}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
   }
 
   @media (max-width: 991px) {
