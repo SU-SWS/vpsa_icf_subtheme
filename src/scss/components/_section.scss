@@ -7,8 +7,43 @@
   margin-bottom: -58px;
 }
 
+// Shared horizontal gutters (smallest breakpoint last so it wins).
+@mixin vicf-content-gutters {
+  @media (max-width: 1599px) {
+    padding-left: 160px;
+    padding-right: 160px;
+  }
+
+  @media (max-width: 991px) {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+
+  @media (max-width: 767px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+// Page-level sidebar + main: gutters wrap the whole two-column area.
+.content > .jumpstart-ui--two-column.centered-container {
+  box-sizing: border-box;
+  @include vicf-content-gutters;
+
+  @media screen and (max-width: 1499px) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  // Nested section layouts already sit inside the page gutter — don't double-pad.
+  .layout-background > .layout {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 // Full-bleed section backgrounds; content column capped at 1440px.
-// Gutters: smallest breakpoint last so it wins when multiple queries match.
+// Gutters apply here on pages without the jumpstart sidebar column.
 .layout-background {
   > .layout {
     max-width: 1440px;
@@ -16,22 +51,7 @@
     margin-right: auto;
     width: 100%;
     box-sizing: border-box;
-
-    // Keep content off the viewport edges below the 1440 centered range.
-    @media (max-width: 1599px) {
-      padding-left: 160px;
-      padding-right: 160px;
-    }
-
-    @media (max-width: 991px) {
-      padding-left: 6rem;
-      padding-right: 6rem;
-    }
-
-    @media (max-width: 767px) {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
+    @include vicf-content-gutters;
   }
 
   // Image banners inside a layout should still span the full viewport.
@@ -50,12 +70,5 @@
       text-align: left;
       color: $su-color-black;
     }
-  }
-}
-
-.content > .jumpstart-ui--two-column.centered-container {
-  @media screen and (max-width: 1499px) {
-    width: 100%;
-    max-width: 100%;
   }
 }
