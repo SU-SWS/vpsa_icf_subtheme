@@ -31,7 +31,7 @@
     > .field--name-su-banner-body,
     > p {
       order: 1;
-      @include vicf-type-2;
+      @include vicf-type-0;
       margin-bottom: 2.5rem;
 
       // Nested body copy (WYSIWYG wraps text in <p>) must get type-2 too,
