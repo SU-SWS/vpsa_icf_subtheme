@@ -37,7 +37,7 @@
       // Nested body copy (WYSIWYG wraps text in <p>) must get type-2 too,
       // or base theme paragraph styles win (~type-0 size).
       p {
-        @include vicf-type-2;
+        @include vicf-type-0;
       }
     }
 
