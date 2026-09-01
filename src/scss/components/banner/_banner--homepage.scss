@@ -170,5 +170,13 @@
     @media screen and (max-width: 767px) {
       background: none;
     }
+
+    .su-button,
+    .su-button--secondary,
+    a.su-button {
+      min-width: 150px;
+      box-sizing: border-box;
+      text-align: center;
+    }
   }
 }
