@@ -52,14 +52,14 @@
     .su-wysiwyg-text,
     .field--name-su-banner-body {
       color: $su-color-white;
-      @include vicf-type-1;
+      @include vicf-type-1-small;
       margin-bottom: 0;
       margin-left: 0;
       margin-right: 0;
 
       p {
         color: $su-color-white;
-        @include vicf-type-1;
+        @include vicf-type-1-small;
         margin-bottom: 0;
       }
 
