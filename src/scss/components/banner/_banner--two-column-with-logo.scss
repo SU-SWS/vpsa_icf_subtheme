@@ -15,9 +15,17 @@
 
     @include responsive-spacing('padding', 2);
 
+    // Full-width pages only — too much inset inside a sidebar main column.
     @media (min-width: 1024px) {
       padding-left: 17rem;
       padding-right: 17rem;
+    }
+
+    .jumpstart-ui--two-column & {
+      @media (min-width: 1024px) {
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
 
     > span,
@@ -61,6 +69,10 @@
 
     .su-hero__card,
     .su-card.su-hero__card {
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: auto;
       margin: 0;
       max-width: none;
       position: relative;
@@ -70,10 +82,22 @@
 
       @include grid-media-max('sm') {
         background-color: rgba($su-color-black, 0.7);
+        padding-left: $vicf-content-gutter-sm;
+        padding-right: $vicf-content-gutter-sm;
+        box-sizing: border-box;
       }
 
+      // Stretch edge-to-edge over the hero image (same as caption).
       @include grid-media-min('md') {
         position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
       }
     }
   }

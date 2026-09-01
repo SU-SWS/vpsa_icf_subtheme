@@ -122,9 +122,9 @@
       left: 70%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 35vw;
+      width: 30vw;
       max-width: 500px;
-      height: 500px;
+      height: 100%;
       background-image: url("../assets/SICF-logo-transparent.png");
       background-repeat: no-repeat;
       background-size: contain;
@@ -169,14 +169,6 @@
   .su-card.su-hero__card {
     @media screen and (max-width: 767px) {
       background: none;
-    }
-
-    .su-button,
-    .su-button--secondary,
-    a.su-button {
-      min-width: 150px;
-      box-sizing: border-box;
-      text-align: center;
     }
   }
 }
