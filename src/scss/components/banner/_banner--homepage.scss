@@ -110,38 +110,42 @@
 }
 
 .vicf-banner--homepage-with-logo {
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 70%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 35vw;
-    max-width: 500px;
-    height: 500px;
-    background-image: url("../assets/SICF-logo-transparent.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    pointer-events: none;
-    z-index: 2;
-
-
-    @media screen and (max-width: 1160px) {
-      left: 80%;
-    }
-
-    @media screen and (max-width: 991px) {
-      left: 75%;
-    }
-
-    @media screen and (max-width: 767px) {
-      left: 50%;
-      top: 35vw;
+  // Logo must be positioned against .su-hero (has min-height). The outer
+  // wrapper can be shorter when .su-hero__media is position:absolute, which
+  // made top: 50% place the logo too high. Use ::before so overlay ::after
+  // (tint) can still apply on .su-hero.
+  &.su-hero,
+  .su-hero {
+    &::before {
+      content: "";
+      position: absolute;
+      left: 70%;
+      top: 50%;
       transform: translate(-50%, -50%);
-      width: 55vw;
+      width: 30vw;
+      max-width: 500px;
+      height: 90%;
+      background-image: url("../assets/SICF-logo-transparent.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      pointer-events: none;
+      z-index: 2;
+
+      @media screen and (max-width: 1160px) {
+        left: 80%;
+      }
+
+      @media screen and (max-width: 991px) {
+        left: 75%;
+      }
+
+      @media screen and (max-width: 767px) {
+        left: 50%;
+        top: 35vw;
+        transform: translate(-50%, -50%);
+        width: 55vw;
+      }
     }
   }
 

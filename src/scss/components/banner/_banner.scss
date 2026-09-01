@@ -15,6 +15,30 @@ $vicf-content-gutter-sm: 2rem;
 // Keep hero cards inside the 1440px content column on wide screens.
 // Align to the column edge (with the design inset as a minimum).
 // Section gutters apply only below 1600px (narrower breakpoints last).
+// Sidebar pages already apply page gutters on the two-column wrapper —
+// use the design inset only so cards are not double-padded.
+@mixin vicf-banner-card-inset-nested-left($inset) {
+  .jumpstart-ui--two-column & {
+    left: $inset;
+    right: auto;
+
+    @media (max-width: 1599px) {
+      left: $inset;
+    }
+  }
+}
+
+@mixin vicf-banner-card-inset-nested-right($inset) {
+  .jumpstart-ui--two-column & {
+    left: auto;
+    right: $inset;
+
+    @media (max-width: 1599px) {
+      right: $inset;
+    }
+  }
+}
+
 @mixin vicf-banner-card-inset-left($inset) {
   // String-wrap so Sass does not treat max() as its own math function.
   left: #{"max(#{$inset}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
@@ -35,6 +59,8 @@ $vicf-content-gutter-sm: 2rem;
   @media (max-width: 767px) {
     left: #{"max(#{$inset}, #{$vicf-content-gutter-sm}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
   }
+
+  @include vicf-banner-card-inset-nested-left($inset);
 }
 
 @mixin vicf-banner-card-inset-right($inset) {
@@ -56,6 +82,8 @@ $vicf-content-gutter-sm: 2rem;
   @media (max-width: 767px) {
     right: #{"max(#{$inset}, #{$vicf-content-gutter-sm}, calc((100% - #{$vicf-banner-content-max}) / 2))"};
   }
+
+  @include vicf-banner-card-inset-nested-right($inset);
 }
 
 .ptype-stanford-banner {
@@ -69,6 +97,25 @@ $vicf-content-gutter-sm: 2rem;
     .su-button,
     .su-card__button a {
       @include vicf-type-0;
+    }
+  }
+
+  // Embedded images in banner card body only (not the hero media).
+  .su-hero__card,
+  .su-card.su-hero__card,
+  .su-card__contents {
+    .media-entity-wrapper.image,
+    .media.image {
+      width: 293px;
+      max-width: 100%;
+    }
+
+    .media-entity-wrapper.image img,
+    .media.image img {
+      width: 293px;
+      height: 293px;
+      max-width: 100%;
+      object-fit: cover;
     }
   }
 }

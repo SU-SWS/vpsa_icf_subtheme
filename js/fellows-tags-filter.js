@@ -7,6 +7,9 @@
  */
 (function (Drupal, once) {
   const ALL_VALUE = '__all__';
+  // Only auto-select the latest year once per page load so choosing
+  // "All Fellows" (clears the real select) is not overridden on AJAX remount.
+  let autoDefaultApplied = false;
 
   function yearLabel(text) {
     return String(text || '')
@@ -18,7 +21,7 @@
   }
 
   function collectOptions(realSelect) {
-    const options = [{ value: ALL_VALUE, label: Drupal.t('All Fellows') }];
+    const years = [];
     const seen = new Set();
 
     Array.from(realSelect.options).forEach((option) => {
@@ -27,26 +30,37 @@
         return;
       }
       seen.add(option.value);
-      options.push({
+      years.push({
         value: option.value,
+        year: Number(text),
         label: Drupal.t('@year Fellows', { '@year': text }),
       });
     });
 
-    return options;
+    // Latest year first, then earlier years; All Fellows last.
+    years.sort((a, b) => b.year - a.year);
+
+    return years
+      .map(({ value, label }) => ({ value, label }))
+      .concat([{ value: ALL_VALUE, label: Drupal.t('All Fellows') }]);
   }
 
-  function currentValue(realSelect) {
+  function latestYearValue(options) {
+    const latest = options.find((item) => item.value !== ALL_VALUE);
+    return latest ? latest.value : ALL_VALUE;
+  }
+
+  function selectedYearValue(realSelect) {
     const selected = Array.from(realSelect.selectedOptions)
       .map((option) => option.value)
       .filter(Boolean);
     if (!selected.length) {
-      return ALL_VALUE;
+      return null;
     }
     const yearOption = Array.from(realSelect.options).find((option) => (
       selected.includes(option.value) && /^\d{4}$/.test(yearLabel(option.textContent))
     ));
-    return yearOption ? yearOption.value : ALL_VALUE;
+    return yearOption ? yearOption.value : null;
   }
 
   function applyValue(realSelect, value) {
@@ -155,7 +169,26 @@
       select.appendChild(option);
     });
 
-    select.value = currentValue(realSelect);
+    const selectedYear = selectedYearValue(realSelect);
+    let initial = selectedYear;
+    let shouldApplyDefault = false;
+
+    if (!initial) {
+      if (!autoDefaultApplied) {
+        initial = latestYearValue(options);
+        autoDefaultApplied = true;
+        shouldApplyDefault = initial !== ALL_VALUE;
+      }
+      else {
+        initial = ALL_VALUE;
+      }
+    }
+
+    select.value = initial;
+    if (shouldApplyDefault) {
+      applyValue(realSelect, initial);
+    }
+
     select.addEventListener('change', () => {
       applyValue(realSelect, select.value);
     });

@@ -14,28 +14,31 @@
     }
     
   }
-
-  // Embedded media images default to 293px square.
-  .media-entity-wrapper.image,
-  .media.image {
-    width: 293px;
-    max-width: 100%;
-  }
-
-  .media-entity-wrapper.image img,
-  .media.image img {
-    width: 293px;
-    height: 293px;
-    max-width: 100%;
-    object-fit: cover;
-  }
 }
 
+// Fellows text-area variant: embedded media images default to 214px square.
+// Class is on the paragraph wrapper (react behaviors); keep .su-wysiwyg-text
+// form in case it is applied directly on the field.
+.vpsa-text-area--fellows,
 .su-wysiwyg-text.vpsa-text-area--fellows {
   // Align with the left text edge.
   .su-quote-text,
   p.su-quote-text {
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .media-entity-wrapper.image,
+  .media.image {
+    width: 214px;
+    max-width: 100%;
+  }
+
+  .media-entity-wrapper.image img,
+  .media.image img {
+    width: 214px;
+    height: 214px;
+    max-width: 100%;
+    object-fit: cover;
   }
 }

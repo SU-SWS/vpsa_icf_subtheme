@@ -24,9 +24,17 @@
 
     @include responsive-spacing('padding', 2);
 
+    // Full-width pages only — too much inset inside a sidebar main column.
     @media (min-width: 1024px) {
       padding-left: 17rem;
       padding-right: 17rem;
+    }
+
+    .jumpstart-ui--two-column & {
+      @media (min-width: 1024px) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
     }
 
     > span,
@@ -44,14 +52,14 @@
     .su-wysiwyg-text,
     .field--name-su-banner-body {
       color: $su-color-white;
-      @include vicf-type-1;
+      @include vicf-type-1-small;
       margin-bottom: 0;
       margin-left: 0;
       margin-right: 0;
 
       p {
         color: $su-color-white;
-        @include vicf-type-1;
+        @include vicf-type-1-small;
         margin-bottom: 0;
       }
 
@@ -85,35 +93,17 @@
       box-sizing: border-box;
     }
 
+    // Stretch edge-to-edge over the hero image; text inset lives on .su-card__contents.
     @include grid-media-min('md') {
-      // Same centering as .layout-background > .layout (margin: auto + max-width).
       position: absolute;
       left: 0;
       right: 0;
       width: 100%;
-      max-width: $vicf-banner-content-max;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: none;
+      margin-left: 0;
+      margin-right: 0;
       padding-left: 0;
       padding-right: 0;
-
-      @media (max-width: 1599px) {
-        left: $vicf-content-gutter;
-        right: $vicf-content-gutter;
-        width: auto;
-        margin-left: 0;
-        margin-right: 0;
-      }
-
-      @media (max-width: 1199px) {
-        left: $vicf-content-gutter-lg;
-        right: $vicf-content-gutter-lg;
-      }
-
-      @media (max-width: 991px) {
-        left: $vicf-content-gutter-md;
-        right: $vicf-content-gutter-md;
-      }
     }
   }
 
@@ -125,26 +115,9 @@
     .su-card {
       left: 0;
       right: 0;
-      margin-left: auto;
-      margin-right: auto;
+      margin-left: 0;
+      margin-right: 0;
       text-align: center;
-
-      @media (max-width: 1599px) {
-        left: $vicf-content-gutter;
-        right: $vicf-content-gutter;
-        margin-left: 0;
-        margin-right: 0;
-      }
-
-      @media (max-width: 1199px) {
-        left: $vicf-content-gutter-lg;
-        right: $vicf-content-gutter-lg;
-      }
-
-      @media (max-width: 991px) {
-        left: $vicf-content-gutter-md;
-        right: $vicf-content-gutter-md;
-      }
     }
   }
 }
