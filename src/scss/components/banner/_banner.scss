@@ -71,4 +71,23 @@ $vicf-content-gutter-sm: 2rem;
       @include vicf-type-0;
     }
   }
+
+  // Embedded images in banner card body only (not the hero media).
+  .su-hero__card,
+  .su-card.su-hero__card,
+  .su-card__contents {
+    .media-entity-wrapper.image,
+    .media.image {
+      width: 293px;
+      max-width: 100%;
+    }
+
+    .media-entity-wrapper.image img,
+    .media.image img {
+      width: 293px;
+      height: 293px;
+      max-width: 100%;
+      object-fit: cover;
+    }
+  }
 }
