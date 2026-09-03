@@ -15,30 +15,37 @@
     position: relative;
     width: 100%;
     max-width: none;
-    // Height comes from the in-flow image only — parent min-heights leave a grey band.
-    height: auto;
-    min-height: 0;
     overflow: visible;
   }
 
-  // Keep media in-flow so the hero gets the image height. Parent themes often
-  // position media absolute, which collapses the hero when the card is also
-  // absolute (especially inside .jumpstart-ui--two-column).
+  // Keep media in-flow so the hero gets height. Parent themes often position
+  // media absolute, which collapses the hero when the card is also absolute.
   .su-hero__media {
     position: relative;
     inset: auto;
     width: 100%;
-    height: auto;
-    // Shared banner rule uses 4/3 under 768px; that taller box shows as a grey gap
-    // under wide banner images before the caption.
-    aspect-ratio: auto;
-    min-height: 0;
     z-index: 0;
 
     img {
       display: block;
       width: 100%;
       height: auto;
+    }
+
+    // Keep shared 4/3 mobile frame; crop the wide banner image to fill it
+    // so no grey band shows above the caption.
+    @include grid-media-max('sm') {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+
+      img,
+      picture,
+      picture img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
     }
   }
 
