@@ -15,9 +15,7 @@
     position: relative;
     width: 100%;
     max-width: none;
-    // Height comes from the in-flow image only — parent min-heights leave a grey band.
-    height: auto;
-    min-height: 0;
+    // Avoid flex/absolute collapse inside sidebar main columns.
     overflow: visible;
   }
 
@@ -29,10 +27,6 @@
     inset: auto;
     width: 100%;
     height: auto;
-    // Shared banner rule uses 4/3 under 768px; that taller box shows as a grey gap
-    // under wide banner images before the caption.
-    aspect-ratio: auto;
-    min-height: 0;
     z-index: 0;
 
     img {
@@ -118,24 +112,35 @@
     text-align: center;
     transform: none;
     z-index: 2;
-    // Always overlay the image — stacking below at small sizes left a grey gap
-    // when the hero/media box was taller than the photo.
-    position: absolute;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: auto;
-    max-width: none;
-    margin: 0;
-    padding-left: 0;
-    padding-right: 0;
 
     @include grid-media-max('sm') {
       background-color: rgba($su-color-black, 0.7);
+      position: relative;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      top: auto;
+      width: 100%;
+      max-width: none;
+      margin: 0;
       padding-left: $vicf-content-gutter-sm;
       padding-right: $vicf-content-gutter-sm;
       box-sizing: border-box;
+    }
+
+    // Overlay the bottom of the in-flow image; stretch edge-to-edge.
+    @include grid-media-min('md') {
+      position: absolute;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: auto;
+      max-width: none;
+      margin: 0;
+      padding-left: 0;
+      padding-right: 0;
+      transform: none;
     }
   }
 }
