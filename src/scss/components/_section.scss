@@ -65,6 +65,13 @@
     padding-left: 0;
     padding-right: 0;
   }
+
+  // Caption (and other full-bleed heroes) must not keep section gutters under 1600px.
+  > .layout:has(.vicf-banner--caption) {
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .ptype-stanford-layout {
