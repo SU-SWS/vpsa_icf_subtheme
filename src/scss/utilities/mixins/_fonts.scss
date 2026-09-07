@@ -13,7 +13,7 @@
 @mixin vicf-type-5 {
   font-size: 3.2rem;
   font-weight: 700;
-  line-height: 130%;
+  line-height: 105%;
   letter-spacing: 0.32px;
 
   @media (min-width: 576px) {
@@ -39,7 +39,7 @@
 
   @media (min-width: 1500px) {
     font-size: 5.8rem;
-    line-height: 140%;
+    line-height: 107%;
     letter-spacing: 0.58px;
   }
 }
