@@ -59,7 +59,11 @@
     .field--name-su-banner-body {
       color: $su-color-white;
       @include vicf-type-2;
-
+    }  
+    
+    .su-banner-body,
+    .su-wysiwyg-text,
+    .field--name-su-banner-body {
       @media screen and (max-width: 767px) {
         margin-top: 5px;
       }
