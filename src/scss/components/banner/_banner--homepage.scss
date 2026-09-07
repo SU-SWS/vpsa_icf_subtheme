@@ -59,6 +59,10 @@
     .field--name-su-banner-body {
       color: $su-color-white;
       @include vicf-type-2;
+
+      @media screen and (max-width: 767px) {
+        margin-top: 5px;
+      }
     }
   }
 
