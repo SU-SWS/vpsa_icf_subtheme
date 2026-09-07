@@ -11,38 +11,54 @@
 
   &.su-hero,
   .su-hero {
-    background: transparent;
-    background-color: transparent;
     display: block;
-    height: auto;
-    max-width: none;
-    // Parent .su-hero min-height (fog grey) is taller than the image in a
-    // sidebar main column, which leaves a grey bar below the photo.
-    min-height: 0;
-    overflow: hidden;
-    padding: 0;
     position: relative;
     width: 100%;
+    max-width: none;
+    // Avoid flex/absolute collapse inside sidebar main columns.
+    overflow: visible;
   }
 
   // Keep media in-flow so the hero gets the image height. Parent themes often
   // position media absolute, which collapses the hero when the card is also
   // absolute (especially inside .jumpstart-ui--two-column).
   .su-hero__media {
-    background: transparent;
-    height: auto;
-    inset: auto;
-    min-height: 0;
     position: relative;
+    inset: auto;
     width: 100%;
+    height: auto;
     z-index: 0;
 
-    picture,
     img {
       display: block;
-      height: auto;
-      max-width: 100%;
       width: 100%;
+    }
+  }
+
+  // Sidebar main column: parent .su-hero min-height (fog grey) is taller than
+  // the narrower image, which leaves a grey bar below the photo.
+  .jumpstart-ui--two-column & {
+    &.su-hero,
+    .su-hero {
+      background: transparent;
+      background-color: transparent;
+      height: auto;
+      min-height: 0;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .su-hero__media {
+      background: transparent;
+      min-height: 0;
+
+      picture,
+      img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+      }
     }
   }
 

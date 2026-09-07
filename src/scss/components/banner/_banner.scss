@@ -86,7 +86,7 @@ $vicf-content-gutter-sm: 2rem;
   @include vicf-banner-card-inset-nested-right($inset);
 }
 
-.ptype-stanford-banner:not(.vicf-banner--caption) {
+.ptype-stanford-banner {
   @include grid-media-max('sm') {
     .su-hero__media {
       aspect-ratio: 4 / 3;
