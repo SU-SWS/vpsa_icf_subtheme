@@ -6,6 +6,12 @@
 
 .su-news-vertical-teaser,
 .ds-entity--stanford-news {
+  box-shadow: none;
+
+  .su-card {
+    box-shadow: none;
+  }
+
   // Hide the Decanter action/external arrow after the title.
   .su-card__link::after,
   .su-link--action::after,
