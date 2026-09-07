@@ -35,29 +35,32 @@
     }
   }
 
-  // Sidebar main column: parent .su-hero min-height (fog grey) is taller than
-  // the narrower image, which leaves a grey bar below the photo.
-  .jumpstart-ui--two-column & {
-    &.su-hero,
-    .su-hero {
-      background: transparent;
-      background-color: transparent;
-      height: auto;
-      min-height: 0;
-      overflow: hidden;
-      padding: 0;
-    }
-
-    .su-hero__media {
-      background: transparent;
-      min-height: 0;
-
-      picture,
-      img {
-        display: block;
+  // Sidebar main column (lg+): parent .su-hero min-height (fog grey) is taller
+  // than the narrower image, which leaves a grey bar below the photo.
+  // Below 992px the sidebar stacks, so keep the original caption styles.
+  @media (min-width: 992px) {
+    .jumpstart-ui--two-column & {
+      &.su-hero,
+      .su-hero {
+        background: transparent;
+        background-color: transparent;
         height: auto;
-        max-width: 100%;
-        width: 100%;
+        min-height: 0;
+        overflow: hidden;
+        padding: 0;
+      }
+
+      .su-hero__media {
+        background: transparent;
+        min-height: 0;
+
+        picture,
+        img {
+          display: block;
+          height: auto;
+          max-width: 100%;
+          width: 100%;
+        }
       }
     }
   }
