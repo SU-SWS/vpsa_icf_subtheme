@@ -19,8 +19,15 @@
     .content:has(> .jumpstart-ui--two-column > div:nth-child(2)) {
       // background-color: $vicf-color-poppy-light;
 
+      .jumpstart-ui--two-column .left-region {
+        @media (min-width: 992px) {
+          padding-top: 5rem;
+        }
+      }
+ 
       .paragraph-item.ptype-stanford-layout:nth-child(1) {
         position: relative;
+        padding-top: 5rem;
         background-color: $vicf-color-poppy-light;
 
         &::before,
