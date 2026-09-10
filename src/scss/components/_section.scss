@@ -41,6 +41,7 @@
   }
 
   // Nested section layouts already sit inside the page gutter — don't double-pad.
+  .layout-background,
   .layout-background > .layout {
     padding-left: 0;
     padding-right: 0;
