@@ -11,8 +11,9 @@ text_area_variant_info:  # part of the key after the :
       default_value: vpsa-text-area--regular
       options:
         vpsa-text-area--regular: Default (No override)
-        vpsa-text-area--fellows: Fellows Text Area variant
-      
+        vpsa-text-area--fellows: Fellows 214px
+        vpsa-text-area--alt-image-styles: Alternative Image Styles
+
 # React behaviors plugin definitions for VPSA ICF Subtheme.
 # Plugin property $defaults are defined in ReactBehaviorsPluginManager.
 banner_variant_info:
