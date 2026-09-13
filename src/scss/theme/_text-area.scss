@@ -12,33 +12,73 @@
     @media (min-width: 992px) {
       line-height: 140%;
     }
-    
+
   }
 }
 
-// Fellows text-area variant: embedded media images default to 214px square.
-// Class is on the paragraph wrapper (react behaviors); keep .su-wysiwyg-text
-// form in case it is applied directly on the field.
-.vpsa-text-area--fellows,
-.su-wysiwyg-text.vpsa-text-area--fellows {
-  // Align with the left text edge.
-  .su-quote-text,
-  p.su-quote-text {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
+// Circle-cropped embedded images for text-area variants.
+//
+// Shared by the `Fellows 214px` and `Alternative Image Styles` variants, which
+// differ only in diameter. Intended for the `medium_square` image style (a
+// 220x220 crop), which already ships square pixels so the circle mask does not
+// distort the subject.
+//
+// SCOPE NOTE: these selectors match *every* embedded media image inside a text
+// area using the variant, not only `medium_square`. A non-square source (a wide
+// banner, a portrait headshot) is center-cropped to square by `object-fit:
+// cover` before the circle is applied. That is intentional — the variant is an
+// opt-in, per-paragraph choice — but authors should only pick it for paragraphs
+// whose images are square crops.
+@mixin vicf-text-area-circle-images($size) {
   .media-entity-wrapper.image,
   .media.image {
-    // width: 214px;
     max-width: 100%;
   }
 
   .media-entity-wrapper.image img,
   .media.image img {
-    // width: 214px;
-    // height: 214px;
+    // Override the width/height attributes the image style writes inline.
+    width: $size;
+    height: $size;
     max-width: 100%;
     object-fit: cover;
+    border-radius: 50%;
   }
+
+  // Keep CKEditor's alignment classes working at the reduced width.
+  .align-center.media-entity-wrapper.image {
+    display: flex;
+    justify-content: center;
+  }
+
+  // Captioned images: constrain the figure, not just the img, so the caption
+  // wraps under the circle rather than across the original crop box.
+  figure.align-center {
+    width: $size;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  figcaption {
+    text-align: center;
+  }
+}
+
+// `Fellows 214px` text-area variant — 214px circles.
+//
+// Class name is kept as `--fellows` on purpose: option keys are persisted in
+// paragraph behavior settings, so renaming the key would orphan every existing
+// author selection. Only the dropdown label changed.
+//
+// Class is on the paragraph wrapper (react behaviors); keep the
+// .su-wysiwyg-text form in case it is applied directly on the field.
+.vpsa-text-area--fellows,
+.su-wysiwyg-text.vpsa-text-area--fellows {
+  @include vicf-text-area-circle-images(214px);
+}
+
+// `Alternative Image Styles` text-area variant — 180px circles.
+.vpsa-text-area--alt-image-styles,
+.su-wysiwyg-text.vpsa-text-area--alt-image-styles {
+  @include vicf-text-area-circle-images(180px);
 }
