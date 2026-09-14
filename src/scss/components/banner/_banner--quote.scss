@@ -31,13 +31,13 @@
     > .field--name-su-banner-body,
     > p {
       order: 1;
-      @include vicf-type-0;
+      @include vicf-type-2-quote-banner;
       margin-bottom: 2.5rem;
 
       // Nested body copy (WYSIWYG wraps text in <p>) must get type-2 too,
       // or base theme paragraph styles win (~type-0 size).
       p {
-        @include vicf-type-0;
+        @include vicf-type-2-quote-banner;
       }
     }
 
