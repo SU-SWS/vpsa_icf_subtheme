@@ -49,10 +49,21 @@ The following Stanford Sites section background colors are overridden in `src/sc
 | SCSS mixin | `vicf-[name]` | `vicf-button--primary` |
 | CSS class | `.vicf-[component]` | `.vicf-card` |
 
-## Banner edit previews (`vpsa_icf_banner`)
+## Paragraph variants
 
-Stanford Sites edits content under Claro/Gin, so this theme’s PHP and CSS do not run in Layout Paragraphs / paragraph widget previews. The companion module in `modules/vpsa_icf_banner` applies `vicf-banner--*` classes and attaches `vpsa_icf_subtheme/allpages` during those previews.
+Author-selectable variants (banner styles, banner overlay, text area image
+styles) are declared in `vpsa_icf_subtheme.react_behaviors.yml` as React
+Paragraphs behavior plugins. Each option key *is* the CSS class that gets
+emitted; `vpsa_icf_subtheme.theme` reads the setting and appends the class, and
+the styles live in `src/scss/`.
 
-1. Copy or symlink `modules/vpsa_icf_banner` into the site’s `modules/custom/` (Drupal does not discover modules inside a theme directory).
-2. Enable: `drush en vpsa_icf_banner -y`
-3. Clear caches.
+### Known limitation: variants do not render in edit previews
+
+Stanford Sites edits content under Claro/Gin, so this theme’s preprocess
+functions and CSS do not run in Layout Paragraphs / paragraph widget previews.
+Authors pick a variant and see no visual change until they save and view the
+page on the front end.
+
+This cannot be fixed from the theme, and Stanford Sites does not allow
+per-site custom modules, so there is no workaround available to us. Treat it as
+expected behavior and note it in author-facing documentation.
