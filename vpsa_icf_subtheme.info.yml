@@ -1,6 +1,6 @@
 name: VPSA ICF Subtheme
 type: theme
-description: 'Stanford Sites subtheme for VPSA ICF Subtheme.'
+description: 'Subtheme off of Stanford Basic for Indigenous Communities Fellowship site.'
 package: Stanford
 version: 1.1.1
 core_version_requirement:  ^10 || ^11 || ^12
