@@ -186,8 +186,10 @@ function vpsa_icf_subtheme_preprocess_ds_entity_view(array &$variables) {
 /**
  * Implements hook_ENTITY_TYPE_view_alter() for paragraph.
  *
- * Front-end only. Edit/Layout Paragraphs previews use Claro/Gin, so the
- * companion module vpsa_icf_banner owns preview class + CSS attachment.
+ * Front-end only. Edit/Layout Paragraphs previews render under Claro/Gin, where
+ * theme hooks do not run, so variant classes are absent there. Stanford Sites
+ * does not allow per-site custom modules, so that is a known limitation rather
+ * than something to work around here.
  */
 function vpsa_icf_subtheme_paragraph_view_alter(array &$build, ParagraphInterface $paragraph, $display) {
   if ($paragraph->bundle() === 'stanford_banner') {
