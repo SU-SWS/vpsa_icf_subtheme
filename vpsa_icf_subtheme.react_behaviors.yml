@@ -11,8 +11,8 @@ text_area_variant_info:  # part of the key after the :
       default_value: vpsa-text-area--regular
       options:
         vpsa-text-area--regular: Default (No override)
-        vpsa-text-area--fellows: Fellows 214px
-        vpsa-text-area--alt-image-styles: Alternative Image Styles
+        vpsa-text-area--fellows: Fellows Circle
+        vpsa-text-area--alt-image-styles: ICF Circle
 
 layout_variant_info:
   id: layout_style
