@@ -82,24 +82,36 @@
         // Replaces an earlier `justify-items: center` here, which never worked
         // in any browser: .su-card--minimal has no `display` of its own, so it
         // is a plain block container, and `justify-items` has no effect on
-        // block-level children. Chrome only appeared to honor it.
+        // block-level children.
         //
         // The card markup puts the image *outside* .su-card__contents (see
-        // jumpstart_ui/components/card/card.twig), so both have to be handled.
+        // jumpstart_ui/components/card/card.twig), so the card has two block
+        // children to line up. Making the card a flex column gives them a
+        // single shared centering axis.
+        //
+        // An earlier attempt used `text-align: center` plus auto margins on the
+        // image. That centered each child by a *different* mechanism — the
+        // image against the card's content box, the text as a line inside
+        // .su-card__contents — so any horizontal asymmetry in
+        // .su-card__contents offset the text relative to the image. It read as
+        // a slight left shift in both browsers.
         .su-card.su-card--minimal {
-          // Centers all inline content: the name link and the short title.
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           text-align: center;
 
-          // The base theme sets `img { display: block }`, so images are
-          // block-level and text-align cannot center them. Auto margins do.
-          // Applied to the usual media wrappers too, in case the derivative is
-          // narrower than the card.
-          img,
-          figure,
-          .su-media,
-          .su-media__wrapper {
-            margin-left: auto;
-            margin-right: auto;
+          // align-items shrinks each child to its content width; without this
+          // .su-card__contents can get narrower than its text wants and wrap
+          // early.
+          .su-card__contents {
+            width: 100%;
+            // Neutralize any inherited horizontal offset so the text line
+            // centers on the same axis as the image box above it.
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
           }
         }
       }
