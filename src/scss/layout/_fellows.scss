@@ -69,9 +69,33 @@
           grid-template-columns: repeat(4, minmax(0, 1fr));
         }
 
-        // NOTE: this is just for the fellows page, not sure if we want it for other pages.
+        // Center each card's own contents: headshot, linked name, short title.
+        //
+        // NOTE: this is just for the fellows page, not sure if we want it for
+        // other pages.
+        //
+        // Replaces an earlier `justify-items: center` here, which never worked
+        // in any browser: .su-card--minimal has no `display` of its own, so it
+        // is a plain block container, and `justify-items` has no effect on
+        // block-level children. Chrome only appeared to honor it.
+        //
+        // The card markup puts the image *outside* .su-card__contents (see
+        // jumpstart_ui/components/card/card.twig), so both have to be handled.
         .su-card.su-card--minimal {
-          justify-items: center;
+          // Centers all inline content: the name link and the short title.
+          text-align: center;
+
+          // The base theme sets `img { display: block }`, so images are
+          // block-level and text-align cannot center them. Auto margins do.
+          // Applied to the usual media wrappers too, in case the derivative is
+          // narrower than the card.
+          img,
+          figure,
+          .su-media,
+          .su-media__wrapper {
+            margin-left: auto;
+            margin-right: auto;
+          }
         }
       }
     }
