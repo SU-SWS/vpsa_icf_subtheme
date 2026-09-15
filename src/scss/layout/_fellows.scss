@@ -4,7 +4,12 @@
 // debug aliases (e.g. /fellows-debug) get the same treatment.
 .stanford-people-grid.people-filtered {
   .views-exposed-form {
-    width: 182px;
+    // min-width, not width: a hard 182px squeezed the tags select, and because
+    // its padding reserves room for the caret the option text was the first
+    // thing to lose space — visibly clipped in Firefox, which measures the
+    // select's intrinsic text width slightly wider than Chrome. 182px stays as
+    // the design floor; longer option labels are allowed to make it wider.
+    min-width: 182px;
 
     label[for="edit-tags"],
     .form-item-tags > label,

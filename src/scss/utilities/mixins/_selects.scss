@@ -13,6 +13,19 @@
 // Optional: add .is-open on the wrapper while the menu is open (for browsers
 // without :open / :has support). Prefer CSS :has(select:open) when available.
 
+// Caret geometry, shared by the ::after and the select's right padding so they
+// can never drift apart.
+//
+// FIREFOX: the select's right padding must clear the caret entirely. Firefox
+// computes a `width: auto` select's intrinsic width from the widest option and
+// measures that text slightly wider than Chrome, so a reserve that only just
+// fits in Chrome lets the caret sit on top of the last character in Firefox.
+// $vicf-select-caret-reserve is the caret's right offset + its width + a gap.
+$vicf-select-caret-inset: 1em;   // distance from the right edge to the caret
+$vicf-select-caret-width: 0.75em;
+$vicf-select-caret-gap: 0.75em;  // clear space between text and caret
+$vicf-select-caret-reserve: $vicf-select-caret-inset + $vicf-select-caret-width + $vicf-select-caret-gap;
+
 @mixin vicf-select--button {
   position: relative;
   display: inline-block;
@@ -28,7 +41,10 @@
     width: auto;
     max-width: 100%;
     min-height: 2.5rem;
-    padding: 0.6em 2.5em 0.6em 1.25em;
+    // Padding is inside max-width, so a constrained parent shortens the text
+    // rather than pushing it under the caret.
+    box-sizing: border-box;
+    padding: 0.6em $vicf-select-caret-reserve 0.6em 1.25em;
     border: 0;
     background-color: $su-color-digital-red;
     background-image: none;
@@ -57,8 +73,8 @@
     content: '';
     position: absolute;
     top: 50%;
-    right: 1em;
-    width: 0.75em;
+    right: $vicf-select-caret-inset;
+    width: $vicf-select-caret-width;
     height: 0.5em;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23ffffff' d='M1.4 0.6 6 5.2 10.6 0.6 12 2 6 8 0 2z'/%3E%3C/svg%3E");
