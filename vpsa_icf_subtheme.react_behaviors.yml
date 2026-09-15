@@ -14,6 +14,20 @@ text_area_variant_info:  # part of the key after the :
         vpsa-text-area--fellows: Fellows 214px
         vpsa-text-area--alt-image-styles: Alternative Image Styles
 
+layout_variant_info:
+  id: layout_style
+  label: 'Layout Paragraph Type'
+  bundles:
+    - paragraphs_type|stanford_layout
+  config:
+    section_color:
+      type: select
+      title: Section background color
+      description: Choose a background color that spans the full page width. Applies wherever the section sits on the page.
+      empty_option: Default
+      options:
+        vicf-section-color--light-yellow: Light Yellow
+
 # React behaviors plugin definitions for VPSA ICF Subtheme.
 # Plugin property $defaults are defined in ReactBehaviorsPluginManager.
 banner_variant_info:
