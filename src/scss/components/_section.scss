@@ -85,3 +85,63 @@
     }
   }
 }
+
+// Section background-color variants (react behaviors: layout_variant_info).
+//
+// The class lands on the same element as .ptype-stanford-layout. On pages with
+// a Jumpstart sidebar the section is constrained inside the two-column
+// container, so background-color alone stops at the column edge. The ::before
+// / ::after pair paints the same color out to the left and right, which makes
+// the background reach the page edges regardless of where the section sits or
+// whether the page has a sidebar.
+//
+// Requires a clipping ancestor (see `.content` below) or the pseudo-elements
+// introduce a horizontal scrollbar.
+@mixin vicf-section-full-bleed-color($color) {
+  position: relative;
+  background-color: $color;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    // Fill the section vertically.
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    right: 100%;
+    z-index: -1;
+    background-color: $color;
+  }
+
+  &::after {
+    right: auto;
+    left: 100%;
+  }
+}
+
+// Contains the full-bleed pseudo-elements so they never cause page-level
+// horizontal scroll. `clip` (not `hidden`) so sticky/position behavior inside
+// sections is unaffected.
+.content {
+  overflow-x: clip;
+}
+
+.vicf-section-color--light-yellow {
+  @include vicf-section-full-bleed-color($vicf-color-light-yellow);
+}
+
+// Drop the inherited paragraph margin inside colored sections, so the section's
+// own padding controls the spacing instead of the paragraph's `margin: 0 auto`.
+//
+// `.su-page-components` is an ancestor (a Layout Builder field wrapper class),
+// not a descendant, so this cannot be nested inside the variant block above.
+//
+// Specificity note: stanford_profile_styles sets `margin: 0 auto` at (0,2,0) and
+// `margin-left/right: auto` at (0,3,1) via
+// `.su-page-components div[data-react-columns="12"].ptype-stanford-wysiwyg`.
+// Including `.ptype-stanford-layout` here puts this rule at (0,4,0) so it wins
+// both without `!important`.
+.su-page-components .ptype-stanford-layout.vicf-section-color--light-yellow .ptype-stanford-wysiwyg {
+  margin: 0;
+}
