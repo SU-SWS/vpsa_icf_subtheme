@@ -37,6 +37,16 @@
     .ptype-stanford-wysiwyg {
       color: $su-color-white;
 
+      // Containing block for the logo ::after below.
+      //
+      // Without this, nothing in the ancestor chain is positioned, so the
+      // absolutely positioned ::after resolved against the initial containing
+      // block — the page. `top: 245px` then meant 245px from the top of the
+      // *document*, dropping the logo into whatever happened to be there,
+      // typically the banner. It appeared on banner variants that have no
+      // logo, which made it look like a banner bug.
+      position: relative;
+
       // Secondary buttons are red by default; override to white so they remain
       // readable against the image. Primary buttons are left as-is.
       .su-button--secondary {

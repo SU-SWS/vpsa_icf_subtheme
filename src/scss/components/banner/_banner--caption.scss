@@ -65,26 +65,24 @@
     }
   }
 
+  // Caption measure.
+  //
+  // The tinted bar is .su-hero__card, which is already full-bleed at md+
+  // (left: 0; right: 0; max-width: none — see the card block below), so this
+  // element must NOT be capped: capping it would pull the tint in with it.
+  // Instead the box runs full width and the *text* carries the max-width, so
+  // the tint spans the viewport while the copy measures 1100px and shrinks
+  // below that on narrower screens.
+  //
+  // Replaces `max-width: 100ch` plus a 17rem (170px per side) inset at
+  // >=1024px. Root font-size is 62.5% (1rem = 10px) and everything is
+  // border-box, so those stacked and left roughly 560px of text.
   .su-card__contents {
     color: $su-color-white;
-    margin: 0 auto;
-    max-width: 100ch;
     text-align: center;
 
+    // Gutters for narrow viewports; irrelevant once the text hits its cap.
     @include responsive-spacing('padding', 2);
-
-    // Full-width pages only — too much inset inside a sidebar main column.
-    @media (min-width: 1024px) {
-      padding-left: 17rem;
-      padding-right: 17rem;
-    }
-
-    .jumpstart-ui--two-column & {
-      @media (min-width: 1024px) {
-        padding-left: 2rem;
-        padding-right: 2rem;
-      }
-    }
 
     > span,
     > h2,
@@ -96,15 +94,19 @@
       display: none;
     }
 
+    // The measure lives here, not on .su-card__contents, so the tinted bar
+    // stays full width. 1100px at the widest; auto margins keep it centered
+    // and max-width lets it shrink on narrower viewports.
     p,
     .su-banner-body,
     .su-wysiwyg-text,
     .field--name-su-banner-body {
       color: $su-color-white;
       @include vicf-type-1-small;
+      max-width: 1100px;
       margin-bottom: 0;
-      margin-left: 0;
-      margin-right: 0;
+      margin-left: auto;
+      margin-right: auto;
 
       p {
         color: $su-color-white;
