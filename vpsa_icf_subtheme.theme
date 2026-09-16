@@ -163,6 +163,38 @@ function vpsa_icf_subtheme_preprocess_paragraph(array &$variables) {
 }
 
 /**
+ * Implements hook_preprocess_HOOK() for paragraph__stanford_layout.
+ *
+ * Section (layout) variants. Position-independent: the class is applied
+ * wherever the section sits in the page, and the full-bleed background is
+ * handled in SCSS with pseudo-elements.
+ */
+function vpsa_icf_subtheme_preprocess_paragraph__stanford_layout(array &$variables) {
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  $paragraph = $variables['paragraph'];
+
+  $classes = array_filter([
+    $paragraph->getBehaviorSetting('react_paragraphs:layout_variant_info', 'section_color'),
+  ]);
+
+  if (empty($classes)) {
+    return;
+  }
+
+  if ($variables['attributes'] instanceof Attribute) {
+    $variables['attributes']->addClass($classes);
+    return;
+  }
+
+  $existing = $variables['attributes']['class'] ?? [];
+  if (!is_array($existing)) {
+    $existing = $existing ? [$existing] : [];
+  }
+
+  $variables['attributes']['class'] = array_values(array_unique(array_merge($existing, $classes)));
+}
+
+/**
  * Implements hook_preprocess_HOOK() for ds_entity_view.
  *
  * Used when the banner uses the Display Suite Hero layout.
