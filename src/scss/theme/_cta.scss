@@ -20,3 +20,43 @@
     }
   }
 }
+
+// Footer header call-to-action.
+//
+// The base theme renders `.su-local-footer__header .su-link--internal` as a
+// red-filled button with white text. That base rule is only (0,2,0), while the
+// blanket link rule above lands at (0,5,1) — and the element carries
+// `.su-link--internal`, not `.su-button`, so the `:not()` list does not exclude
+// it. The result was red text on the red button.
+//
+// Restoring white here rather than widening the `:not()` chain, because
+// `.su-link--internal` elsewhere in `.content` is an ordinary text link and
+// should stay digital red.
+//
+// Specificity: including `.su-local-footer` and mirroring the `:not()` chain
+// puts the base state at (0,7,1) and the hover/focus states at (0,8,1), which
+// beats every competing rule outright — no `!important`, no reliance on source
+// order (`vicf-link`'s own icon and hover rules would otherwise tie).
+.su-local-footer .su-local-footer__header {
+  a.su-link--internal:not(.su-button):not(.su-button--secondary):not(.su-button--big):not(.button) {
+    color: $su-color-white;
+
+    &:hover,
+    &:focus {
+      color: $su-color-white;
+    }
+
+    // Arrow glyph is a masked shape tinted via background-color.
+    &::before,
+    &::after {
+      background-color: $su-color-white;
+    }
+
+    &:hover::before,
+    &:hover::after,
+    &:focus::before,
+    &:focus::after {
+      background-color: $su-color-white;
+    }
+  }
+}
