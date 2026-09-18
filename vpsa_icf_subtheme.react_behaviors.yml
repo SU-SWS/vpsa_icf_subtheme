@@ -9,10 +9,15 @@ text_area_variant_info:  # part of the key after the :
       title: 'Text Area Style'
       description: Select the text style & Image sizes for displaying this text area.
       default_value: vpsa-text-area--regular
+      # Labels quote the circle diameter. Those numbers live in
+      # src/scss/theme/_text-area.scss — update both together.
+      # Option keys are persisted in paragraph behavior settings and must not
+      # be renamed, which is why two of them no longer match their labels.
       options:
         vpsa-text-area--regular: Default (No override)
-        vpsa-text-area--fellows: Fellows Circle
-        vpsa-text-area--alt-image-styles: ICF Circle
+        vpsa-text-area--fellows: ICF Fellows 293px
+        vpsa-text-area--alt-image-styles: ICF Circle 196px
+        vpsa-text-area--icf-icon: ICF Icon 140px
 
 layout_variant_info:
   id: layout_style

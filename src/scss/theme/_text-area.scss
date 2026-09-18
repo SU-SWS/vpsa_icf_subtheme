@@ -18,13 +18,13 @@
 
 // Circle-cropped embedded images for text-area variants.
 //
-// Shared by the `Fellows Circle` and `ICF Circle` variants, which differ only
-// in diameter. Intended for the `medium_square` image style (a 220x220 crop),
-// which already ships square pixels so the circle mask does not distort the
-// subject.
+// Shared by the `ICF Fellows 293px`, `ICF Circle 196px` and `ICF Icon 140px`
+// variants, which differ only in diameter. Intended for the `medium_square`
+// image style (a 220x220 crop), which already ships square pixels so the
+// circle mask does not distort the subject.
 //
 // RESOLUTION NOTE: `medium_square` is 220px, so any diameter above that is an
-// upscale and will look soft. `Fellows Circle` at 293px is ~33% larger than the
+// upscale and will look soft. `ICF Fellows 293px` is ~33% larger than the
 // source. If it reads as blurry, the fix is a larger square image style, not a
 // CSS change.
 //
@@ -69,7 +69,7 @@
   }
 }
 
-// `Fellows Circle` text-area variant — 293px circles.
+// `ICF Fellows 293px` text-area variant.
 //
 // Class names are kept as `--fellows` and `--alt-image-styles` on purpose:
 // option keys are persisted in paragraph behavior settings, so renaming a key
@@ -83,8 +83,14 @@
   @include vicf-text-area-circle-images(293px);
 }
 
-// `ICF Circle` text-area variant — 196px circles.
+// `ICF Circle 196px` text-area variant.
 .vpsa-text-area--alt-image-styles,
 .su-wysiwyg-text.vpsa-text-area--alt-image-styles {
   @include vicf-text-area-circle-images(196px);
+}
+
+// `ICF Icon 140px` text-area variant.
+.vpsa-text-area--icf-icon,
+.su-wysiwyg-text.vpsa-text-area--icf-icon {
+  @include vicf-text-area-circle-images(140px);
 }
