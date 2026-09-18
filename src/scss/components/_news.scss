@@ -8,7 +8,18 @@
 .ds-entity--stanford-news {
   box-shadow: none;
 
+  // The base theme sets `border: 1px solid #d5d5d4` (and an earlier
+  // `1px solid #e3e3e3`) on bare `.su-card`, i.e. at (0,1,0) — the same
+  // specificity as the selectors above, so removing it there would only win on
+  // stylesheet order. Compounding with `.su-card` lands at (0,2,0) and wins
+  // outright.
+  //
+  // `&.su-card` covers the card carrying the teaser class itself
+  // (`.su-card.su-news-vertical-teaser`); the descendant form covers cards
+  // nested inside a teaser wrapper.
+  &.su-card,
   .su-card {
+    border: 0;
     box-shadow: none;
   }
 
