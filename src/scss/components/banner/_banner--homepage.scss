@@ -154,6 +154,15 @@
 
   .su-card__contents {
     max-width: 90%;
-    @include responsive-spacing('margin-bottom', 0);
+
+    // No bottom margin.
+    //
+    // This used `responsive-spacing('margin-bottom', 0)`, which does NOT emit
+    // zero — level 0 is the smallest step on Decanter's scale, so it compiled
+    // to 1.5rem / 1.8rem / 1.9rem. Now that the card has a dark background on
+    // mobile, and .su-hero__card has no bottom padding, that margin collapsed
+    // through the card's bottom edge and showed as a white gap below the
+    // block.
+    margin-bottom: 0;
   }
 }
