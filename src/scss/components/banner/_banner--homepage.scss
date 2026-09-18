@@ -1,7 +1,12 @@
 @charset "UTF-8";
 
 //
-// Homepage Banner variant for stanford_banner.
+// `ICF Banner` / `ICF Banner with ICF Logo` variants for stanford_banner.
+//
+// File and class names keep the `--homepage` wording: the option keys are
+// persisted in paragraph behavior settings, so they cannot be renamed without
+// orphaning existing author selections. Only the dropdown labels changed — the
+// variants are used site-wide, not just on the homepage.
 // Class may be on a paragraph wrapper OR on .su-hero itself (edit preview).
 //
 
@@ -26,10 +31,11 @@
     }
   }
 
+  // Text is white at every width. Below 768px the card drops below the image
+  // and gets its own dark background (see .su-hero__card), so it no longer
+  // needs the black-on-light treatment it used to switch to.
   .su-card__contents {
-    @media screen and (min-width: 768px) {
-      color: $su-color-white;
-    }
+    color: $su-color-white;
 
     @include grid-media-min('md') {
       padding-left: 0;
@@ -45,9 +51,7 @@
     h3,
     h4,
     .su-font-splash {
-      @media screen and (min-width: 768px) {
-        color: $su-color-white;
-      }
+      color: $su-color-white;
 
       @include vicf-type-5-bold;
       margin-bottom: 0px;
@@ -83,12 +87,17 @@
 
   .su-hero__card,
   .su-card.su-hero__card {
-    background: transparent;
     border: 0;
     box-shadow: none;
+    color: $su-color-white;
 
-    @media screen and (min-width: 768px) {
-      color: $su-color-white;
+    // Below 768px the card stacks under the image rather than overlaying it,
+    // so it needs its own background to keep the white text readable.
+    background: $vicf-color-dark-grey;
+
+    // From 768px up the card sits over the photo — stay transparent.
+    @include grid-media-min('md') {
+      background: transparent;
     }
 
     @include grid-media-min('md') {
@@ -99,20 +108,6 @@
     @include grid-media-min('xl') {
       @include vicf-banner-card-inset-left(133px);
       max-width: 604px;
-    }
-  }
-}
-
-// Homepage (no logo): description matches heading — black under 768px.
-.vicf-banner--homepage {
-  .su-card__contents {
-    p,
-    .su-banner-body,
-    .su-wysiwyg-text,
-    .field--name-su-banner-body {
-      @media screen and (max-width: 767px) {
-        color: $su-color-black;
-      }
     }
   }
 }
@@ -159,24 +154,15 @@
 
   .su-card__contents {
     max-width: 90%;
-    @include responsive-spacing('margin-bottom', 0);
 
-    @media screen and (max-width: 767px) {
-      color: $su-color-black;
-
-      h2,
-      h3,
-      h4,
-      span {
-        color: $su-color-black;
-      }
-    }
-  }
-
-  .su-hero__card,
-  .su-card.su-hero__card {
-    @media screen and (max-width: 767px) {
-      background: none;
-    }
+    // No bottom margin.
+    //
+    // This used `responsive-spacing('margin-bottom', 0)`, which does NOT emit
+    // zero — level 0 is the smallest step on Decanter's scale, so it compiled
+    // to 1.5rem / 1.8rem / 1.9rem. Now that the card has a dark background on
+    // mobile, and .su-hero__card has no bottom padding, that margin collapsed
+    // through the card's bottom edge and showed as a white gap below the
+    // block.
+    margin-bottom: 0;
   }
 }

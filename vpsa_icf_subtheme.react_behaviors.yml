@@ -50,8 +50,12 @@ banner_variant_info:
         vicf-banner--default: Default
         vicf-banner--quote: Quote Banner
         vicf-banner--caption: Caption Banner
-        vicf-banner--homepage: Homepage Banner
-        vicf-banner--homepage-with-logo: Homepage Banner with ICF Logo Overlay
+        # Keys keep the `--homepage` wording: option keys are persisted in
+        # paragraph behavior settings, so renaming one would orphan every
+        # existing author selection. Labels say ICF because the variant is used
+        # site-wide, not only on the homepage.
+        vicf-banner--homepage: ICF Banner
+        vicf-banner--homepage-with-logo: ICF Banner with ICF Logo
         # vicf-banner--two-column-with-logo: Two-Column Banner with ICF Logo Overlay
     banner_overlay:
       type: select

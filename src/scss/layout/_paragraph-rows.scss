@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+//
+// Layout Paragraphs / react_paragraphs row columns.
+//
+
+// Drop Decanter's empty-column guard inside paragraph rows.
+//
+// decanter/core/src/scss/core/flex-grid sets `min-height: 1px` on every
+// `.flex-*-of-12` column. That is a float-era grid trick so an empty column
+// still occupies its track; in a flexbox row it buys nothing.
+//
+// The cost is visible as soon as two coloured blocks sit next to each other:
+// an empty column between them renders exactly 1px tall, showing the page
+// background. That is the white hairline between the ICF Banner card and a
+// Light Yellow section below it on mobile.
+//
+// Scoped to .su-page-components so this only affects Layout Paragraphs rows,
+// not Decanter grids elsewhere. Columns holding real content are unaffected —
+// their height comes from that content, not from the 1px floor.
+.su-page-components {
+  [class*='flex-'][class*='-of-12'] {
+    min-height: 0;
+  }
+}
