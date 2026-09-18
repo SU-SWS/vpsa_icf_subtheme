@@ -11,6 +11,23 @@
     // the design floor; longer option labels are allowed to make it wider.
     min-width: 182px;
 
+    // Below md the form wraps onto its own line above the grid, because the
+    // Fellows page makes .stanford-people-grid a wrapping flex row. As a
+    // content-sized flex item it then sits at flex-start, i.e. hard left.
+    // Auto inline margins absorb the free space on both sides to centre it,
+    // and text-align centres the inline-block select wrapper inside it.
+    //
+    // From md up the form sits beside the grid and stays left-aligned.
+    //
+    // Breakpoint note: grid-media-max('sm') is max-width 767px. Decanter's
+    // max() takes the *next* breakpoint minus 1px, so max('md') would be 991px
+    // and would wrongly centre this on tablet and small desktop too.
+    @include grid-media-max('sm') {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
     label[for="edit-tags"],
     .form-item-tags > label,
     #preact-tags > .form-item > label,
