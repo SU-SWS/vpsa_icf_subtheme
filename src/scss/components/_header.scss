@@ -35,41 +35,53 @@
     }
   }
 
-  // Search was moved into Menu via preprocess_page — sit beside the nav and wrap.
   .region-menu {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1.5rem;
-    row-gap: 1rem;
-
+    // Region's own alignment within .su-masthead--inner. Independent of the
+    // flex layout below, so it stays outside that gate.
     @include grid-media-max('md') {
       align-self: flex-start;
       margin-top: 0;
     }
 
-    // Nav / Preact menu island.
-    .main,
-    .preact-main-menu,
-    [data-island='main-menu-island'] {
-      flex: 0 1 auto;
-      min-width: 0;
-      width: unset;
-    }
+    // Search was moved into Menu via preprocess_page — sit beside the nav and
+    // wrap.
+    //
+    // MOBILE: gated to md+ (768px) on purpose. `.region-menu` also contains the
+    // hamburger and the mobile menu panel. Applying this at every width turned
+    // the whole region into a flex row below 768px, reflowing children that
+    // Decanter expects to stack, and `.su-site-search`'s `min-width: 12rem`
+    // floor refused to shrink — which pushed the nav out of place. Below md the
+    // region now keeps Decanter's native layout.
+    @include grid-media-min('md') {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1.5rem;
+      row-gap: 1rem;
 
-    // Override Decanter’s masthead flex-column(4) — search is no longer a
-    // direct masthead sibling; size it within this flex row instead.
-    .su-site-search {
-      flex: 1 1 16rem;
-      min-width: 12rem;
-      max-width: 22rem;
-      width: auto;
+      // Nav / Preact menu island.
+      .main,
+      .preact-main-menu,
+      [data-island='main-menu-island'] {
+        flex: 0 1 auto;
+        min-width: 0;
+        width: unset;
+      }
 
-      > form {
-        margin-left: 0;
-        width: 100%;
-        max-width: 100%;
+      // Override Decanter’s masthead flex-column(4) — search is no longer a
+      // direct masthead sibling; size it within this flex row instead.
+      .su-site-search {
+        flex: 1 1 16rem;
+        min-width: 12rem;
+        max-width: 22rem;
+        width: auto;
+
+        > form {
+          margin-left: 0;
+          width: 100%;
+          max-width: 100%;
+        }
       }
     }
   }
@@ -77,9 +89,17 @@
 
 // Active main-nav item (Preact menu uses aria-current / iscurrent).
 // !important beats styled-components runtime styles from the menu island.
-.preact-main-menu {
-  a[aria-current='page'],
-  a[iscurrent='true'] {
-    color: $su-color-black !important;
+//
+// MOBILE: gated to md+ for the same reason. The mobile panel has its own
+// background and the base theme gives the current item its own treatment
+// (a red ::before bar, plus #b1040e / #e50808 / #2e2d29 across states). Forcing
+// black everywhere — with !important, so nothing could correct it — recoloured
+// the active item in the mobile menu.
+@include grid-media-min('md') {
+  .preact-main-menu {
+    a[aria-current='page'],
+    a[iscurrent='true'] {
+      color: $su-color-black !important;
+    }
   }
 }
