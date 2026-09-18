@@ -46,13 +46,18 @@
     // Search was moved into Menu via preprocess_page — sit beside the nav and
     // wrap.
     //
-    // MOBILE: gated to md+ (768px) on purpose. `.region-menu` also contains the
-    // hamburger and the mobile menu panel. Applying this at every width turned
-    // the whole region into a flex row below 768px, reflowing children that
-    // Decanter expects to stack, and `.su-site-search`'s `min-width: 12rem`
-    // floor refused to shrink — which pushed the nav out of place. Below md the
-    // region now keeps Decanter's native layout.
-    @include grid-media-min('md') {
+    // Gated to lg+ (992px), which is where the masthead actually switches to
+    // the desktop nav: the base theme shows .su-multi-menu__nav-toggle up to
+    // 991px and hides it from 992px. `.region-menu` holds that hamburger and
+    // the expanded mobile panel, so applying a flex row any earlier reflows
+    // children Decanter expects to stack, and `.su-site-search`'s
+    // `min-width: 12rem` floor refuses to shrink and pushes the nav sideways.
+    //
+    // Note 768-991px is not a spare "tablet" band to borrow: the base theme
+    // gives the expanded panel explicit sizing there
+    // (`.su-multi-menu > ul { width: 40rem }`, `.su-multi-menu__menu-lv1
+    // { max-width: 24em }`), which this layout would fight.
+    @include grid-media-min('lg') {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -90,12 +95,12 @@
 // Active main-nav item (Preact menu uses aria-current / iscurrent).
 // !important beats styled-components runtime styles from the menu island.
 //
-// MOBILE: gated to md+ for the same reason. The mobile panel has its own
-// background and the base theme gives the current item its own treatment
-// (a red ::before bar, plus #b1040e / #e50808 / #2e2d29 across states). Forcing
-// black everywhere — with !important, so nothing could correct it — recoloured
-// the active item in the mobile menu.
-@include grid-media-min('md') {
+// Gated to lg+ for the same reason: below 992px this is the hamburger panel,
+// not the desktop nav. That panel has its own background, and the base theme
+// gives the current item its own treatment (a red ::before bar, plus
+// #b1040e / #e50808 / #2e2d29 across states). Forcing black everywhere — with
+// !important, so nothing could correct it — recoloured the active item there.
+@include grid-media-min('lg') {
   .preact-main-menu {
     a[aria-current='page'],
     a[iscurrent='true'] {
