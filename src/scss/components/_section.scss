@@ -88,38 +88,55 @@
 
 // Section background-color variants (react behaviors: layout_variant_info).
 //
-// The class lands on the same element as .ptype-stanford-layout. On pages with
-// a Jumpstart sidebar the section is constrained inside the two-column
-// container, so background-color alone stops at the column edge. The ::before
-// / ::after pair paints the same color out to the left and right, which makes
-// the background reach the page edges regardless of where the section sits or
-// whether the page has a sidebar.
+// APPLIED TO .layout-background, not to the paragraph.
 //
-// Requires a clipping ancestor (see `.content` below) or the pseudo-elements
-// introduce a horizontal scrollbar.
+// The variant class lands on .ptype-stanford-layout, but that element *wraps*
+// .layout-background (set as wrapper_classes in stanford_layout_paragraphs'
+// layout templates). Painting the paragraph put the colour one level too far
+// out, which caused both of the problems this replaces:
+//
+//   - .layout-background carries `margin-bottom: 6.4/7.2/7.6rem`. Sitting
+//     inside the painted paragraph box, that margin was filled with the
+//     section colour — so the section looked like it had extra bottom padding
+//     AND no gap after it.
+//   - Any padding added at the paragraph level stacked on top of the padding
+//     the built-in colours apply to .layout-background, reading as doubled.
+//
+// Styling .layout-background instead puts the variant on exactly the element
+// the built-in section colours use, so the geometry matches and margin-bottom
+// falls outside the colour as it should.
+//
+// On pages with a Jumpstart sidebar the section is constrained inside the
+// two-column container, so background-color alone stops at the column edge.
+// The ::before / ::after pair paints the same colour out to the left and
+// right, so the background reaches the page edges regardless of where the
+// section sits or whether the page has a sidebar. That needs a clipping
+// ancestor (see `.content` below) or it introduces a horizontal scrollbar.
 @mixin vicf-section-full-bleed-color($color) {
   position: relative;
   background-color: $color;
 
-  // Vertical padding. Two jobs:
+  // Vertical padding copied from `.layout-background.background-color` in
+  // stanford_layout_paragraphs/dist/css/layouts/all-layouts.css, so the
+  // variant is spaced identically to the built-in section colours. Restated
+  // rather than inherited because that class is only added when an author
+  // picks a built-in colour.
   //
-  // 1. Restores the spacing the pre-variant rule had. The sidebar-only yellow
-  //    block this replaced carried `padding-top: 5rem`; converting it to a
-  //    variant dropped that, so the copy sat flush against the colour.
-  //
-  // 2. Stops margin collapsing. With no padding or border on the top and
-  //    bottom edges, the first child's top margin and the last child's bottom
-  //    margin collapse straight *through* the section — they push the whole
-  //    coloured band down the page instead of creating space inside it. That
-  //    is why adding Spacer paragraphs did nothing: the Spacer works purely
-  //    via `margin-bottom` (.paragraph--type--stanford-spacer sets no height
-  //    or padding), so its margin escaped the section. A padding edge gives
-  //    those margins something to push against.
-  //
-  // Level 5 matches the section padding ppo_irsr uses: 3.8rem on mobile,
-  // 7.2rem from md, 7.6rem at the widest.
-  @include responsive-spacing('padding-top', 5);
-  @include responsive-spacing('padding-bottom', 5);
+  // It also gives the box a padding edge, which stops child margins collapsing
+  // through the section — that is what made Spacer paragraphs appear to do
+  // nothing, since the Spacer works purely via `margin-bottom`.
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+
+  @media only screen and (min-width: 768px) {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+
+  @media only screen and (min-width: 1500px) {
+    padding-top: 4.75rem;
+    padding-bottom: 4.75rem;
+  }
 
   &::before,
   &::after {
@@ -147,8 +164,24 @@
   overflow-x: clip;
 }
 
-.vicf-section-color--light-yellow {
+// Both Light Yellow options share the same colour and padding. They differ
+// only in whether the section keeps its bottom margin.
+//
+// Descendant rather than child combinator: .layout-background is emitted by
+// the layout template and is not guaranteed to be an immediate child of the
+// paragraph.
+.vicf-section-color--light-yellow .layout-background,
+.vicf-section-color--light-yellow-no-margin .layout-background {
   @include vicf-section-full-bleed-color($vicf-color-light-yellow);
+}
+
+// Sections get `margin-bottom: 6.4/7.2/7.6rem` from `.layout-background` in
+// stanford_layout_paragraphs. Dropping it lets two coloured sections stack
+// flush. This is the subtheme equivalent of that module's own
+// `.bottom-margin-none` modifier, which authors cannot reach from the
+// behaviors form.
+.vicf-section-color--light-yellow-no-margin .layout-background {
+  margin-bottom: 0;
 }
 
 // Drop the inherited paragraph margin inside colored sections, so the section's
@@ -162,6 +195,9 @@
 // `.su-page-components div[data-react-columns="12"].ptype-stanford-wysiwyg`.
 // Including `.ptype-stanford-layout` here puts this rule at (0,4,0) so it wins
 // both without `!important`.
-.su-page-components .ptype-stanford-layout.vicf-section-color--light-yellow .ptype-stanford-wysiwyg {
+// Applies to both Light Yellow options — they are the same coloured section
+// and differ only in bottom margin.
+.su-page-components .ptype-stanford-layout.vicf-section-color--light-yellow .ptype-stanford-wysiwyg,
+.su-page-components .ptype-stanford-layout.vicf-section-color--light-yellow-no-margin .ptype-stanford-wysiwyg {
   margin: 0;
 }

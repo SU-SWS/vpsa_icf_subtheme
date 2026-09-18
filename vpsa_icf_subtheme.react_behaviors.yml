@@ -31,7 +31,11 @@ layout_variant_info:
       description: Choose a background color that spans the full page width. Applies wherever the section sits on the page.
       empty_option: Default
       options:
-        vicf-section-color--light-yellow: Light Yellow
+        # Key kept as `--light-yellow` for the margin version: it is persisted
+        # in paragraph behavior settings, so renaming it would orphan every
+        # section already using it. Only the label gained "with Bottom Margin".
+        vicf-section-color--light-yellow: Light Yellow with Bottom Margin
+        vicf-section-color--light-yellow-no-margin: Light Yellow with No Bottom Margin
 
 # React behaviors plugin definitions for VPSA ICF Subtheme.
 # Plugin property $defaults are defined in ReactBehaviorsPluginManager.
