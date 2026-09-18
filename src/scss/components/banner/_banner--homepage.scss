@@ -1,7 +1,12 @@
 @charset "UTF-8";
 
 //
-// Homepage Banner variant for stanford_banner.
+// `ICF Banner` / `ICF Banner with ICF Logo` variants for stanford_banner.
+//
+// File and class names keep the `--homepage` wording: the option keys are
+// persisted in paragraph behavior settings, so they cannot be renamed without
+// orphaning existing author selections. Only the dropdown labels changed — the
+// variants are used site-wide, not just on the homepage.
 // Class may be on a paragraph wrapper OR on .su-hero itself (edit preview).
 //
 
