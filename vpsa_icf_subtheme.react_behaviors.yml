@@ -13,6 +13,7 @@ text_area_variant_info:  # part of the key after the :
         vpsa-text-area--regular: Default (No override)
         vpsa-text-area--fellows: Fellows Circle
         vpsa-text-area--alt-image-styles: ICF Circle
+        vpsa-text-area--icf-icon: ICF Icon
 
 layout_variant_info:
   id: layout_style
