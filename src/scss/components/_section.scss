@@ -101,6 +101,26 @@
   position: relative;
   background-color: $color;
 
+  // Vertical padding. Two jobs:
+  //
+  // 1. Restores the spacing the pre-variant rule had. The sidebar-only yellow
+  //    block this replaced carried `padding-top: 5rem`; converting it to a
+  //    variant dropped that, so the copy sat flush against the colour.
+  //
+  // 2. Stops margin collapsing. With no padding or border on the top and
+  //    bottom edges, the first child's top margin and the last child's bottom
+  //    margin collapse straight *through* the section — they push the whole
+  //    coloured band down the page instead of creating space inside it. That
+  //    is why adding Spacer paragraphs did nothing: the Spacer works purely
+  //    via `margin-bottom` (.paragraph--type--stanford-spacer sets no height
+  //    or padding), so its margin escaped the section. A padding edge gives
+  //    those margins something to push against.
+  //
+  // Level 5 matches the section padding ppo_irsr uses: 3.8rem on mobile,
+  // 7.2rem from md, 7.6rem at the widest.
+  @include responsive-spacing('padding-top', 5);
+  @include responsive-spacing('padding-bottom', 5);
+
   &::before,
   &::after {
     content: "";
