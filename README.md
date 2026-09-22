@@ -2,6 +2,8 @@
 
 Stanford Sites subtheme built on `stanford_basic`, scaffolded from `stanford_starter`.
 
+Documentation for users: https://docs.google.com/document/d/1qrgTpmH6HRbN6dLG8A5pQX5kEWWV88QkxMtXqQrpY6Q/edit?usp=sharing
+
 ## Developer Setup
 
 1. Install dependencies:
