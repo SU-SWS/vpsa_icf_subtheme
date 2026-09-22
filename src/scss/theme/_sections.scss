@@ -133,6 +133,51 @@
         }
       }
 
+      // MOBILE: put the logo in flow instead of absolutely positioning it.
+      //
+      // The desktop treatment pins the logo with `top: 245px` on an absolutely
+      // positioned ::after, while the buttons are pushed clear of it by a
+      // large `padding-top: 35vw` on their <p>. Those are two independent
+      // coordinate systems — one measured from the top of the paragraph, the
+      // other from the top of the button row — so the gap between them drifts
+      // with heading length and viewport width. That is why they overlap, and
+      // why no single `top` value fixes it for every page.
+      //
+      // The absolute box is also misleading at these widths: `max-width: 30vw`
+      // shrinks its width but `height` stays 268px, so the artwork (sized by
+      // `contain`) floats in the middle of a box far taller than it looks.
+      //
+      // Below 768px the logo instead becomes a full-width flex item at the
+      // start of the button row. It occupies real space, so it cannot overlap
+      // the buttons, it sits naturally between the headings and them, and one
+      // margin controls the gap.
+      @media screen and (max-width: 767px) {
+        // Absolute logo off; the in-flow one below replaces it.
+        &::after {
+          display: none;
+        }
+
+        .su-wysiwyg-text > p {
+          // The logo supplies this space itself now.
+          padding-top: 0;
+
+          &::before {
+            content: "";
+            // Own row in the wrapping flex container, so buttons fall below.
+            flex: 0 0 100%;
+            // Square artwork: `contain` inside a full-width box of this height
+            // renders the logo 30vw wide, centred.
+            height: 30vw;
+            // Gap between logo and buttons — the one number to tune.
+            margin-bottom: 2.4rem;
+            background-image: url("../assets/SICF-logo-transparent.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+          }
+        }
+      }
+
     }
   }
 
