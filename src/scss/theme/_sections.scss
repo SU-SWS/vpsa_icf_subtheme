@@ -62,9 +62,23 @@
 
       & > h3 {
         // simplify heading
-        font-size: 30px; 
+        font-size: 30px;
         // add responsive size for smaller also
         font-weight: 400;
+      }
+
+      // Remove the inherited heading offset so the h2/h3 read as a tight pair.
+      //
+      // The base theme sets `.su-wysiwyg-text h3 { padding-top: 1.6/1.8/1.9rem }`
+      // at (0,1,1), plus `body h3` at (0,0,2). Scoped here the selector is
+      // (0,3,2), so it wins without `!important`.
+      //
+      // Both shapes are covered: depending on how the text was authored the h3
+      // can render as a direct child of the paragraph or nested inside
+      // .su-wysiwyg-text, and only the nested form picks up the base rule.
+      & > h3,
+      .su-wysiwyg-text h3 {
+        padding-top: 0;
       }
 
       // set normal text that is not headings to be split into 2 columns for 2 buttons.
