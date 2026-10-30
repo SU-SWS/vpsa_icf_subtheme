@@ -22,3 +22,6 @@ fellows_tags_filter:
   dependencies:
     - core/drupal
     - core/once
+    # Load after Drupal.AjaxCommands so the scroll-suppression patch applies.
+    - core/drupal.ajax
+    - views/views.ajax
