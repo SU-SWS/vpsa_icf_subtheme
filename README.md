@@ -17,6 +17,18 @@ Documentation for users: https://docs.google.com/document/d/1qrgTpmH6HRbN6dLG8A5
 
 This project uses webpack to assemble the CSS, JavaScript, and image assets required by the theme.
 
+### Sass compiler
+
+SCSS is compiled with [Dart Sass](https://sass-lang.com/dart-sass/) (the `sass`
+npm package). `sass-loader` picks it up automatically; no webpack config is
+needed. The theme previously used `node-sass`, which is deprecated and fails on
+current Node versions and Apple Silicon. Do not reintroduce it.
+
+- Decanter emits Sass deprecation warnings during the build. They are expected
+  and do not affect the output.
+- `npm run build` deletes `dist/` before compiling, so a failed build leaves
+  `dist/` empty. Restore it with `git checkout -- dist` before committing.
+
 ## SCSS structure
 
 src/scss/

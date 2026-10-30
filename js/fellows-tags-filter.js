@@ -10,6 +10,25 @@
   // Only auto-select the latest year once per page load so choosing
   // "All Fellows" (clears the real select) is not overridden on AJAX remount.
   let autoDefaultApplied = false;
+  // The auto-default triggers a BEF autosubmit (AJAX). Views responds with a
+  // scroll-to-view command, which jumps the page down mid-load. Skip that one
+  // scroll; user-initiated filter changes still scroll normally.
+  let suppressNextScroll = false;
+
+  ['scrollTop', 'viewsScrollTop'].forEach((command) => {
+    const proto = Drupal.AjaxCommands && Drupal.AjaxCommands.prototype;
+    const original = proto && proto[command];
+    if (typeof original !== 'function') {
+      return;
+    }
+    proto[command] = function (...args) {
+      if (suppressNextScroll) {
+        suppressNextScroll = false;
+        return undefined;
+      }
+      return original.apply(this, args);
+    };
+  });
 
   function yearLabel(text) {
     return String(text || '')
@@ -176,16 +195,20 @@
     if (!initial) {
       if (!autoDefaultApplied) {
         initial = latestYearValue(options);
-        autoDefaultApplied = true;
         shouldApplyDefault = initial !== ALL_VALUE;
       }
       else {
         initial = ALL_VALUE;
       }
     }
+    // Mark the first mount regardless of how the year was chosen, so arriving
+    // via ?tags[]=<id> and then picking "All Fellows" isn't overridden on the
+    // AJAX remount.
+    autoDefaultApplied = true;
 
     select.value = initial;
     if (shouldApplyDefault) {
+      suppressNextScroll = true;
       applyValue(realSelect, initial);
     }
 

@@ -78,7 +78,10 @@
       align-items: center;
       flex-wrap: wrap;
 
-      .views-infinite-scroll-content-wrapper ul.su-list-unstyled {
+      // Not scoped under .views-infinite-scroll-content-wrapper: that wrapper
+      // is absent on a server-rendered filtered load (e.g. /fellows?tags[]=371),
+      // which dropped every rule below.
+      ul.su-list-unstyled {
         grid-template-columns: repeat(1, minmax(0, 1fr));
 
         @media (min-width: 576px) {
